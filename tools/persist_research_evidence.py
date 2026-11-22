@@ -19,7 +19,10 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from verify_research_archive import verify_bundle
+try:
+    from .verify_research_archive import verify_bundle
+except ImportError:  # direct CLI execution
+    from verify_research_archive import verify_bundle
 
 MAX_GIT_FALLBACK_BYTES = 25_000_000
 
