@@ -102,6 +102,69 @@ def fow_endgame_sanity():
             "not_exhaustive_8x8_endgame": True}
 
 
+
+def certify_referee_one_turn(fens, side=True):
+    """Exhaustive *one own move + one opponent reply* reachability check under
+    actual starter FoW rules. This is a sound positive certificate for the
+    supplied, nonterminal full-state support and this ONE-turn horizon only.
+
+    Every candidate action must be legal in all possible worlds that yield
+    the same current observation; every legal opponent reply is enumerated.
+    Longer-game guarantees, repetition-history, and unreachable-state filters
+    are expressly outside this bounded certificate's assumptions.
+    """
+    import fow  # noqa: F401
+    import chess
+    import referee
+    from collections import Counter
+    if not fens:
+        raise ValueError("no initial hidden states")
+    boards = [referee.FowBoard(fen) for fen in fens]
+    if any(board.turn != side for board in boards):
+        raise ValueError("not own turn in every hidden state")
+    obs = {referee.observation(board, side) for board in boards}
+    if len(obs) != 1:
+        raise ValueError("starting states are not one information set")
+    for board in boards:
+        if referee.outcome(board, Counter({referee.position_key(board): 1})):
+            raise ValueError("already terminal; no active one-turn certificate")
+    common = set.intersection(*(set(referee.fow_moves(board)) for board in boards))
+    wins = []
+    replies_checked = 0
+    for action in sorted(common, key=lambda move: move.uci()):
+        works = True
+        for board in boards:
+            after_own = board.copy(stack=False)
+            after_own.push(action)
+            seen = Counter({referee.position_key(board): 1,
+                            referee.position_key(after_own): 1})
+            term = referee.outcome(after_own, seen)
+            if term is not None:
+                if term[0] != ("1-0" if side else "0-1"):
+                    works = False
+                    break
+                continue
+            for reply in referee.fow_moves(after_own):
+                replies_checked += 1
+                next_board = after_own.copy(stack=False)
+                next_board.push(reply)
+                future = seen.copy()
+                future[referee.position_key(next_board)] += 1
+                terminal = referee.outcome(next_board, future)
+                if terminal is None or terminal[0] != ("1-0" if side else "0-1"):
+                    works = False
+                    break
+            if not works:
+                break
+        if works:
+            wins.append(action.uci())
+    return {"real_referee": True, "worlds": len(boards),
+            "common_legal_attempts_checked": len(common),
+            "full_defender_replies_checked": replies_checked,
+            "certified_one_turn_capture_actions": wins,
+            "horizon_own_turns": 1,
+            "no_broader_endgame_theorem": True}
+
 def trial(seed=719):
     # Two hidden kings, one common probe; next observation disambiguates.
     states = {
@@ -123,9 +186,15 @@ def trial(seed=719):
     attacked["h2"]["actions"]["probe"].append("loss")
     assert not certify(attacked, ["h1", "h2"], 2)["certified_winning"]
     real = fow_endgame_sanity()
+    bounded = certify_referee_one_turn(
+        ["1k6/8/8/8/8/8/8/K6Q w - - 0 1",
+         "2k5/8/8/8/8/8/8/K6Q w - - 0 1"], True)
+    assert bounded["real_referee"] and bounded["worlds"] == 2
+    assert bounded["common_legal_attempts_checked"] > 0
     return {"primary_metric": "zero false win certificates in complete finite adversarial toy graph",
             "exact_toy_depth2_winning": win,
             "exact_toy_depth1_winning": no,
             "adversary_counterexample_rejected": True,
             "actual_referee_hidden_king_sanity": real,
+            "bounded_real_referee_certificate": bounded,
             "limitations": "Certificate applies only to supplied finite transitions; queen-vs-king 8x8 theorem NOT reproduced, defended, or extended."}
