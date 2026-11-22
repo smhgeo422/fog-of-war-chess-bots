@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "goal": "Track every research idea while prioritizing implementable, informative experiments; do not claim all are completed until verified.",
+  "selection_rule": "Select the first unfinished, unblocked item from earliest feasible wave, using the registry plus dependencies and evidence. Work on at most one substantive independent hypothesis at a time; checkpoint between agent runs.",
+  "status_source": "research/experiment_registry.jsonl",
+  "evidence_source": "research/runs/ and draft GitHub Releases",
+  "stages": [
+    {
+      "name": "wave-1-diagnostics-and-low-cost-controls",
+      "ids": [
+        "A01",
+        "B01",
+        "C01",
+        "C02",
+        "C06",
+        "F01",
+        "F02",
+        "F03",
+        "F05"
+      ],
+      "objective": "Establish baseline/control fidelity, detect practical losses, and find inexpensive high-information improvements.",
+      "evaluation": "Unit tests and replay labels, then 20-game color-balanced screening; only finalists proceed to independent-seed full-clock trials."
+    },
+    {
+      "name": "wave-2-information-and-inference",
+      "ids": [
+        "A02",
+        "A03",
+        "A05",
+        "A06",
+        "B02",
+        "B04",
+        "B05",
+        "C03",
+        "C04",
+        "C05",
+        "E01"
+      ],
+      "objective": "Isolate gains from observation-consistent action evaluation, posterior quality, selective search and delayed tactical risk.",
+      "evaluation": "Feature ablations, CPU-matched comparisons, complete 180+2 trials for plausible winners; avoid claiming significance from small matches."
+    },
+    {
+      "name": "wave-3-game-theory-and-learning",
+      "ids": [
+        "A04",
+        "A07",
+        "A08",
+        "B03",
+        "B06",
+        "B07",
+        "B08",
+        "C07",
+        "C08",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "F04",
+        "F06",
+        "F07"
+      ],
+      "objective": "Pursue advanced opponent reasoning, population robustness and learned corrections where evidence or compute budget justifies them.",
+      "evaluation": "Prefer offline validation and CPU-matched small ablations; document failures and resource barriers rather than forcing all to full tournament."
+    },
+    {
+      "name": "wave-4-high-cost-and-final-integration",
+      "ids": [
+        "E07",
+        "F08"
+      ],
+      "objective": "Evaluate expensive end-to-end learning only if feasible, then integrate independently verified improvements as a final candidate.",
+      "evaluation": "Report grounded improvements, negatives, confidence intervals, resource cost and full reproducibility; no official arena without authorization."
+    }
+  ]
+}
