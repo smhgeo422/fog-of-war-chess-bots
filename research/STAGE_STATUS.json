@@ -2,7 +2,7 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/stage2-baselines-corpus",
+  "branch": "infra/stage3-independent-kernels",
   "planning_pr": 4,
   "current_stage_completed": 2,
   "next_stage": 3,
@@ -78,7 +78,8 @@
     {
       "id": 3,
       "name": "Independent algorithm v1 implementations",
-      "status": "not_started"
+      "status": "in_progress",
+      "goal": "Nine separate P1..P9 algorithmic first-version kernels, deterministic tests, individually hosted offline research artifacts; no invented game-strength results."
     },
     {
       "id": 4,
@@ -346,5 +347,23 @@
     "Only 4 short-clock smoke games each for B1 and B2; no reliable strength estimate or paired CI.",
     "No full-clock 180+2 tournament, official MIT arena, public/private external replay data, or new research algorithms during Stage 2.",
     "More permitted opponent/seed and clock-matched full games are needed before supporting later P2/P7 or strength conclusions."
+  ],
+  "stage3_base_branch": "infra/stage3-independent-kernels",
+  "stage3_expected_branches": [
+    "experiment/P1-v1-toy-kernel",
+    "experiment/P2-v1-toy-kernel",
+    "experiment/P3-v1-toy-kernel",
+    "experiment/P4-v1-toy-kernel",
+    "experiment/P5-v1-toy-kernel",
+    "experiment/P6-v1-toy-kernel",
+    "experiment/P7-v1-toy-kernel",
+    "experiment/P8-v1-toy-kernel",
+    "experiment/P9-v1-toy-kernel"
+  ],
+  "stage3_requirements": [
+    "Each kernel answers its distinct Stage0 scientific question, with explicit target and assumptions.",
+    "Separate tests and parameter version; all held-out labels retrospective only.",
+    "Nine independent offline branch executions each leave remotely verified archive or explicit failure.",
+    "No bot performance claims or frozen baseline edits."
   ]
 }
