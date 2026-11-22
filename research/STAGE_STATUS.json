@@ -2,10 +2,10 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/stage6-confirmation-decision",
+  "branch": "infra/stage7-report-package",
   "planning_pr": 4,
-  "current_stage_completed": 6,
-  "next_stage": 7,
+  "current_stage_completed": 7,
+  "next_stage": null,
   "stages": [
     {
       "id": 0,
@@ -240,7 +240,33 @@
     {
       "id": 7,
       "name": "Archive verification and report-ready evidence package",
-      "status": "not_started"
+      "status": "completed",
+      "scope": "Evidence verification, project closure, and report inputs. Course report drafting is separate.",
+      "audited_checkpoint": "91c060c",
+      "reviewed_projects": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9"
+      ],
+      "run_catalogs": 18,
+      "verified_git_tracked_archives": 4,
+      "older_hosted_catalogs": 14,
+      "older_draft_release_bytes_accessible_here": false,
+      "confirmatory_games": 0,
+      "final_research_candidate": null,
+      "evidence": [
+        "research/report_package/README.md",
+        "research/report_package/CLOSURE.md",
+        "research/combined_results.json",
+        "research/combined_results.csv",
+        "research/report_package/figures/p8_paired_contrasts.svg"
+      ]
     }
   ],
   "research_projects": [
@@ -365,7 +391,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Stage 7 only on user instruction. Audit and package the existing evidence, including the empty confirmation slate and per-project limitations, for the final report.",
+  "next_stage_action": "The eight-stage plan is complete. The report package is ready for human review and report writing. The older draft Release archive bytes remain inaccessible in this environment.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,

@@ -32,3 +32,7 @@ At the user's direction, Codex developed and tested the P8 uncertainty adjustmen
 ## Stage 6 confirmation audit attribution (2026-11-22)
 
 At the user's direction, Codex reviewed eligibility for each project, checked archived evidence and native component integrity, and recorded the confirmation decision. This work used substantial AI assistance for the audit and documentation. It adds no playing-strength observations. [Stage 6 confirmation decision](STAGE6_FINDINGS.md)
+
+## Stage 7 evidence package attribution (2026-11-22)
+
+The user directed completion of the eight-stage research plan. Codex assembled the report inputs, checked the accessible archives and Git provenance, generated the ledger and figure, and wrote scoped project dispositions. This documentation, tooling, and evidence audit involved substantial AI assistance. Original teammate code and historical match work remain attributed separately. Human review and formal course disclosure remain report-writing tasks. [Evidence package](report_package/README.md)

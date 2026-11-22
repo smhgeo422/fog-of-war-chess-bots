@@ -206,6 +206,8 @@ Book, reserve clock, adaptive root count, special FoW endgame logic, and *final*
 
 **Stage 6 update (2026-11-22):** The confirmation audit found zero qualifying candidates. Full-clock research comparisons and an integrated research bot are absent from the evidence. Use the [confirmation decision](STAGE6_FINDINGS.md) when describing the final results and their limits.
 
+**Stage 7 update (2026-11-22):** The [report evidence package](report_package/README.md) contains the verified run ledger, all nine conclusions, and reproducible figure data. Use the [closure sheet](report_package/CLOSURE.md) for final scope and the [contribution record](contributions.md) for AI disclosure and teammate attribution.
+
 ## References / source links (starter list)
 
 - Official FoW rules and submission instructions: https://www.mit.edu/~6.7980/fow/?tab=rules and https://www.mit.edu/~6.7980/fow/?tab=submit

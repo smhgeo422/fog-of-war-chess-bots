@@ -40,3 +40,7 @@ Each experiment was independently run on its own Pn-v1 branch. The evidence incl
 ## Stage 6 · Confirmation gate
 
 The [confirmation audit](STAGE6_FINDINGS.md) records the decision for each of the nine projects. There were zero eligible research candidates, zero 180+2 confirmation games, and no integrated research bot. Stage 4 and Stage 5 archives were reverified.
+
+## Stage 7 · Report package
+
+The [report package](report_package/README.md) includes nine [project closure notes](report_package/CLOSURE.md), combined [JSON](combined_results.json) and [CSV](combined_results.csv) tables, and the P8 figure with its exact paired estimates. Four Git-tracked bundles were reverified. Fourteen earlier hosted catalogs and their source commits were verified; direct draft Release access remains unresolved in this environment.

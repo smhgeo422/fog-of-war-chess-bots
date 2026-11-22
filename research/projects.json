@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "stage6_confirmation_gate_closed_no_candidate",
+  "status": "stage7_report_evidence_packaged",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -49,7 +49,8 @@
         "disposition": "deferred_threat_bearing_histories",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P1/findings.md"
     },
     {
       "id": "P2",
@@ -85,7 +86,8 @@
         "disposition": "deferred_wider_opponent_validation",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P2/findings.md"
     },
     {
       "id": "P3",
@@ -127,7 +129,8 @@
         "branch": "experiment/P3-v2-hidden-reply-slot",
         "archive_sha256": "eb81672dee9370db1655fe79ce37172d2d6779df4017de651015bb5900b6e3eb"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P3/findings.md"
     },
     {
       "id": "P4",
@@ -163,7 +166,8 @@
         "disposition": "deferred_action_conditioned_forecast",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P4/findings.md"
     },
     {
       "id": "P5",
@@ -199,7 +203,8 @@
         "disposition": "current_categorical_model_not_promoted",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P5/findings.md"
     },
     {
       "id": "P6",
@@ -235,7 +240,8 @@
         "disposition": "deferred_extensive_form_policy_and_compute",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P6/findings.md"
     },
     {
       "id": "P7",
@@ -271,7 +277,8 @@
         "disposition": "current_residual_not_promoted",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P7/findings.md"
     },
     {
       "id": "P8",
@@ -313,7 +320,8 @@
         "branch": "experiment/P8-v2-voc-reliability",
         "archive_sha256": "6b5c9bf25d249e3a9d7cca0b22d2f18794828222d111db387051c8d61fc409b6"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P8/findings.md"
     },
     {
       "id": "P9",
@@ -349,7 +357,8 @@
         "disposition": "one_turn_domain_closed_zero_hidden_coverage",
         "findings": "research/STAGE5_FINDINGS.md"
       },
-      "stage6_confirmation_eligible": false
+      "stage6_confirmation_eligible": false,
+      "stage7_findings": "research/projects/P9/findings.md"
     }
   ],
   "legacy_registry": "research/experiment_registry.jsonl",
@@ -373,5 +382,6 @@
     "full_clock_games_played": 0,
     "final_research_candidate": null,
     "findings": "research/STAGE6_FINDINGS.md"
-  }
+  },
+  "stage7_report_package": "research/report_package/README.md"
 }
