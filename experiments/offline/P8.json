@@ -1,0 +1,8 @@
+{
+  "project_id": "P8",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "One-step value of computation avoids worthless further search while preserving hard clock reserve on close decisions.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7147
+}
