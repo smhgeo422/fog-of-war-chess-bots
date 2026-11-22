@@ -2,10 +2,10 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/stage4-scientific-screening",
+  "branch": "infra/stage5-guided-ablations",
   "planning_pr": 4,
-  "current_stage_completed": 4,
-  "next_stage": 5,
+  "current_stage_completed": 5,
+  "next_stage": 6,
   "stages": [
     {
       "id": 0,
@@ -160,7 +160,47 @@
     {
       "id": 5,
       "name": "Hypothesis-driven algorithm versions and ablations",
-      "status": "not_started"
+      "status": "completed",
+      "scope": "Two isolated v2 ablations and evidence-based dispositions for all nine projects.",
+      "evidence": [
+        "research/STAGE5_DESIGN.md",
+        "research/STAGE5_FINDINGS.md",
+        "research/runs/stage5-P3-v2.json",
+        "research/runs/stage5-P8-v2.json"
+      ],
+      "runs": {
+        "P3": {
+          "index": "research/runs/stage5-P3-v2.json",
+          "variant": "v2",
+          "source_commit": "bdf80f55fa9b2b78d7372779de2957758c64aa23",
+          "branch": "experiment/P3-v2-hidden-reply-slot",
+          "archive_sha256": "eb81672dee9370db1655fe79ce37172d2d6779df4017de651015bb5900b6e3eb"
+        },
+        "P8": {
+          "index": "research/runs/stage5-P8-v2.json",
+          "variant": "v2",
+          "source_commit": "be3f507ffdb6cd4e64c5b70135ad5079966c3cce",
+          "branch": "experiment/P8-v2-voc-reliability",
+          "archive_sha256": "6b5c9bf25d249e3a9d7cca0b22d2f18794828222d111db387051c8d61fc409b6"
+        }
+      },
+      "project_dispositions": {
+        "P1": "deferred_threat_bearing_histories",
+        "P2": "deferred_wider_opponent_validation",
+        "P3": "v2_matched_fixture_null_not_promoted",
+        "P4": "deferred_action_conditioned_forecast",
+        "P5": "current_categorical_model_not_promoted",
+        "P6": "deferred_extensive_form_policy_and_compute",
+        "P7": "current_residual_not_promoted",
+        "P8": "v2_matched_quota_no_gain_not_promoted",
+        "P9": "one_turn_domain_closed_zero_hidden_coverage"
+      },
+      "regression_tests_passed": 357,
+      "regression_warnings": 1,
+      "regression_code_commit": "bdf80f55fa9b2b78d7372779de2957758c64aa23",
+      "playing_matches": 0,
+      "eligible_confirmatory_candidates": [],
+      "competitive_replay_access": "proxy_blocked"
     },
     {
       "id": 6,
@@ -182,7 +222,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "blocked",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "deferred_threat_bearing_histories",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P2",
@@ -192,7 +234,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "screened",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "deferred_wider_opponent_validation",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P3",
@@ -202,7 +246,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "fixture_screen_complete",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "v2_matched_fixture_null_not_promoted",
+      "stage5_evidence": "research/runs/stage5-P3-v2.json"
     },
     {
       "id": "P4",
@@ -212,7 +258,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "fixture_screen_complete",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "deferred_action_conditioned_forecast",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P5",
@@ -222,7 +270,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "screened",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "current_categorical_model_not_promoted",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P6",
@@ -232,7 +282,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "fixture_screen_complete",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "deferred_extensive_form_policy_and_compute",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P7",
@@ -242,7 +294,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "restricted_diagnostic",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "current_residual_not_promoted",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     },
     {
       "id": "P8",
@@ -252,7 +306,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "restricted_diagnostic",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "v2_matched_quota_no_gain_not_promoted",
+      "stage5_evidence": "research/runs/stage5-P8-v2.json"
     },
     {
       "id": "P9",
@@ -262,7 +318,9 @@
       "verified_results": 1,
       "bot_integration": "not_started",
       "stage4_screen_status": "fixture_screen_complete",
-      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json",
+      "stage5_disposition": "one_turn_domain_closed_zero_hidden_coverage",
+      "stage5_evidence": "research/STAGE5_FINDINGS.md"
     }
   ],
   "legacy_backlog_preserved": true,
@@ -277,7 +335,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Stage 5 only on user instruction. Use Stage 4 dispositions to select hypothesis-driven revisions and revisit blocked endpoints with a prespecified data source or fixture. Keep candidate work separate and require feature-off parity and matched budgets before playing-strength screens.",
+  "next_stage_action": "Stage 6 only on user instruction. Review the confirmation gate before scheduling full-clock games. No Stage 5 variant qualified. No integration candidate is supported by these results.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,

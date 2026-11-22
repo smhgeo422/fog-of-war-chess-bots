@@ -202,6 +202,8 @@ Book, reserve clock, adaptive root count, special FoW endgame logic, and *final*
 
 **Stage 4 update (2026-11-22):** The restricted replay/referee screens are archived from `effafc6`. Useful report evidence includes the P3/P4 information counterexamples, P6 restricted security, P7's adverse residual result, and P9's zero hidden-world one-turn coverage. P1 lacked positive threat labels. P8 is exploratory and the playing-strength results section remains open. See [findings](STAGE4_FINDINGS.md) and the [run index](runs/stage4-screen-20261122.json).
 
+**Stage 5 update (2026-11-22):** The P3 and P8 v2 ablations are archived. P3 covered more omitted threats with no observed change in root choice. P8 reliability shrinkage gave no ordinary holdout gain at a matched quota. There is no supported variant for confirmatory playing-strength trials. See [Stage 5 findings](STAGE5_FINDINGS.md).
+
 ## References / source links (starter list)
 
 - Official FoW rules and submission instructions: https://www.mit.edu/~6.7980/fow/?tab=rules and https://www.mit.edu/~6.7980/fow/?tab=submit

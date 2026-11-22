@@ -24,3 +24,7 @@ Original teammate source and published antecedents, including the existing eBotI
 ## Stage 4 screening attribution (2026-11-22)
 
 User-directed continuation. Codex implemented the FoW screening harness, fixtures, statistical controls, and verified Stockfish model recovery, then executed and archived the local screens. Code, tests, run execution, and draft findings involved substantial AI assistance and await human review. Existing team playing-bot and referee source provided the unchanged comparison context. Evidence is traced through [the Stage 4 findings](STAGE4_FINDINGS.md) and [run index](runs/stage4-screen-20261122.json).
+
+## Stage 5 guided-ablation attribution (2026-11-22)
+
+At the user's direction, Codex developed and tested the P8 uncertainty adjustment and the experimental P3 reply-slot selector, built the controlled ablations, ran regression tests, and archived the results. The prior team authored the underlying eBotI infoset planner, native components, and frozen comparisons. Code, tests, experimental execution, and draft findings involved substantial AI assistance. [Stage 5 findings and source records](STAGE5_FINDINGS.md)

@@ -1,0 +1,25 @@
+{
+  "archive": "research-offline-P3-stage5-P3-v2.tar.gz",
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "Declared bounded local FoW referee tactical fixtures and their color mirrors. No training or competitive replays.",
+  "evidence_type": "offline",
+  "file_count": 5,
+  "hypothesis": "Replacing at most one legacy infoset reply with an overlooked unseen king threat reduces observation-consistent root regret without increasing the reply-slot budget.",
+  "primary_metric": {
+    "n": 4,
+    "name": "hidden-slot minus legacy observation-consistent root regret",
+    "unit": "bounded referee utility",
+    "value": 0.0
+  },
+  "purpose": "research",
+  "research_id": "P3",
+  "run_id": "stage5-P3-v2",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage5_p3.py",
+  "sha256": "eb81672dee9370db1655fe79ce37172d2d6779df4017de651015bb5900b6e3eb",
+  "source_commit": "bdf80f55fa9b2b78d7372779de2957758c64aa23",
+  "source_ref": "experiment/P3-v2-hidden-reply-slot",
+  "status": "complete",
+  "valid_complete_run": true,
+  "variant": "v2"
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "stage4_restricted_screening_completed",
+  "status": "stage5_guided_ablations_completed",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -44,6 +44,10 @@
         "metric": "Early replay, game-averaged unseen king-attack Brier at 64 roots",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "deferred_threat_bearing_histories",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -75,6 +79,10 @@
         "metric": "Game-averaged action and observed transition NLL on early opponent moves",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "deferred_wider_opponent_validation",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -83,9 +91,10 @@
       "spec": "research/projects/P3/proposal.md",
       "ledger": "research/projects/P3/variants.jsonl",
       "actual_implementation_branches": [
-        "experiment/P3-v1-toy-kernel"
+        "experiment/P3-v1-toy-kernel",
+        "experiment/P3-v2-hidden-reply-slot"
       ],
-      "valid_run_count": 1,
+      "valid_run_count": 2,
       "verified_release_urls": [
         "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P3-v1-toy-kernel/research/runs/research-offline-evidence-45076165589-1.json"
       ],
@@ -106,6 +115,15 @@
         "metric": "mean fixed-blind vs observation-contingent policy regret on fixed referee roots",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "v2_matched_fixture_null_not_promoted",
+        "findings": "research/STAGE5_FINDINGS.md",
+        "index": "research/runs/stage5-P3-v2.json",
+        "variant": "v2",
+        "source_commit": "bdf80f55fa9b2b78d7372779de2957758c64aa23",
+        "branch": "experiment/P3-v2-hidden-reply-slot",
+        "archive_sha256": "eb81672dee9370db1655fe79ce37172d2d6779df4017de651015bb5900b6e3eb"
       }
     },
     {
@@ -137,6 +155,10 @@
         "metric": "instrumental VOI after quiet, equal-direct-payoff referee moves",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "deferred_action_conditioned_forecast",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -168,6 +190,10 @@
         "metric": "Game-averaged Brier score of next-reply unseen capture of undefended N/B/R/Q after our action",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "current_categorical_model_not_promoted",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -199,6 +225,10 @@
         "metric": "exact exploitability gap and policy security in restricted hidden-world matrices",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "deferred_extensive_form_policy_and_compute",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -230,6 +260,10 @@
         "metric": "Equal color-pair-block weight MSE of six-ply logged-policy utility",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "current_residual_not_promoted",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     },
     {
@@ -238,9 +272,10 @@
       "spec": "research/projects/P8/proposal.md",
       "ledger": "research/projects/P8/variants.jsonl",
       "actual_implementation_branches": [
-        "experiment/P8-v1-toy-kernel"
+        "experiment/P8-v1-toy-kernel",
+        "experiment/P8-v2-voc-reliability"
       ],
-      "valid_run_count": 1,
+      "valid_run_count": 2,
       "verified_release_urls": [
         "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P8-v1-toy-kernel/research/runs/research-offline-evidence-45076186587-1.json"
       ],
@@ -261,6 +296,15 @@
         "metric": "Equal color-pair-block weight action regret against the shared larger root sample",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "v2_matched_quota_no_gain_not_promoted",
+        "findings": "research/STAGE5_FINDINGS.md",
+        "index": "research/runs/stage5-P8-v2.json",
+        "variant": "v2",
+        "source_commit": "be3f507ffdb6cd4e64c5b70135ad5079966c3cce",
+        "branch": "experiment/P8-v2-voc-reliability",
+        "archive_sha256": "6b5c9bf25d249e3a9d7cca0b22d2f18794828222d111db387051c8d61fc409b6"
       }
     },
     {
@@ -292,6 +336,10 @@
         "metric": "false certificates and certified action coverage for declared one-turn KQvK layouts",
         "findings": "research/STAGE4_FINDINGS.md",
         "playing_benchmark_result": null
+      },
+      "stage5_revision": {
+        "disposition": "one_turn_domain_closed_zero_hidden_coverage",
+        "findings": "research/STAGE5_FINDINGS.md"
       }
     }
   ],
@@ -309,5 +357,6 @@
   "stage3_ci_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/actions/runs/45076702957",
   "stage3_all_nine_remotely_verified": true,
   "stage3_playing_strength_untested": true,
-  "stage4_evidence_index": "research/runs/stage4-screen-20261122.json"
+  "stage4_evidence_index": "research/runs/stage4-screen-20261122.json",
+  "stage5_findings": "research/STAGE5_FINDINGS.md"
 }

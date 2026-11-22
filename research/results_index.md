@@ -30,3 +30,9 @@ Each experiment was independently run on its own Pn-v1 branch. The evidence incl
 
 - [Stage 4 findings](STAGE4_FINDINGS.md) and [offline run index](runs/stage4-screen-20261122.json). The Git-tracked checksummed archive contains all nine project records, 72 reconstructed synthetic games, fixed referee fixtures, and restricted Stockfish traces from source `effafc6`. P1's calibration endpoint was blocked by zero positive events. The archive records zero variant playing games and makes no playing-strength claim.
 - [B0–B2 integration smoke](archives/stage4-b0-b2-smoke-20261122/). Both colors completed at 24+0.1 to the 20-ply cap, using their own pinned native components. This verifies baseline operation only.
+
+## Stage 5 · Guided v2 ablations
+
+- [P3 v2 referee ablation](runs/stage5-P3-v2.json). The hidden-reply slot changed retention on 18 of 32 root/world cases, with zero selected-root changes and zero measured regret gain in the paired fixture domain.
+- [P8 v2 matched-quota replay ablation](runs/stage5-P8-v2.json). The reliability-adjusted allocation failed to improve ordinary holdout regret versus v1 over 24 paired blocks. The shifted contrast was nearly zero.
+- [Stage 5 findings and dispositions](STAGE5_FINDINGS.md). Both revisions are preserved separately. None advanced to full-clock confirmation.
