@@ -1,0 +1,64 @@
+name: Stage 2 reference baseline and replay corpus
+
+on:
+  push:
+    branches: ['infra/stage2-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline-and-corpus:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run stage2]'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.9'
+          enable-cache: true
+      - name: Set up frozen and experimental control bots
+        run: |
+          set -euo pipefail
+          mkdir -p data/research/setup
+          tools/setup-experiments.sh 2>&1 | tee data/research/setup/stage2-setup.log
+      - name: Build referee-replay corpus and audit baseline action parity
+        run: |
+          set -euo pipefail
+          mkdir -p data/research/offline_runs
+          run="data/research/offline_runs/actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          timeout --kill-after=30s 18m .venv/bin/python tools/stage2_pipeline.py \
+            --run "$run" --seed 7106 2>&1 | tee data/research/setup/stage2-study.log
+      - name: Preserve full baseline/corpus evidence as immutable archive
+        if: always()
+        run: |
+          set -euo pipefail
+          run="data/research/offline_runs/actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          test -f "$run/manifest.json"
+          .venv/bin/python tools/archive_offline_run.py \
+            --run "$run" --output data/research/stage2_archive --research-id Infra
+      - name: Remotely publish, download, verify, and index the Stage 2 archive
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          .venv/bin/python tools/persist_research_evidence.py \
+            --archive-dir data/research/stage2_archive --type offline
+      - name: Preserve temporary diagnostic logs and complete generated corpus
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/research/setup/stage2-setup.log
+            data/research/setup/stage2-study.log
+            data/research/offline_runs/
+            data/research/stage2_archive/
+          retention-days: 90

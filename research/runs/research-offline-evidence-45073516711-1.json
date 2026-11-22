@@ -1,0 +1,31 @@
+{
+  "archive": "research-offline-Infra-actions-45073516711-1.tar.gz",
+  "archive_sha256": "1372b8f1b082e0060aaa5af5042287a38898bbffa0af5c8810359aa3f7d2f371",
+  "archive_urls": {},
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "fresh synthetic games, local starter FowBoard/ObservationTracker; no public arena or private replays",
+  "evidence_type": "offline",
+  "file_count": 104,
+  "hypothesis": "Local referee rules, split provenance, and B0/B1/B2 controls are auditable before scientific algorithms.",
+  "primary_metric": {
+    "n": 72,
+    "name": "reference_replay_reconstruction_rate",
+    "unit": "games",
+    "value": 1.0
+  },
+  "purpose": "research",
+  "release_tag": "research-offline-evidence-45073516711-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-c29583f84899b4436896",
+  "research_id": "Infra",
+  "run_id": "actions-45073516711-1",
+  "schema": 1,
+  "script": "tools/stage2_pipeline.py",
+  "sha256": "1372b8f1b082e0060aaa5af5042287a38898bbffa0af5c8810359aa3f7d2f371",
+  "source_commit": "102d55df6c53049b17674c1b3fdd3f2235b52454",
+  "source_ref": "infra/stage2-baselines-corpus",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": null,
+  "verified_remote": true
+}

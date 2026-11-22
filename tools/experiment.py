@@ -87,7 +87,7 @@ def load_settings(path, identifier):
     settings = {
         "baseline": "obscuro_v4", "base": 180, "increment": 2, "max_plies": 1000,
         "parallel": 1, "engines": 2, "purpose": "strength", "candidate_args": [],
-        "baseline_args": [],
+        "baseline_args": [], "candidate_env": {}, "baseline_env": {},
     }
     config = json.loads(path.read_text())
     unknown = config.keys() - (settings.keys() | {"id", "candidate", "games", "seed", "hypothesis", "project_id", "variant"})
@@ -108,6 +108,16 @@ def load_settings(path, identifier):
             raise ValueError("legacy runs must not declare a P-project variant")
     elif "variant" in settings:
         raise ValueError("variant requires project_id")
+    for role in ("candidate", "baseline"):
+        overrides = settings[role + "_env"]
+        if not isinstance(overrides, dict):
+            raise ValueError("bot environment overrides must be a JSON object")
+        for key, value in overrides.items():
+            if (not isinstance(key, str) or not re.fullmatch(r"FOW_[A-Z0-9_]{1,40}", key)
+                    or key in {"FOW_STOCKFISH", "FOW_POSITIONS", "FOW_ENGINES"}):
+                raise ValueError("unmanaged or invalid FOW_ override")
+            if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9._-]{1,80}", value):
+                raise ValueError("unsafe bot environment override value")
     if settings["candidate"] == settings["baseline"]:
         raise ValueError("candidate and baseline must be distinct bot directories")
     for key in ("games", "seed", "parallel", "engines", "max_plies"):
@@ -158,7 +168,8 @@ def bot_spec(settings, role):
             raise ValueError(f"{name} position-set self-test did not report success")
         components["positions"] = {"path": str(binary), "sha256": digest(binary)}
         args.extend(["--positions", str(binary)])
-    return {"name": name, "argv": args, "components": components}
+    return {"name": name, "argv": args, "components": components,
+            "environment_overrides": settings.get(role + "_env", {})}
 
 
 def write_json(path, value):
@@ -185,6 +196,10 @@ def stop_worker(signum, frame):
 
 
 def worker_init():
+    # Avoid inherited untracked FOW strategy flags contaminating controls.
+    for key in list(os.environ):
+        if key.startswith("FOW_"):
+            os.environ.pop(key, None)
     # The referee kills each bot's process group. Adopt the engine/helper
     # grandchildren so minimal container init processes need not reap them.
     libc = ctypes.CDLL(None, use_errno=True)
@@ -234,7 +249,8 @@ def play(out, settings, bots, number, seed):
     start = time.monotonic()
     roles = ("candidate", "baseline") if number % 2 else ("baseline", "candidate")
     candidate_side = roles.index("candidate")
-    argv = [bots[role]["argv"] + ["--seed", str(seed[role])] for role in roles]
+    argv = [["env", *(key + "=" + value for key, value in sorted(bots[role]["environment_overrides"].items())),
+             *bots[role]["argv"], "--seed", str(seed[role])] for role in roles]
     names = [bots[role]["name"] for role in roles]
     ComponentCapture.instances = []
     local._recorder.latest = None
