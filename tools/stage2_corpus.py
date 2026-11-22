@@ -151,22 +151,26 @@ def play(game_id, root_seed, block, swap, split, white_policy, black_policy):
         chosen = choose(attempts, views[side], side, styles[side], rngs[side])
         own_view = views[side]
         feature = {
-            "schema": 1, "game_id": game_id, "split": split, "ply": ply,
-            "side": "white" if side else "black", "view": own_view,
-            "own_history_sha256": digest(histories[side]),
-            "legal_attempts": sorted(move.uci() for move in attempts),
-            "selected_action": chosen.uci(),
-            "policy": styles[side], "opponent_policy": styles[not side],
-            "visible_enemy_count": sum(c in ("pnbrqk" if side else "PNBRQK")
-                                       for c in own_view),
-            "visible_square_count": 64 - own_view.count("?"),
+            "schema": 2, "sample_id": f"{game_id}:{ply:03d}",
+            "game_id": game_id, "split": split, "ply": ply,
+            "online_inputs": {
+                "side": "white" if side else "black", "view": own_view,
+                "own_history_sha256": digest(histories[side]),
+                "legal_attempts": sorted(move.uci() for move in attempts),
+                "visible_enemy_count": sum(c in ("pnbrqk" if side else "PNBRQK")
+                                           for c in own_view),
+                "visible_square_count": 64 - own_view.count("?"),
+            },
         }
-        forbidden = {"fen", "board", "true_board", "future", "hidden", "opponent_action"}
-        if forbidden.intersection(feature):
-            raise ValueError("private referee truth leaked into public feature")
+        allowed = {"side", "view", "own_history_sha256", "legal_attempts",
+                   "visible_enemy_count", "visible_square_count"}
+        if set(feature["online_inputs"]) != allowed:
+            raise ValueError("unapproved online feature field")
         observations.append(feature)
         labels.append({
-            "schema": 1, "game_id": game_id, "ply": ply,
+            "schema": 2, "sample_id": feature["sample_id"],
+            "game_id": game_id, "split": split, "ply": ply,
+            "policy": styles[side], "opponent_policy": styles[not side],
             "truth_board_fen": board.fen(),
             "truth_board_64": full_board(board),
             "truth_enemy_king_square": chess.square_name(board.king(not side))
@@ -232,25 +236,28 @@ def build(root, root_seed=7106):
     block_splits = {x["pair_block"]: x["split"] for x in all_games}
     if any(block_splits[x["pair_block"]] != x["split"] for x in all_games):
         raise ValueError("paired color blocks split apart")
-    if any(x["opponent_policy"] == "king_pressure" for x in all_features
-           if x["split"] != "opponent_shift"):
+    if any(x["policy"] == "king_pressure" or x["opponent_policy"] == "king_pressure"
+           for x in all_labels if x["split"] != "opponent_shift"):
         raise ValueError("unseen opponent style leaked into train/dev/test")
     manifest = {
-        "schema": 1, "provenance": "fresh synthetic games, local starter FowBoard/ObservationTracker; no public arena or private replays",
+        "schema": 2, "provenance": "fresh synthetic games, local starter FowBoard/ObservationTracker; no public arena or private replays",
         "seed": root_seed, "generator": "tools/stage2_corpus.py",
         "games": len(all_games), "pairs": block_no, "max_plies": MAX_PLIES,
         "split_groups": by_split, "pair_blocks": block_splits, "style_holdout": "king_pressure",
         "training_allowed": ["train"], "model_selection_allowed": ["development"],
         "confirmatory_holdout": ["holdout"], "opponent_shift_holdout": ["opponent_shift"],
         "private_label_path": "retrospective_labels/<split>.jsonl",
-        "online_only_path": "observations/<split>.jsonl",
+        "online_only_path": "observations/<split>.jsonl::online_inputs",
+        "online_feature_keys": ["side", "view", "own_history_sha256", "legal_attempts",
+                                "visible_enemy_count", "visible_square_count"],
+        "target_and_opponent_policy_ids_private": True,
         "not_competitive_training_data": True,
         "no_chess_clock": True, "no_official_arena_data": True,
         "limitations": [
             "Observation-only simple synthetic opponents are not representative of high-skill FoW play.",
             "The same small policy families appear in train/dev/ordinary holdout; opponent_shift is separately isolated.",
             "Synthetic paired positions are correlated by source-game and must be clustered by full game/block.",
-            "Private truth labels are retrospective and forbidden as online model input.",
+            "Private truth, target selected actions, and style identities are retrospective and forbidden as online model input.",
             "No time-control or Stockfish result is established by this synthetic corpus.",
         ],
     }
@@ -287,11 +294,16 @@ def audit(root):
                 raise ValueError("observation/label alignment mismatch")
             if split_by_game[f["game_id"]] != split:
                 raise ValueError("cross-split feature contamination")
-            if len(f["view"]) != 64 or len(label["truth_board_64"]) != 64:
+            allowed_top = {"schema", "sample_id", "game_id", "split", "ply", "online_inputs"}
+            allowed_live = {"side", "view", "own_history_sha256", "legal_attempts",
+                            "visible_enemy_count", "visible_square_count"}
+            if set(f) != allowed_top or set(f.get("online_inputs", {})) != allowed_live:
+                raise ValueError("unapproved online field: possible target leakage")
+            if f["sample_id"] != label["sample_id"]:
+                raise ValueError("sample ID alignment mismatch")
+            if len(f["online_inputs"]["view"]) != 64 or len(label["truth_board_64"]) != 64:
                 raise ValueError("incorrect square count")
-            if "truth_board_64" in f or "truth_board_fen" in f:
-                raise ValueError("private truth in online feature data")
-            if f["selected_action"] not in f["legal_attempts"]:
+            if label["selected_action"] not in f["online_inputs"]["legal_attempts"]:
                 raise ValueError("selected action unavailable to player")
         observed_count += len(fs)
     return {"games_checked": len(games), "pairs_checked": manifest["pairs"],
