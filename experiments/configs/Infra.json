@@ -1,0 +1,16 @@
+{
+  "id": "Infra-stage2-b2-current-default",
+  "hypothesis": "Capture matched-color reference observations and reliability of the current eBotI defaults against frozen v4; exploratory process/data check only.",
+  "purpose": "smoke",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "candidate_env": {},
+  "baseline_env": {},
+  "games": 4,
+  "seed": 349701,
+  "base": 36,
+  "increment": 0.4,
+  "max_plies": 160,
+  "parallel": 1,
+  "engines": 2
+}
