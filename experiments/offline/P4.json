@@ -1,0 +1,8 @@
+{
+  "project_id": "P4",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "Decision-focused information value distinguishes useful revelation from equal-area, decision-irrelevant revelation under equal immediate payoff.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7143
+}
