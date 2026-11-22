@@ -1,0 +1,8 @@
+{
+  "project_id": "P2",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "A probability-floor mixture of style experts updated on observable event equivalence classes should learn opponent tendencies without observing hidden moves.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7141
+}
