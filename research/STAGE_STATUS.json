@@ -2,10 +2,10 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "research/nine-independent-directions",
+  "branch": "infra/p1-p9-research-pipeline",
   "planning_pr": 4,
-  "current_stage_completed": 0,
-  "next_stage": 1,
+  "current_stage_completed": 1,
+  "next_stage": 2,
   "stages": [
     {
       "id": 0,
@@ -32,7 +32,20 @@
     {
       "id": 1,
       "name": "Reproducible P1–P9 infrastructure and archival smoke",
-      "status": "not_started"
+      "status": "completed",
+      "evidence": [
+        "experiments/RESEARCH_PIPELINE.md",
+        "research/projects.json",
+        "tools/research_ids.py",
+        "tools/experiment.py",
+        "tools/archive_research_run.py",
+        "tools/archive_offline_run.py",
+        "tools/run_offline_experiment.py",
+        "tools/persist_research_evidence.py",
+        "tools/verify_research_archive.py",
+        "tests/test_research_stage1.py",
+        "research/STAGE1_README.md"
+      ]
     },
     {
       "id": 2,
@@ -139,9 +152,64 @@
   "limitations": [
     "Course permission check and dataset provenance follow in Stage 2",
     "Precise match seeds/opponent holdouts instantiated in Stage 2 before observing new outcomes",
-    "Stage 1 must migrate GitHub Actions A01-style parser to P1–P9 identifiers",
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Implement P1–P9 workflow naming, test/per-run evidence schemas and archive smoke on a non-main branch; do not implement playing strategies."
+  "next_stage_action": "Stage 2: establish frozen v4/eBotI control action parity, validate referee replay/observation rules, build leakage-safe training/development/holdout corpus with provenance, and freeze match configurations before any new algorithm experiment.",
+  "stage1_pr": 5,
+  "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
+  "stage1_smoke_run": 45071213893,
+  "stage1_changes": [
+    "P1..P9+legacy IDs",
+    "versioned game configurations",
+    "offline evidence runner + model/metric archive",
+    "GitHub release roundtrip verifier",
+    "P1-v0 hosted dual-smoke in progress"
+  ],
+  "stage1_validation_run": 45071250294,
+  "stage1_verified_tests": 282,
+  "stage1_verified_records": [
+    {
+      "kind": "game",
+      "research_id": "P1",
+      "variant": "v0",
+      "purpose": "smoke",
+      "run_id": "actions-45071213893-1",
+      "storage": "draft-release",
+      "result_index": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P1-v0-pipeline-smoke/research/runs/research-evidence-45071213893-1.json",
+      "release_tag": "research-evidence-45071213893-1",
+      "sha256": "33953ce41daaa324e9fd6575f5fb6e6c81f98b57bbc42081ea0274e80913af87",
+      "recorded_games": 2,
+      "verified_remote": true
+    },
+    {
+      "kind": "offline",
+      "research_id": "P1",
+      "variant": "v0",
+      "purpose": "smoke",
+      "run_id": "actions-45071213893-1",
+      "storage": "draft-release",
+      "result_index": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P1-v0-pipeline-smoke/research/runs/research-offline-evidence-45071213893-1.json",
+      "release_tag": "research-offline-evidence-45071213893-1",
+      "sha256": "3614a7c521d9274e12f9f7b53a9866f0643454f880bc25c90c1f6ac140479ddf",
+      "verified_remote": true
+    }
+  ],
+  "stage1_early_failures": [
+    {
+      "run": 45069998818,
+      "issue": "Fresh offline runner lacked locked Python environment; fixed"
+    },
+    {
+      "run": 45070634285,
+      "issue": "GitHub intermittently rejected draft Release writes with HTTP 403; verified branch-backed fallback added and tested by unit mock"
+    }
+  ],
+  "stage1_notes": [
+    "No research algorithms were added, no 180+2 strength tournament, no official arena submission.",
+    "All v0 smoke results are synthetic or capped, and explicitly not evidence of playing strength.",
+    "P1 through P9 and prior A01..F99/Infra identifiers are supported; active P workflows include version traceability.",
+    "Hosted release publication and release re-download verification passed on run 45071213893.",
+    "The GitHub branch fallback is unit-tested for a simulated release denial, but not yet exercised as the successful storage path in a hosted run."
+  ]
 }

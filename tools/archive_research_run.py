@@ -15,7 +15,7 @@ from pathlib import Path
 import re
 import tarfile
 
-ID = re.compile(r"(?:[A-F][0-9]{2}|Infra)")
+ID = re.compile(r"(?:P[1-9]|[A-F][0-9]{2}|Infra)")
 RUN = re.compile(r"[A-Za-z0-9_-]{1,100}")
 HEX = re.compile(r"[a-f0-9]{40}")
 
@@ -34,7 +34,7 @@ def read_json(path):
 
 def evidence(run, research_id):
     if not ID.fullmatch(research_id):
-        raise ValueError("research ID must be A01..F99 or Infra")
+        raise ValueError("research ID must be P1..P9, A01..F99 or Infra")
     if not RUN.fullmatch(run.name) or not run.is_dir():
         raise ValueError("invalid run directory or ID")
     required = ("manifest.json", "report.json", "registry.json", "report.md")
@@ -89,9 +89,14 @@ def evidence(run, research_id):
              and not report.get("invalid")
              and not report.get("failure_codes")
              and all(x == 0 for x in report.get("worker_exit_codes", [])))
+    if re.fullmatch(r"P[1-9]", research_id):
+        if settings.get("project_id") != research_id or not re.fullmatch(r"v(?:0|[1-9][0-9]*)", settings.get("variant") or ""):
+            raise ValueError("P1..P9 run lacks matching project_id and variant")
     metadata = {
         "schema": 1,
         "research_id": research_id,
+        "variant": settings.get("variant"),
+        "hypothesis": settings.get("hypothesis"),
         "run_id": run.name,
         "source_commit": manifest["commit"],
         "source_ref": manifest.get("ref"),
