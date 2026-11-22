@@ -137,6 +137,8 @@ def run(output, seed):
         checks = audit(output / "corpus")
         stat = static_audit()
         live = black_box_probe(output / "parity_logs")
+        self_control = black_box_probe(output / "self_parity_logs",
+                                       candidate_name=B0, candidate_profile={})
         write_json(output / "baseline_audit.json", {
             "schema": 1,
             "reference": {"id": "B0", "bot": B0, "frozen": True, "hashes": frozen},
@@ -146,6 +148,7 @@ def run(output, seed):
                             "note": "B2 is current default; not assumed stronger than B0"},
             "bot_binary_hashes": bins,
             "static": stat, "behavioral_probe": live,
+            "frozen_self_comparison": self_control,
             "parity_conclusion": (
                 "Limited shared-history action agreement observed; not a proof of complete bot equivalence."
                 if live["action_parity_established"] and stat["all_shared_components_equal"]
@@ -186,6 +189,9 @@ def run(output, seed):
                 "live_action_parity_equal": live["equal_actions"],
                 "live_action_divergences": live["divergent_actions"],
                 "live_runtime_errors": live["runtime_errors"],
+                "v4_vs_v4_action_comparisons": self_control["action_comparisons"],
+                "v4_vs_v4_divergences": self_control["divergent_actions"],
+                "v4_vs_v4_runtime_errors": self_control["runtime_errors"],
                 "B1_action_parity_established": live["action_parity_established"] and
                                                 stat["all_shared_components_equal"],
             },
@@ -205,7 +211,8 @@ def run(output, seed):
             "- Every game replay, per-ply board and both side observations matched the referee.",
             f"- {len(laws)} special-rule regression checks passed",
             f"- {sum(stat['checks'].values())}/{len(stat['checks'])} shared-component baseline parity checks matched",
-            f"- Black-box parity: {live['equal_actions']}/{live['action_comparisons']} identical choices, {live['divergent_actions']} divergences, {live['runtime_errors']} runtime errors.",
+            f"- B1 vs v4 black-box parity: {live['equal_actions']}/{live['action_comparisons']} identical choices, {live['divergent_actions']} divergences, {live['runtime_errors']} runtime errors.",
+            f"- v4 vs v4 timing/self-control: {self_control['equal_actions']}/{self_control['action_comparisons']} identical choices, {self_control['divergent_actions']} divergences, {self_control['runtime_errors']} runtime errors.",
             "",
             "## Interpretation",
             ("B1 passed finite observed action-prefix probes but does not have an all-histories equivalence proof."
