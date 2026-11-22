@@ -1,0 +1,13 @@
+{
+  "id": "ci-smoke",
+  "hypothesis": "eBotI and frozen obscuro_v4 can complete a color pair using their own required native components.",
+  "purpose": "smoke",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "games": 2,
+  "seed": 7106,
+  "base": 24,
+  "increment": 0.1,
+  "max_plies": 20,
+  "parallel": 1
+}

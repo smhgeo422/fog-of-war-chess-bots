@@ -1,0 +1,11 @@
+{
+  "id": "arena-clock",
+  "hypothesis": "Measure the candidate's score against frozen obscuro_v4 at the 180+2 time control.",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "games": 20,
+  "seed": 22973,
+  "base": 180,
+  "increment": 2,
+  "parallel": 1
+}
