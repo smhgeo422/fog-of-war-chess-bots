@@ -40,15 +40,15 @@ Implementation: 'tools/stage2_corpus.py'; runner: 'tools/stage2_pipeline.py'; ho
 - 6 blocks / 12 games: **opponent-style shift** holdout, uniform vs an observation-only king-pressure/center policy not present in training or development
 
 Policies use only the current 64-square observation and inferred legal attempted actions through the public starter ObservationTracker, not referee truth. For every ply the builder regenerates each player's view, checks the chosen attempt is legal under the full referee, and stores:
-1. 'corpus/observations/<split>.jsonl' — **online-eligible** view, own information-history digest, legal attempted actions, chosen action, side, seed/game/ply, visible counts. Never full true board or future event.
-2. 'corpus/retrospective_labels/<split>.jsonl' — **offline only**, full true board/FEN, true opponent king square, true legal moves, retrospective attack labels. These files must never be read by live bot features.
+1. 'corpus/observations/<split>.jsonl' — **pre-decision** records with an exact `online_inputs` allowlist: own color, current view, own information-history digest, observation-derived legal attempts and visible counts. Game/ply/split are join metadata, **not model inputs**. Crucially no selected action, target, opponent policy identity, full true board or future event is in `online_inputs`.
+2. 'corpus/retrospective_labels/<split>.jsonl' — **offline only**, selected action (the prediction target), true sampled policy identity/opponent style, full true board/FEN, true opponent king square, true legal moves, retrospective attack labels. These files must never be read by live bot features.
 3. 'corpus/replays/<split>/<game>.json' — full referee frames for independent rule reconstruction.
 4. 'corpus/corpus_manifest.json' — allowed splits, per-game policy styles, game IDs and limitations.
 5. 'corpus/game_registry.json' — replay SHA256, paired block, side assignment, seed and termination reason.
 6. 'data_split.json' — machine-readable data lineage with train/dev/holdout IDs and file checksums.
 7. 'referee_checks.json', 'baseline_audit.json', 'metrics.json', 'notes.md' — rule tests, baseline behavior, measured integrity and caveats.
 
-**No data leakage** is checked on per-game and group-split boundaries. A color-swapped pair never crosses a train/test partition. The opponent-shift style appears only in the shift holdout. The full chess board is present *only* in a separate retrospective-label or replay file, not in online feature records. This is a logical/data-path restriction plus tests; the files are still readable in the archive, so later training scripts must continue to enforce the separation.
+**No data leakage** is checked on per-game and group-split boundaries. A color-swapped pair never crosses a train/test partition. The opponent-shift style appears only in the shift holdout. The chosen action, opponent-style identity, and full chess board are present *only* in retrospective-label or replay files, not in pre-decision model feature records. This is a logical/data-path restriction plus tests; the files are still readable in the archive, so later training scripts must continue to enforce the separation.
 
 ### Referee rules validated
 
