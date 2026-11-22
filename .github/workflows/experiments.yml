@@ -1,0 +1,84 @@
+name: Fog of War validation
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'infra/**']
+  workflow_dispatch:
+    inputs:
+      config:
+        description: Optional tracked experiment JSON path
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.9'
+          enable-cache: true
+      - name: Compile, test and run integration smoke
+        run: tools/check-experiments.sh
+      - name: Preserve validation logs and replays
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/research/checks/*.log
+            data/research/setup/*.log
+            data/research/runs/ci-smoke/
+          retention-days: 30
+
+  experiment:
+    if: github.event_name == 'workflow_dispatch' && inputs.config != ''
+    needs: checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.9'
+          enable-cache: true
+      - name: Build and run tracked experiment
+        env:
+          EXPERIMENT_CONFIG: ${{ inputs.config }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPERIMENT_CONFIG" =~ ^experiments/configs/[a-zA-Z0-9_-]+\.json$ ]]
+          git ls-files --error-unmatch -- "$EXPERIMENT_CONFIG"
+          candidate=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["candidate"])' "$EXPERIMENT_CONFIG")
+          baseline=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("baseline", "obscuro_v4"))' "$EXPERIMENT_CONFIG")
+          extra=()
+          for bot in "$candidate" "$baseline"; do
+            [[ "$bot" =~ ^[a-zA-Z0-9_-]+$ ]]
+            if [[ -f "bots/$bot/REQUIRE_STOCKFISH" || -f "bots/$bot/REQUIRE_POSITIONS" ]]; then
+              extra+=("$bot")
+            fi
+          done
+          mkdir -p data/research/checks
+          tools/setup-experiments.sh "${extra[@]}" 2>&1 | tee data/research/checks/setup.log
+          timeout --kill-after=45s 330m .venv/bin/python tools/experiment.py "$EXPERIMENT_CONFIG" \
+            --id "actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" 2>&1 | tee data/research/checks/experiment.log
+      - name: Preserve experiment and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: experiment-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/research/checks/*.log
+            data/research/setup/*.log
+            data/research/runs/
+          retention-days: 90

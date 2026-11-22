@@ -1,0 +1,20 @@
+[
+  {
+    "white": "obscuro",
+    "black": "greedy",
+    "result": "1-0",
+    "reason": "King capturable",
+    "plies": 14,
+    "seconds": 12.66890481900009,
+    "failed_side": null
+  },
+  {
+    "white": "greedy",
+    "black": "obscuro",
+    "result": "0-1",
+    "reason": "King capturable",
+    "plies": 35,
+    "seconds": 27.183851175999962,
+    "failed_side": null
+  }
+]

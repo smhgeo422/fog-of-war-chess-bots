@@ -1,0 +1,11 @@
+{
+  "id": "screening",
+  "hypothesis": "Measure the candidate's score and color effects against the frozen obscuro_v4 baseline at short time controls.",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "games": 20,
+  "seed": 21931,
+  "base": 36,
+  "increment": 0.4,
+  "parallel": 1
+}

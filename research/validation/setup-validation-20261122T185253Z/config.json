@@ -1,0 +1,21 @@
+{
+  "pairs": [
+    [
+      "obscuro",
+      "greedy"
+    ],
+    [
+      "greedy",
+      "obscuro"
+    ]
+  ],
+  "base_seconds": 45,
+  "increment_seconds": 0.5,
+  "max_plies": null,
+  "stockfish": "off",
+  "pause_waiting_bot": true,
+  "seeds": null,
+  "source_commit": "580618950b9925521229bc076169967de2d87048",
+  "python": "3.14.10",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+}
