@@ -2,7 +2,7 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "research/nine-independent-directions",
+  "branch": "infra/p1-p9-research-pipeline",
   "planning_pr": 4,
   "current_stage_completed": 0,
   "next_stage": 1,
@@ -32,7 +32,8 @@
     {
       "id": 1,
       "name": "Reproducible P1–P9 infrastructure and archival smoke",
-      "status": "not_started"
+      "status": "in_progress",
+      "pending_gate": "P1-v0 hosted game and offline release download/integrity checks"
     },
     {
       "id": 2,
@@ -143,5 +144,15 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Implement P1–P9 workflow naming, test/per-run evidence schemas and archive smoke on a non-main branch; do not implement playing strategies."
+  "next_stage_action": "Implement P1–P9 workflow naming, test/per-run evidence schemas and archive smoke on a non-main branch; do not implement playing strategies.",
+  "stage1_pr": 5,
+  "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
+  "stage1_smoke_run": 45069998818,
+  "stage1_changes": [
+    "P1..P9+legacy IDs",
+    "versioned game configurations",
+    "offline evidence runner + model/metric archive",
+    "GitHub release roundtrip verifier",
+    "P1-v0 hosted dual-smoke in progress"
+  ]
 }
