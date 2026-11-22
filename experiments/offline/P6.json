@@ -1,0 +1,8 @@
+{
+  "project_id": "P6",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "Regret-matched mixed policies in a bounded zero-sum toy game reduce exact restricted best-response exploitability versus a predictable pure policy.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7145
+}
