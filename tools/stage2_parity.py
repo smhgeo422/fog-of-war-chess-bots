@@ -146,8 +146,8 @@ def bot_command(name, move_time=0.18):
 
 
 class BotProbe:
-    def __init__(self, name, side, seed, folder, profile):
-        self.logfile = (Path(folder) / (name + "-" + ("w" if side else "b") + "-" + str(seed) + ".stderr"))
+    def __init__(self, name, side, seed, folder, profile, *, label=None):
+        self.logfile = (Path(folder) / ((label or name) + "-" + ("w" if side else "b") + "-" + str(seed) + ".stderr"))
         self.log = self.logfile.open("w", encoding="utf-8")
         env = {k: v for k, v in os.environ.items() if not k.startswith("FOW_")}
         env.update(profile)
@@ -201,14 +201,17 @@ class BotProbe:
 
 
 def black_box_probe(directory, *, seeds=(17, 29), sides=(True, False),
-                    max_own_decisions=3):
+                    max_own_decisions=3, candidate_name=B1, candidate_profile=None):
     """Compare decisions only while both bots share the exact same legal history.
 
     On first divergence stop the trajectory; subsequent decisions would no
     longer be conditioned on the same self-chosen history.
     """
     Path(directory).mkdir(parents=True, exist_ok=True)
-    summary = {"trials": [], "action_comparisons": 0, "equal_actions": 0,
+    if candidate_profile is None:
+        candidate_profile = B1_ENV if candidate_name == B1 else {}
+    summary = {"reference": B0, "candidate": candidate_name,
+               "trials": [], "action_comparisons": 0, "equal_actions": 0,
                "divergent_actions": 0, "runtime_errors": 0}
     for side in sides:
         for seed in seeds:
@@ -216,8 +219,9 @@ def black_box_probe(directory, *, seeds=(17, 29), sides=(True, False),
                      "actions": [], "first_divergence_ply": None, "error": None}
             baseline = candidate = None
             try:
-                baseline = BotProbe(B0, side, seed, directory, {})
-                candidate = BotProbe(B1, side, seed, directory, B1_ENV)
+                baseline = BotProbe(B0, side, seed, directory, {}, label="reference")
+                candidate = BotProbe(candidate_name, side, seed, directory,
+                                     candidate_profile, label="candidate")
                 board = referee.FowBoard()
                 reps = Counter({referee.position_key(board): 1})
                 opponent = ObservationTracker(not side)
