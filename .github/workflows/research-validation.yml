@@ -1,0 +1,29 @@
+name: Research validation
+on:
+  push:
+    branches:
+      - setup/infrastructure-validation
+  pull_request:
+    branches:
+      - main
+      - setup/research-recordkeeping
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install locked dependencies
+        run: uv sync --locked
+      - name: Run tests
+        run: uv run --locked pytest -ra
+      - name: Verify validation artifacts
+        run: |
+          for manifest in research/validation/*/SHA256SUMS; do
+            (cd "$(dirname "$manifest")" && sha256sum -c SHA256SUMS) || exit 1
+          done
