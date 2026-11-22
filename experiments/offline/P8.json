@@ -1,0 +1,8 @@
+{
+  "project_id": "P8",
+  "variant": "v2",
+  "purpose": "research",
+  "hypothesis": "A leave-one-root reliability adjustment improves extra-root allocation over the v1 threshold at the same call quota on a disjoint reference.",
+  "script": "tools/offline_jobs/stage5_p8.py",
+  "seed": 75101
+}
