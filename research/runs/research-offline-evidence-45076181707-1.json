@@ -1,0 +1,30 @@
+{
+  "archive": "research-offline-P7-actions-45076181707-1.tar.gz",
+  "archive_sha256": "30499aec6ccf3c7e0cd179d57f180d505f0cff459de7099cbd5e6341be9135df",
+  "archive_urls": {},
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "tracked Stage 3 synthetic fixtures generated from toy models; no use of private arena replays, official match data, or Stage 2 holdout labels",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "Strict online-only features and a ridge continuation-value residual predict a declared synthetic counterfactual target on untouched samples better than zero residual.",
+  "primary_metric": {
+    "n": 160,
+    "name": "heldout_synthetic_counterfactual_residual_mse",
+    "value": 0.00019890761270623518
+  },
+  "purpose": "research",
+  "release_tag": "research-offline-evidence-45076181707-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-4be0ed7cc82c5466d448",
+  "research_id": "P7",
+  "run_id": "actions-45076181707-1",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage3.py",
+  "sha256": "30499aec6ccf3c7e0cd179d57f180d505f0cff459de7099cbd5e6341be9135df",
+  "source_commit": "03580db53f09c5d03a42a77bbcb5df3179b5e754",
+  "source_ref": "experiment/P7-v1-toy-kernel",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": "v1",
+  "verified_remote": true
+}
