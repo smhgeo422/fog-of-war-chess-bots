@@ -1,0 +1,15 @@
+{
+  "id": "P1-v0-pipeline-integration",
+  "project_id": "P1",
+  "variant": "v0",
+  "hypothesis": "The P1–P9 versioned game archive and independent offline model-evidence archive are durable and retrievable; no playing-strength inference.",
+  "purpose": "smoke",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "games": 2,
+  "seed": 7106,
+  "base": 24,
+  "increment": 0.1,
+  "max_plies": 20,
+  "parallel": 1
+}
