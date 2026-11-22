@@ -236,5 +236,15 @@
     "holdout_games": 12,
     "opponent_shift_games": 12
   },
-  "stage2_does_not_implement_research_algorithms": true
+  "stage2_does_not_implement_research_algorithms": true,
+  "stage2_first_verified_run": 45073161259,
+  "stage2_first_verified_primary": {
+    "games_reconstructed": 72,
+    "decisions": 2200,
+    "rule_checks": 7,
+    "parity_b1_v4_equal": 5,
+    "parity_b1_v4_compared": 8,
+    "parity_divergences": 3
+  },
+  "stage2_next_hosted_run_purpose": "Re-verify with policy-role-paired seeds and frozen-v4 self-variation calibration; previous archive remains immutable."
 }
