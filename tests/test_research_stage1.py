@@ -184,3 +184,35 @@ def test_offline_script_config_validation_rejects_untracked_or_wrong_branch(monk
         validate_offline_config(good, "experiment/P2-v0-archive")
     with pytest.raises(ValueError, match="under tools"):
         validate_offline_config({**good, "script": "../../unsafe.py"}, "experiment/P1-v0-archive")
+
+
+def test_downloaded_release_bundle_full_round_trip(tmp_path):
+    from tools.verify_research_archive import verify_bundle
+    run = sample_offline(tmp_path)
+    archive_file, _ = archive(run, tmp_path / "released", "P1")
+    stem = archive_file.name[:-len(".tar.gz")]
+    folder = archive_file.parent
+    index = verify_bundle(archive_file, folder / (stem + ".sha256"),
+                          folder / (stem + ".json"))
+    assert index["run_id"] == run.name
+    assert index["variant"] == "v1"
+
+
+def test_downloaded_release_bundle_detects_tampered_sidecar_and_catalog(tmp_path):
+    from tools.verify_research_archive import verify_bundle
+    run = sample_offline(tmp_path)
+    archive_file, _ = archive(run, tmp_path / "released", "P1")
+    stem = archive_file.name[:-len(".tar.gz")]
+    folder = archive_file.parent
+    sidecar = folder / (stem + ".sha256")
+    catalog = folder / (stem + ".json")
+    original = sidecar.read_text()
+    sidecar.write_text("0" * 64 + "  " + archive_file.name + "\n")
+    with pytest.raises(ValueError, match="SHA-256"):
+        verify_bundle(archive_file, sidecar, catalog)
+    sidecar.write_text(original)
+    data = json.loads(catalog.read_text())
+    data["source_commit"] = "f" * 40
+    dump(catalog, data)
+    with pytest.raises(ValueError, match="identity mismatch"):
+        verify_bundle(archive_file, sidecar, catalog)
