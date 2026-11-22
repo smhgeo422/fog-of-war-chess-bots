@@ -1,0 +1,30 @@
+{
+  "archive": "research-offline-P1-actions-45071213893-1.tar.gz",
+  "archive_sha256": "3614a7c521d9274e12f9f7b53a9866f0643454f880bc25c90c1f6ac140479ddf",
+  "archive_urls": {},
+  "conclusion": "Synthetic offline integration smoke; not evidence of research or playing strength.",
+  "data_provenance": "deterministic generated synthetic fixture",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "The offline evidence pipeline can retain checksummed synthetic labels and model assets without implying a scientific result.",
+  "primary_metric": {
+    "n": 2,
+    "name": "synthetic_integrity_only",
+    "value": 1.0
+  },
+  "purpose": "smoke",
+  "release_tag": "research-offline-evidence-45071213893-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-0b8da3137f5d9a94a953",
+  "research_id": "P1",
+  "run_id": "actions-45071213893-1",
+  "schema": 1,
+  "script": "tools/offline_jobs/smoke.py",
+  "sha256": "3614a7c521d9274e12f9f7b53a9866f0643454f880bc25c90c1f6ac140479ddf",
+  "source_commit": "eae833fd78bab8f580f5ca9408b801d708ebe533",
+  "source_ref": "experiment/P1-v0-pipeline-smoke",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": "v0",
+  "verified_remote": true
+}
