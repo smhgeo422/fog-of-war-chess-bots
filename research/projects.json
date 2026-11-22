@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "preimplementation",
+  "status": "v1_algorithms_committed_pending_hosted_trials",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -17,93 +17,129 @@
   "projects": [
     {
       "id": "P1",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P1/proposal.md",
       "ledger": "research/projects/P1/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P1-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P1.py",
+      "v1_toy_branch": "experiment/P1-v1-toy-kernel"
     },
     {
       "id": "P2",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P2/proposal.md",
       "ledger": "research/projects/P2/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P2-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P2.py",
+      "v1_toy_branch": "experiment/P2-v1-toy-kernel"
     },
     {
       "id": "P3",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P3/proposal.md",
       "ledger": "research/projects/P3/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P3-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P3.py",
+      "v1_toy_branch": "experiment/P3-v1-toy-kernel"
     },
     {
       "id": "P4",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P4/proposal.md",
       "ledger": "research/projects/P4/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P4-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P4.py",
+      "v1_toy_branch": "experiment/P4-v1-toy-kernel"
     },
     {
       "id": "P5",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P5/proposal.md",
       "ledger": "research/projects/P5/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P5-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P5.py",
+      "v1_toy_branch": "experiment/P5-v1-toy-kernel"
     },
     {
       "id": "P6",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P6/proposal.md",
       "ledger": "research/projects/P6/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P6-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P6.py",
+      "v1_toy_branch": "experiment/P6-v1-toy-kernel"
     },
     {
       "id": "P7",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P7/proposal.md",
       "ledger": "research/projects/P7/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P7-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P7.py",
+      "v1_toy_branch": "experiment/P7-v1-toy-kernel"
     },
     {
       "id": "P8",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P8/proposal.md",
       "ledger": "research/projects/P8/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P8-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P8.py",
+      "v1_toy_branch": "experiment/P8-v1-toy-kernel"
     },
     {
       "id": "P9",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_code_committed_pending_verification",
       "spec": "research/projects/P9/proposal.md",
       "ledger": "research/projects/P9/variants.jsonl",
-      "actual_implementation_branches": [],
+      "actual_implementation_branches": [
+        "experiment/P9-v1-toy-kernel"
+      ],
       "valid_run_count": 0,
       "verified_release_urls": [],
-      "conclusion": null
+      "conclusion": null,
+      "v1_module": "tools/stage3/P9.py",
+      "v1_toy_branch": "experiment/P9-v1-toy-kernel"
     }
   ],
   "legacy_registry": "research/experiment_registry.jsonl",
@@ -112,5 +148,7 @@
     "The active project IDs are P1 through P9, not the 46 legacy proposal IDs.",
     "Project registry is a planning snapshot; evidence lives in per-branch run catalogs and checksummed draft releases.",
     "No science/strength experiment has started merely because the Stage 1 pipeline exists."
-  ]
+  ],
+  "stage3_base_branch": "infra/stage3-independent-kernels",
+  "stage3_scientific_scope": "Nine distinct standalone algorithm kernels and exact toy/negative controls; no live eBotI playing strength claims, no P1–P9 integration."
 }
