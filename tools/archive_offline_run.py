@@ -15,7 +15,10 @@ from pathlib import Path
 import re
 import tarfile
 
-from research_ids import research_id, research_variant, SAFE_NAME
+try:
+    from .research_ids import research_id, research_variant, SAFE_NAME
+except ImportError:  # executed directly as tools/archive_offline_run.py
+    from research_ids import research_id, research_variant, SAFE_NAME
 
 HEX40 = re.compile(r"[a-f0-9]{40}")
 
