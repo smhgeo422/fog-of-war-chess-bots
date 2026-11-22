@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "updated": "2026-11-22",
+  "scope": "v1 toy/offline ablation definitions; no integrated live bot variants in Stage 3",
+  "frozen_reference": "B0 bots/obscuro_v4, unchanged",
+  "bot_action_parity_claim": false,
+  "projects": [
+    {
+      "id": "P1",
+      "source": "tools/stage3/P1.py",
+      "disabled_control": "p-weighted root proposal (alpha=0)",
+      "enabled_v1": "threat mixture alpha=0.30 with p/q reweighting",
+      "controlled_toy_test": "Same posterior support, same event and 64 sampled roots; compare exact toy risk MSE and ESS.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P2",
+      "source": "tools/stage3/P2.py",
+      "disabled_control": "uniform legal-action model and global style prior",
+      "enabled_v1": "observation-event-updated 3-style softmax with uniform floor",
+      "controlled_toy_test": "Only event classes observed for online rho updates; retrospective hidden-action NLL.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P3",
+      "source": "tools/stage3/P3.py",
+      "disabled_control": "clairvoyant per-state best continuation and fixed root fallback",
+      "enabled_v1": "observation/history-keyed feasible conditional continuation",
+      "controlled_toy_test": "Compare strategy-fusion gap, changed root and deadline fallback on exact utilities.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P4",
+      "source": "tools/stage3/P4.py",
+      "disabled_control": "two equally valued root actions without instrumental bonus",
+      "enabled_v1": "matched-direct root ranking with decision-VOI beta=1",
+      "controlled_toy_test": "Equal immediate payoff and equal visibility count, compare future optimal decision shifts.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P5",
+      "source": "tools/stage3/P5.py",
+      "disabled_control": "constant event probability pooled across action categories",
+      "enabled_v1": "class-specific Beta posterior risk estimate",
+      "controlled_toy_test": "Brier on held-out synthetic labels; capture receives no generic fog penalty.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P6",
+      "source": "tools/stage3/P6.py",
+      "disabled_control": "predictable pure action and uniform strategy",
+      "enabled_v1": "regret matching+ mixed security policy",
+      "controlled_toy_test": "Exact best response gap on symmetric and asymmetric zero-sum games.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P7",
+      "source": "tools/stage3/P7.py",
+      "disabled_control": "unmodified baseline value and shuffled-target residual",
+      "enabled_v1": "ridge residual with development-selected penalty",
+      "controlled_toy_test": "Held-out synthetic continuation-target MSE and forbidden-feature audit.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P8",
+      "source": "tools/stage3/P8.py",
+      "disabled_control": "stop now / do no additional computation",
+      "enabled_v1": "positive exact net VOC computation with reserve",
+      "controlled_toy_test": "Equal current root values, hard reserve and posterior-mean martingale constraints.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    },
+    {
+      "id": "P9",
+      "source": "tools/stage3/P9.py",
+      "disabled_control": "depth-1 no-certified continuation and unsafe hidden-world-specific guesses",
+      "enabled_v1": "depth-2 observation-consistent universal reachability witness",
+      "controlled_toy_test": "Exhaustive finite toy successors + actual FoW referee one-own-turn defender replies.",
+      "required_for_actual_playing_claim": [
+        "Integrate under explicit FOW feature flag that defaults off",
+        "Demonstrate off-mode action/build parity against frozen reference or corresponding B2 source baseline",
+        "Use same engine/source seed, opponent, total CPU and chess clock",
+        "Archive live games, reliability failures and paired uncertainty"
+      ],
+      "offline_only": true,
+      "verified_archive_status": "pending"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "preimplementation",
+  "status": "stage3_nine_toy_kernels_verified",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -17,93 +17,210 @@
   "projects": [
     {
       "id": "P1",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P1/proposal.md",
       "ledger": "research/projects/P1/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P1-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P1-v1-toy-kernel/research/runs/research-offline-evidence-45076155100-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P1.py",
+      "v1_toy_branch": "experiment/P1-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P1-v1-toy-kernel/research/projects/P1/findings.md",
+      "toy_metric": {
+        "name": "rare-event root estimator MSE",
+        "value": 0.000011847024478008386
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P2",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P2/proposal.md",
       "ledger": "research/projects/P2/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P2-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P2-v1-toy-kernel/research/runs/research-offline-evidence-45076160806-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P2.py",
+      "v1_toy_branch": "experiment/P2-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P2-v1-toy-kernel/research/projects/P2/findings.md",
+      "toy_metric": {
+        "name": "toy opponent-action NLL",
+        "value": 0.6685362152868636
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P3",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P3/proposal.md",
       "ledger": "research/projects/P3/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P3-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P3-v1-toy-kernel/research/runs/research-offline-evidence-45076165589-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P3.py",
+      "v1_toy_branch": "experiment/P3-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P3-v1-toy-kernel/research/projects/P3/findings.md",
+      "toy_metric": {
+        "name": "strategy-fusion gap",
+        "value": 0.5
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P4",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P4/proposal.md",
       "ledger": "research/projects/P4/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P4-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P4-v1-toy-kernel/research/runs/research-offline-evidence-45076169979-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P4.py",
+      "v1_toy_branch": "experiment/P4-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P4-v1-toy-kernel/research/projects/P4/findings.md",
+      "toy_metric": {
+        "name": "instrumental decision VOI",
+        "value": 0.5
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P5",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P5/proposal.md",
       "ledger": "research/projects/P5/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P5-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P5-v1-toy-kernel/research/runs/research-offline-evidence-45076173654-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P5.py",
+      "v1_toy_branch": "experiment/P5-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P5-v1-toy-kernel/research/projects/P5/findings.md",
+      "toy_metric": {
+        "name": "synthetic loss Brier",
+        "value": 0.14792808828764684
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P6",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P6/proposal.md",
       "ledger": "research/projects/P6/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P6-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P6-v1-toy-kernel/research/runs/research-offline-evidence-45076458586-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P6.py",
+      "v1_toy_branch": "experiment/P6-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P6-v1-toy-kernel/research/projects/P6/findings.md",
+      "toy_metric": {
+        "name": "symmetric restricted exploitability (asymmetric gap 0.005993)",
+        "value": 0
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P7",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P7/proposal.md",
       "ledger": "research/projects/P7/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P7-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P7-v1-toy-kernel/research/runs/research-offline-evidence-45076181707-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P7.py",
+      "v1_toy_branch": "experiment/P7-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P7-v1-toy-kernel/research/projects/P7/findings.md",
+      "toy_metric": {
+        "name": "synthetic continuation-target MSE",
+        "value": 0.00019890761270623518
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P8",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P8/proposal.md",
       "ledger": "research/projects/P8/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P8-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P8-v1-toy-kernel/research/runs/research-offline-evidence-45076186587-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P8.py",
+      "v1_toy_branch": "experiment/P8-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P8-v1-toy-kernel/research/projects/P8/findings.md",
+      "toy_metric": {
+        "name": "near-tie computation decision gain",
+        "value": 0.15
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     },
     {
       "id": "P9",
-      "scientific_status": "proposed_not_implemented",
+      "scientific_status": "v1_kernel_toy_verified_real_FoW_endpoint_untested",
       "spec": "research/projects/P9/proposal.md",
       "ledger": "research/projects/P9/variants.jsonl",
-      "actual_implementation_branches": [],
-      "valid_run_count": 0,
-      "verified_release_urls": [],
-      "conclusion": null
+      "actual_implementation_branches": [
+        "experiment/P9-v1-toy-kernel"
+      ],
+      "valid_run_count": 1,
+      "verified_release_urls": [
+        "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P9-v1-toy-kernel/research/runs/research-offline-evidence-45076510415-1.json"
+      ],
+      "conclusion": "Algorithmic v1 validated on restricted synthetic/tiny toy fixture. No actual chess strength or generalization claim.",
+      "v1_module": "tools/stage3/P9.py",
+      "v1_toy_branch": "experiment/P9-v1-toy-kernel",
+      "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P9-v1-toy-kernel/research/projects/P9/findings.md",
+      "toy_metric": {
+        "name": "toy certificate integrity flag; zero real one-turn guaranteed captures",
+        "value": 1
+      },
+      "bot_integration": "not_started",
+      "original_preregistered_endpoint": "not_evaluated"
     }
   ],
   "legacy_registry": "research/experiment_registry.jsonl",
@@ -111,6 +228,13 @@
   "notes": [
     "The active project IDs are P1 through P9, not the 46 legacy proposal IDs.",
     "Project registry is a planning snapshot; evidence lives in per-branch run catalogs and checksummed draft releases.",
-    "No science/strength experiment has started merely because the Stage 1 pipeline exists."
-  ]
+    "No science/strength experiment has started merely because the Stage 1 pipeline exists.",
+    "Stage 3 adds nine distinct assistant-generated v1 algorithm kernels and verifies nine toy/offline archives; it does not edit the playing bot or prove scientific outcome improvements. Stage 4 must test real observations and on/off parity."
+  ],
+  "stage3_base_branch": "infra/stage3-independent-kernels",
+  "stage3_scientific_scope": "Nine distinct standalone algorithm kernels and exact toy/negative controls; no live eBotI playing strength claims, no P1–P9 integration.",
+  "stage3_evidence_document": "research/STAGE3_FINDINGS.md",
+  "stage3_ci_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/actions/runs/45076702957",
+  "stage3_all_nine_remotely_verified": true,
+  "stage3_playing_strength_untested": true
 }

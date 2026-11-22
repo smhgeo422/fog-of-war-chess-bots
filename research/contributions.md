@@ -8,3 +8,15 @@
 | 2026-11-22 | Infrastructure agent (not yet attributed to individual author) | Infra | Codex implemented experiment tooling, then the source was restored to the fork from its verified archive | Original Git bundle commit `01f4051`; restored blobs in [draft PR #2](https://github.com/smhgeo422/fog-of-war-chess-bots/pull/2); [hosted 235-test CI](https://github.com/smhgeo422/fog-of-war-chess-bots/actions/runs/45059968560) | Codex, ChatGPT assisted with restoration and setup | Hosted 235 tests and capped integration smoke passed |
 
 *Add one row per substantive contribution. Do not turn ideas, prompts, or already-written teammate code into claims of new implementation.*
+
+
+## Stage 3 AI-assisted algorithmic prototype attribution (2026-11-22)
+
+The project owner requested nine independent, profound scientific research directions; Stage 0 documented their motivations from the team's existing code, proposals and literature. Stage 3 committed **new assistant-generated Python toy algorithm kernels** and tests under tools/stage3/P1.py through P9.py, with independent evidence on experiment/Pn-v1-toy-kernel branches. These are new implementations of established mathematical ideas, **not** new mathematical theorems or independently validated chess-strength improvements. The user-directed selection/motivation and the assistant's implementation must be distinguished from contributions made by prior human teammates.
+
+| Date | Person/role | Project(s) | Actual work | Evidence | AI assistance | Verification status |
+|---|---|---|---|---|---|---|
+| 2026-11-22 | User-directed project, ChatGPT implementation (human review pending) | P1–P9 | Nine distinct first-version algorithms and their deterministic toy/negative-control tests, no playing-bot integration | [Stage 3 draft PR #7](https://github.com/smhgeo422/fog-of-war-chess-bots/pull/7), tools/stage3, research/STAGE3_FINDINGS.md | **Substantial**: code, tests, experimental scripts and recordkeeping authored using ChatGPT | 334 passing CI tests; source-linked independent study evidence for each P; no real FoW strength endpoint |
+| 2026-11-22 | User-directed project, ChatGPT implementation (human review pending) | P1–P9 | Nine branch-scoped tracked offline studies; complete metrics, toy fixtures, hashes, negative controls and limitations; individual variant ledgers/findings | research/results_index.md and research/projects/Pn/findings.md on each project branch | **Substantial**: ChatGPT executed GitHub workflows and generated finding drafts | Nine remotely verified archives and independent ZIP/checksum cross-checks; human verification not yet recorded |
+
+Original teammate source and published antecedents, including the existing eBotI FOW_INFOSET and GT-CFR implementations and earlier material-risk heuristics, are **prior work**; Stage 3 did not rewrite or claim authorship of them. The frozen v4 bot remains unmodified. All future paper contribution statements require human review and should cite the specific new code, independent experiment and proper literature precedent. No automated test constitutes human scientific endorsement.
