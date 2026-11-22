@@ -16,7 +16,10 @@ import platform
 import subprocess
 import sys
 
-from research_ids import research_id, research_variant, SAFE_NAME
+try:
+    from .research_ids import research_id, research_variant, SAFE_NAME
+except ImportError:  # running tools/run_offline_experiment.py directly
+    from research_ids import research_id, research_variant, SAFE_NAME
 
 ROOT = Path(__file__).resolve().parents[1]
 
