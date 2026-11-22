@@ -139,8 +139,25 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
             --json isDraft,assets,tagName \
             --jq '{tagName, isDraft, names: [.assets[].name]}'
-      - name: Commit permanent results index to the experiment branch
+      - name: Re-download and independently verify archived game evidence
+        id: verify_game_release
         if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          mkdir -p data/research/downloaded-game
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir data/research/downloaded-game
+          shopt -s nullglob
+          archives=(data/research/downloaded-game/*.tar.gz)
+          hashes=(data/research/downloaded-game/*.sha256)
+          catalogs=(data/research/downloaded-game/*.json)
+          [[ ${#archives[@]} -eq 1 && ${#hashes[@]} -eq 1 && ${#catalogs[@]} -eq 1 ]]
+          .venv/bin/python tools/verify_research_archive.py --archive ${archives[0]} --sha256-file ${hashes[0]} --catalog ${catalogs[0]}
+
+      - name: Commit permanent results index to the experiment branch
+        if: always() && steps.verify_game_release.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -240,8 +257,25 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
             --json isDraft,assets,tagName \
             --jq '{tagName, isDraft, names: [.assets[].name]}'
-      - name: Commit permanent offline results index
+      - name: Re-download and independently verify archived offline evidence
+        id: verify_offline_release
         if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          mkdir -p data/research/downloaded-offline
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir data/research/downloaded-offline
+          shopt -s nullglob
+          archives=(data/research/downloaded-offline/*.tar.gz)
+          hashes=(data/research/downloaded-offline/*.sha256)
+          catalogs=(data/research/downloaded-offline/*.json)
+          [[ ${#archives[@]} -eq 1 && ${#hashes[@]} -eq 1 && ${#catalogs[@]} -eq 1 ]]
+          .venv/bin/python tools/verify_research_archive.py --archive ${archives[0]} --sha256-file ${hashes[0]} --catalog ${catalogs[0]}
+
+      - name: Commit permanent offline results index
+        if: always() && steps.verify_offline_release.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
