@@ -29,7 +29,18 @@ jobs:
           tar -xzf "$sf/release.tar.gz" -C "$sf" stockfish/stockfish-linux-x86-64-universal
           echo "FOW_STOCKFISH=$sf/stockfish/stockfish-linux-x86-64-universal" >> "$GITHUB_ENV"
       - name: Run tests
-        run: uv run --locked pytest -ra
+        shell: bash
+        run: |
+          set +e
+          uv run --locked pytest -ra --tb=short 2>&1 | tee "$RUNNER_TEMP/pytest.log"
+          test_status=${PIPESTATUS[0]}
+          {
+            echo '### Pytest result'
+            echo '```text'
+            tail -80 "$RUNNER_TEMP/pytest.log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$test_status"
       - name: Verify validation artifacts
         run: |
           for manifest in research/validation/*/SHA256SUMS; do
