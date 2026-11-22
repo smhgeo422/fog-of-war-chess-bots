@@ -122,7 +122,9 @@ def static_audit():
     actions = referee.fow_moves(referee.FowBoard())
     a0 = sf0.classify(referee.FowBoard(), actions)
     a1 = sf1.classify(referee.FowBoard(), actions)
-    checks["fow_move_classification"] = a0 == a1
+    checks["fow_move_classification"] = (a0 is not None and a1 is not None and
+        (a0.legal, a0.suicide, a0.fow_only) ==
+        (a1.legal, a1.suicide, a1.fow_only))
     return {
         "profile": B1_ENV, "profile_sha256": hashlib.sha256(stable(B1_ENV).encode()).hexdigest(),
         "checks": checks, "max_move_budget_difference": max(differences),
@@ -205,6 +207,7 @@ def black_box_probe(directory, *, seeds=(17, 29), sides=(True, False),
     On first divergence stop the trajectory; subsequent decisions would no
     longer be conditioned on the same self-chosen history.
     """
+    Path(directory).mkdir(parents=True, exist_ok=True)
     summary = {"trials": [], "action_comparisons": 0, "equal_actions": 0,
                "divergent_actions": 0, "runtime_errors": 0}
     for side in sides:
