@@ -1,0 +1,65 @@
+name: Restore archived Phase 2 experiment infrastructure
+
+on:
+  push:
+    branches:
+      - setup/phase2-bootstrap
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out bootstrap
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify and unpack archived source
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import pathlib
+          import zipfile
+
+          archive = pathlib.Path("research/archives/phase2-source-only.zip")
+          expected_sha = "bee8fe20e0004b973b33ab3998bd001a65a6d22e6841bff2c6d205da038db80d"
+          expected = {
+              ".github/workflows/experiments.yml",
+              "experiments/README.md",
+              "experiments/configs/arena-clock.json",
+              "experiments/configs/ci-smoke.json",
+              "experiments/configs/screening.json",
+              "tests/test_experiment_pipeline.py",
+              "tools/check-experiments.sh",
+              "tools/experiment.py",
+              "tools/experiment_report.py",
+              "tools/setup-experiments.sh",
+          }
+          actual_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert actual_sha == expected_sha, "Source archive SHA-256 mismatch"
+          with zipfile.ZipFile(archive) as src:
+              assert set(src.namelist()) == expected, "Unexpected source archive entries"
+              for name in sorted(expected):
+                  target = pathlib.Path(name)
+                  assert not target.is_absolute() and ".." not in target.parts
+                  if target.exists():
+                      raise RuntimeError(f"Refusing to overwrite {target}")
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(src.read(name))
+          print("Verified and restored", len(expected), "archived source files")
+          PY
+          chmod +x tools/setup-experiments.sh tools/check-experiments.sh tools/experiment.py tools/experiment_report.py
+          git diff --exit-code -- bots fow starter
+      - name: Publish separate infrastructure branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c infra/experiment-setup
+          git add .github/workflows/experiments.yml experiments/README.md experiments/configs tests/test_experiment_pipeline.py tools/setup-experiments.sh tools/check-experiments.sh tools/experiment.py tools/experiment_report.py
+          git commit -m 'Restore verified Phase 2 experiment infrastructure from source archive'
+          git push origin HEAD:refs/heads/infra/experiment-setup
