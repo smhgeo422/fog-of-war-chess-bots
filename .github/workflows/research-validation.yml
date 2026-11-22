@@ -20,6 +20,14 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - name: Install locked dependencies
         run: uv sync --locked
+      - name: Install verified Stockfish 19 release
+        run: |
+          sf=$RUNNER_TEMP/fow-stockfish-19
+          mkdir -p "$sf"
+          curl -fsSL --retry 2 https://github.com/official-stockfish/Stockfish/releases/download/sf_19/stockfish-linux-x86-64-universal.tar.gz -o "$sf/release.tar.gz"
+          printf '%s  %s\n' 9defc0d4e55d49c65a6d042f3e571a39fcea499ade6dbe741b53b8c65e03611f "$sf/release.tar.gz" | sha256sum -c
+          tar -xzf "$sf/release.tar.gz" -C "$sf" stockfish/stockfish-linux-x86-64-universal
+          echo "FOW_STOCKFISH=$sf/stockfish/stockfish-linux-x86-64-universal" >> "$GITHUB_ENV"
       - name: Run tests
         run: uv run --locked pytest -ra
       - name: Verify validation artifacts
