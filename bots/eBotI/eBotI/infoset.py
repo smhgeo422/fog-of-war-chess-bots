@@ -21,13 +21,13 @@ from __future__ import annotations
 import math
 import os
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Sequence
 
 import chess
 import numpy as np
 
-from referee import FowBoard, fow_moves, observation
+from referee import FowBoard, fow_moves, observation, outcome
 from .engine import EnginePool, Job
 from .opponent import LOSS as OPP_LOSS, POLICY_TEMPERATURE
 from .rules import side_to_move_wins
@@ -40,8 +40,10 @@ REPLIES = int(os.environ.get("FOW_INFOSET_REPLIES", "3"))    # opponent replies 
 DEPTH = int(os.environ.get("FOW_INFOSET_DEPTH", "6"))        # engine depth after the reply
 SHARE = float(os.environ.get("FOW_INFOSET_SHARE", "0.5"))    # of the move's budget
 MIX = float(os.environ.get("FOW_INFOSET_MIX", "1.0"))        # 1: the two-ply value alone; 0: the one-ply value alone
+HIDDEN_REPLY = os.environ.get("FOW_INFOSET_HIDDEN_REPLY", "0") == "1"
 REPLY_DEPTH = 1
 MIN_SLICE = 0.01
+REPLY_SELECTION_SHARE = 0.10   # fraction of the remaining refinement time for all slot scans
 
 
 def _reply_odds(values: dict[str, float], temperature: float = POLICY_TEMPERATURE) -> dict[str, float]:
@@ -49,6 +51,38 @@ def _reply_odds(values: dict[str, float], temperature: float = POLICY_TEMPERATUR
     w = {m: math.exp((v - top) / temperature) for m, v in values.items()}
     total = sum(w.values())
     return {m: x / total for m, x in w.items()}
+
+
+def unseen_king_reply(child: FowBoard, reply: str, side: chess.Color) -> bool:
+    """Whether a legal modeled reply creates an unseen attack on the future mover's king."""
+    leaf = child.copy(stack=False)
+    leaf.push_uci(reply)
+    king = leaf.king(side)
+    if king is None:
+        return False
+    attackers = leaf.attackers(not side, king)
+    if not attackers or outcome(leaf, Counter()) is not None:
+        return False
+    view = observation(leaf, side)
+    return any(view[square] == "?" for square in attackers)
+
+
+def select_replies(child: FowBoard, odds: dict[str, float], limit: int,
+                   side: chess.Color, *, reserve_hidden: bool = False,
+                   deadline: float | None = None) -> list[str]:
+    """Keep legacy ranking, optionally using its last slot for one unseen threat."""
+    ranked = sorted(odds, key=lambda move: -odds[move])
+    top = ranked[:limit]
+    if not reserve_hidden or len(top) < 2 or len(top) == len(ranked):
+        return top
+    for index, reply in enumerate(ranked):
+        if deadline is not None and time.monotonic() >= deadline:
+            return top
+        if unseen_king_reply(child, reply, side):
+            if index < len(top) or (deadline is not None and time.monotonic() >= deadline):
+                return top
+            return [*top[:-1], reply]
+    return top
 
 
 def refine(pool: EnginePool, states: Sequence[FowBoard], weights: Sequence[float],
@@ -92,6 +126,10 @@ def refine(pool: EnginePool, states: Sequence[FowBoard], weights: Sequence[float
     # 2. After each reply: our view, and the engine's value of every move of ours.
     leaf_jobs, leaf_owner = [], []
     pairs = defaultdict(list)  # (c) -> list of (b, reply uci, prob)
+    selection_deadline = None
+    if HIDDEN_REPLY:
+        now = time.monotonic()
+        selection_deadline = now + REPLY_SELECTION_SHARE * max(0.0, deadline - now)
     for (c, b), result in zip(reply_owner, results, strict=True):
         if result is None or result.no_moves:
             continue
@@ -104,7 +142,8 @@ def refine(pool: EnginePool, states: Sequence[FowBoard], weights: Sequence[float
         if not vals:
             continue
         odds = _reply_odds(vals)
-        top = sorted(odds, key=lambda m: -odds[m])[:REPLIES]
+        top = select_replies(child, odds, REPLIES, side, reserve_hidden=HIDDEN_REPLY,
+                             deadline=selection_deadline)
         norm = sum(odds[m] for m in top)
         for uci in top:
             reply = chess.Move.from_uci(uci)

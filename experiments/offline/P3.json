@@ -1,0 +1,8 @@
+{
+  "project_id": "P3",
+  "variant": "v2",
+  "purpose": "research",
+  "hypothesis": "Replacing at most one legacy infoset reply with an overlooked unseen king threat reduces observation-consistent root regret without increasing the reply-slot budget.",
+  "script": "tools/offline_jobs/stage5_p3.py",
+  "seed": 85311
+}
