@@ -1,0 +1,8 @@
+{
+  "project_id": "P1",
+  "variant": "v0",
+  "purpose": "smoke",
+  "hypothesis": "The offline evidence pipeline can retain checksummed synthetic labels and model assets without implying a scientific result.",
+  "script": "tools/offline_jobs/smoke.py",
+  "seed": 7106
+}
