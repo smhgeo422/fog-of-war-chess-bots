@@ -1,0 +1,8 @@
+{
+  "project_id": "P3",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "Grouping future policy choices by observation and public history eliminates impossible clairvoyant strategy-fusion optimism.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7142
+}
