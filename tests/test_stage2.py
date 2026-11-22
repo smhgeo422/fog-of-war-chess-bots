@@ -9,7 +9,7 @@ import chess
 import pytest
 
 from tools.stage2_corpus import (COUNTS, MAX_PLIES, audit, build, choose, digest,
-                                 play, score, validate_replay)
+                                 play, score, validate_replay, pair_seed)
 from tools.stage2_parity import B1_ENV
 from tools.stage2_pipeline import rule_regression
 from tools.experiment import load_settings
@@ -126,3 +126,15 @@ def test_corrupted_replay_checksums_fail_reaudit(tmp_path):
     path.write_text(path.read_text() + "\n")
     with pytest.raises(ValueError, match="SHA mismatch"):
         audit(root)
+
+
+def test_policy_random_streams_remain_paired_under_color_swap():
+    # In AB vs BA games the same policy keeps the same seed; only its color swaps.
+    left_white = pair_seed(7106, 4, 0, True)
+    left_black = pair_seed(7106, 4, 1, False)
+    right_black = pair_seed(7106, 4, 0, False)
+    right_white = pair_seed(7106, 4, 1, True)
+    assert left_white == left_black
+    assert right_black == right_white
+    assert left_white != right_black
+    assert left_white != pair_seed(7106, 5, 0, True)
