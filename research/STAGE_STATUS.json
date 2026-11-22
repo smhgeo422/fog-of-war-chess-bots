@@ -246,5 +246,19 @@
     "parity_b1_v4_compared": 8,
     "parity_divergences": 3
   },
-  "stage2_next_hosted_run_purpose": "Re-verify with policy-role-paired seeds and frozen-v4 self-variation calibration; previous archive remains immutable."
+  "stage2_next_hosted_run_purpose": "Re-verify with policy-role-paired seeds and frozen-v4 self-variation calibration; previous archive remains immutable.",
+  "stage2_final_schema": 2,
+  "stage2_final_provenance": "Schema 2 strictly separates online_inputs from selected_action, policy identity and retrospective truth; Stage 2 must revalidate and archive before closing",
+  "stage2_final_required_gates": [
+    "302+ pytest passing on schema 2 source",
+    "72-game referee replay reconstruction and splits",
+    "7 referee rules",
+    "v4-v4 selfcontrol and B1-v4 action parity",
+    "remote-verified archive",
+    "B1 and B2 four-game reference archive or documented blocker"
+  ],
+  "stage2_preliminary_verified_runs": [
+    45073161259,
+    45073516711
+  ]
 }
