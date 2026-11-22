@@ -1,0 +1,29 @@
+{
+  "archive": "research-offline-P8-stage5-P8-v2.tar.gz",
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "Four independent schema-2 synthetic referee corpora, using the Stage 2 generator and fresh seeds.",
+  "evidence_type": "offline",
+  "file_count": 333,
+  "hypothesis": "A leave-one-root reliability adjustment improves extra-root allocation over the v1 threshold at the same call quota on a disjoint reference.",
+  "primary_metric": {
+    "n": 24,
+    "name": "holdout_v2_minus_v1_matched_quota_regret",
+    "unit": "color-pair blocks",
+    "value": 0.00021017437621755248
+  },
+  "purpose": "research",
+  "research_id": "P8",
+  "run_id": "stage5-P8-v2",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage5_p8.py",
+  "sha256": "6b5c9bf25d249e3a9d7cca0b22d2f18794828222d111db387051c8d61fc409b6",
+  "source_commit": "be3f507ffdb6cd4e64c5b70135ad5079966c3cce",
+  "source_ref": "experiment/P8-v2-voc-reliability",
+  "status": "complete",
+  "valid_complete_run": true,
+  "variant": "v2",
+  "storage": "git_branch",
+  "archive_path": "research/archives/stage5-P8-v2/research-offline-P8-stage5-P8-v2.tar.gz",
+  "local_inventory_verified": true,
+  "verdict": "v2 did not improve held-out allocation over matched-quota v1; no live candidate."
+}
