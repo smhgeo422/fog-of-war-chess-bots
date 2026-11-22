@@ -4,8 +4,8 @@
   "updated": "2026-11-22",
   "branch": "infra/stage2-baselines-corpus",
   "planning_pr": 4,
-  "current_stage_completed": 1,
-  "next_stage": 2,
+  "current_stage_completed": 2,
+  "next_stage": 3,
   "stages": [
     {
       "id": 0,
@@ -50,7 +50,7 @@
     {
       "id": 2,
       "name": "Frozen baseline parity and offline replay corpus",
-      "status": "in_progress",
+      "status": "completed",
       "planned_artifacts": [
         "research/STAGE2_DESIGN.md",
         "tools/stage2_corpus.py",
@@ -61,7 +61,19 @@
         "tools/experiment.py",
         "research/stage2_baseline_results.md"
       ],
-      "status_reason": "Corpus/rule/parity CI and hosted archive are being validated; neither expected control match nor dataset is yet claimed complete."
+      "evidence": [
+        "research/STAGE2_DESIGN.md",
+        "research/STAGE2_FINDINGS.md",
+        "tools/stage2_corpus.py",
+        "tools/stage2_parity.py",
+        "tools/stage2_pipeline.py",
+        "tests/test_stage2.py",
+        ".github/workflows/stage2.yml",
+        "research/runs/research-offline-evidence-45073998777-1.json (on Stage2 branch)",
+        "research/runs/research-evidence-45073041219-1.json (on B1 control branch)",
+        "research/runs/research-evidence-45073046202-1.json (on B2 control branch)"
+      ],
+      "assessment": "Reference corpus and control evidence complete; B1 is not proven equivalent to B0. Synthetic corpus is not representative competitive training data."
     },
     {
       "id": 3,
@@ -166,7 +178,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Complete all Stage 2 hosted checks, verify the corpus archive and baseline control runs, then start Stage 3 only when explicitly requested.",
+  "next_stage_action": "Stage 3 only after user says next stage: implement and toy/offline-test independent P1..P9 first versions on isolated experiment branches; retain B0 frozen as control and strict schema-2 data separation.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,
@@ -260,5 +272,79 @@
   "stage2_preliminary_verified_runs": [
     45073161259,
     45073516711
+  ],
+  "stage2_pr": 6,
+  "stage2_verified_tests": 302,
+  "stage2_verified_tests_run": 45073873218,
+  "stage2_canonical_run": 45073998777,
+  "stage2_canonical_archive_sha256": "ae507b8f113bacaec0e9f54b65a27ca210b60adcfdc371425047d8b2c885ddc3",
+  "stage2_canonical_result_index": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/infra/stage2-baselines-corpus/research/runs/research-offline-evidence-45073998777-1.json",
+  "stage2_corpus_actual": {
+    "synthetic_games": 72,
+    "verified_replays": 72,
+    "swapped_blocks": 36,
+    "decisions": 2190,
+    "partition_rows": {
+      "train": 902,
+      "development": 310,
+      "holdout": 442,
+      "opponent_shift": 536
+    },
+    "referee_rule_checks": 7,
+    "online_feature_schema": 2,
+    "labels_not_online": true
+  },
+  "stage2_parity_actual": {
+    "shared_component_checks_pass": 6,
+    "shared_component_checks_total": 6,
+    "B1_vs_B0": {
+      "equal": 6,
+      "comparisons": 9,
+      "divergences": 3
+    },
+    "B0_vs_B0": {
+      "equal": 10,
+      "comparisons": 11,
+      "divergences": 1
+    },
+    "B1_action_parity_established": false,
+    "conclusion": "Only B0 frozen v4 is the authoritative benchmark; B1 is not certified equivalent."
+  },
+  "stage2_real_bot_control_runs": [
+    {
+      "name": "B1 v4-like eBotI vs B0 frozen v4",
+      "run_id": 45073041219,
+      "source_commit": "b618abd0cd9ba735aec7321d0f0c092d9faf2214",
+      "games": 4,
+      "wins": 1,
+      "draws": 0,
+      "losses": 3,
+      "score": 0.25,
+      "invalid": 0,
+      "complete": true,
+      "verified_remote": true,
+      "result_index": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/Infra-stage2-b1-parity-profile/research/runs/research-evidence-45073041219-1.json"
+    },
+    {
+      "name": "B2 default eBotI vs B0 frozen v4",
+      "run_id": 45073046202,
+      "source_commit": "1e98c1b605202d95e0995a109b2e5b3492ef9b64",
+      "games": 4,
+      "wins": 1,
+      "draws": 0,
+      "losses": 3,
+      "score": 0.25,
+      "invalid": 0,
+      "complete": true,
+      "verified_remote": true,
+      "result_index": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/Infra-stage2-b2-current-default/research/runs/research-evidence-45073046202-1.json"
+    }
+  ],
+  "stage2_limitations": [
+    "72 local synthetic starter-policy games validate protocols and data schemas, not competitive opponent/game strength.",
+    "B1 vs B0 functional emulation was not established; frozen B0 remains the reference.",
+    "Only 4 short-clock smoke games each for B1 and B2; no reliable strength estimate or paired CI.",
+    "No full-clock 180+2 tournament, official MIT arena, public/private external replay data, or new research algorithms during Stage 2.",
+    "More permitted opponent/seed and clock-matched full games are needed before supporting later P2/P7 or strength conclusions."
   ]
 }
