@@ -1,0 +1,30 @@
+{
+  "archive": "research-offline-P9-actions-45076510415-1.tar.gz",
+  "archive_sha256": "4bc0bccd262bd7e4db4fd22671674012831d2e7aa1e15ea22ed19fd86c0966a8",
+  "archive_urls": {},
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "tracked Stage 3 synthetic fixtures generated from toy models; no use of private arena replays, official match data, or Stage 2 holdout labels",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "A finite reachability solver certifies wins only with a common action across hidden worlds and universal adversarial successor checks.",
+  "primary_metric": {
+    "n": 2,
+    "name": "finite_endgame_reachability_certifier_soundness",
+    "value": 1.0
+  },
+  "purpose": "research",
+  "release_tag": "research-offline-evidence-45076510415-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-ba8c18d8d7e1c65f2dbc",
+  "research_id": "P9",
+  "run_id": "actions-45076510415-1",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage3.py",
+  "sha256": "4bc0bccd262bd7e4db4fd22671674012831d2e7aa1e15ea22ed19fd86c0966a8",
+  "source_commit": "70e1d73eea061159ef500c61a0d7e4db6791ba4d",
+  "source_ref": "experiment/P9-v1-toy-kernel",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": "v1",
+  "verified_remote": true
+}
