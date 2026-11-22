@@ -1,0 +1,13 @@
+{
+  "id": "Infra-archive-smoke",
+  "hypothesis": "End-to-end infrastructure test: two capped, color-swapped games produce verifiable permanent replays and an automated research index, not playing-strength evidence.",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "purpose": "smoke",
+  "games": 2,
+  "seed": 20261122,
+  "base": 24,
+  "increment": 0.1,
+  "max_plies": 20,
+  "parallel": 1
+}
