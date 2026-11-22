@@ -3,7 +3,7 @@ name: Fog of War validation
 on:
   pull_request:
   push:
-    branches: [main, 'infra/**']
+    branches: [main, 'infra/**', 'experiment/**']
   workflow_dispatch:
     inputs:
       config:
@@ -40,8 +40,10 @@ jobs:
           retention-days: 30
 
   experiment:
-    if: github.event_name == 'workflow_dispatch' && inputs.config != ''
+    if: (github.event_name == 'workflow_dispatch' && inputs.config != '') || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/experiment/') && contains(github.event.head_commit.message, '[run experiment]'))
     needs: checks
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
@@ -57,7 +59,21 @@ jobs:
           EXPERIMENT_CONFIG: ${{ inputs.config }}
         run: |
           set -euo pipefail
+          if [[ -z "$EXPERIMENT_CONFIG" ]]; then
+            branch_name="$GITHUB_REF_NAME"
+            id_part="${branch_name#experiment/}"
+            research_id="${id_part%%-*}"
+            [[ "$research_id" =~ ^([A-F][0-9]{2}|Infra)$ ]]
+            EXPERIMENT_CONFIG="experiments/configs/$research_id.json"
+          fi
           [[ "$EXPERIMENT_CONFIG" =~ ^experiments/configs/[a-zA-Z0-9_-]+\.json$ ]]
+          research_id="${EXPERIMENT_CONFIG##*/}"
+          research_id="${research_id%.json}"
+          if [[ ! "$research_id" =~ ^([A-F][0-9]{2}|Infra)$ ]]; then
+            research_id=Infra
+          fi
+          echo "RESEARCH_ID=$research_id" >> "$GITHUB_ENV"
+          echo "EXPERIMENT_CONFIG=$EXPERIMENT_CONFIG" >> "$GITHUB_ENV"
           git ls-files --error-unmatch -- "$EXPERIMENT_CONFIG"
           candidate=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["candidate"])' "$EXPERIMENT_CONFIG")
           baseline=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("baseline", "obscuro_v4"))' "$EXPERIMENT_CONFIG")
@@ -72,6 +88,45 @@ jobs:
           tools/setup-experiments.sh "${extra[@]}" 2>&1 | tee data/research/checks/setup.log
           timeout --kill-after=45s 330m .venv/bin/python tools/experiment.py "$EXPERIMENT_CONFIG" \
             --id "actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" 2>&1 | tee data/research/checks/experiment.log
+      - name: Package complete research evidence with checksums
+        if: always()
+        run: |
+          set -euo pipefail
+          run_dir="data/research/runs/actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          if [[ ! -d "$run_dir" ]]; then
+            echo "Experiment did not produce a run directory; logs are still preserved."
+            exit 1
+          fi
+          python3 tools/archive_research_run.py \
+            --run "$run_dir" \
+            --output data/research/archive \
+            --research-id "${RESEARCH_ID:-Infra}"
+      - name: Persist full evidence in a draft GitHub Release
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd data/research/archive
+          shopt -s nullglob
+          archives=(*.tar.gz)
+          if [[ ${#archives[@]} -ne 1 ]]; then
+            echo "Expected exactly one verified archive; refusing to publish incomplete data."
+            exit 1
+          fi
+          file="${archives[0]}"
+          stem="${file%.tar.gz}"
+          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          gh release create "$tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --draft \
+            --title "[research evidence] $stem" \
+            --notes-file "$stem.md" \
+            "$file" "$stem.sha256" "$stem.json"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
+            --json isDraft,assets,tagName \
+            --jq '{tagName, isDraft, names: [.assets[].name]}'
       - name: Preserve experiment and logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,4 +136,5 @@ jobs:
             data/research/checks/*.log
             data/research/setup/*.log
             data/research/runs/
+            data/research/archive/
           retention-days: 90
