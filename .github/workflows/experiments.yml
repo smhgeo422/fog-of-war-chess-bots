@@ -63,14 +63,26 @@ jobs:
             branch_name="$GITHUB_REF_NAME"
             id_part="${branch_name#experiment/}"
             research_id="${id_part%%-*}"
-            [[ "$research_id" =~ ^([A-F][0-9]{2}|Infra)$ ]]
+            [[ "$research_id" =~ ^(P[1-9]|[A-F][0-9]{2}|Infra)$ ]]
             EXPERIMENT_CONFIG="experiments/configs/$research_id.json"
           fi
           [[ "$EXPERIMENT_CONFIG" =~ ^experiments/configs/[a-zA-Z0-9_-]+\.json$ ]]
           research_id="${EXPERIMENT_CONFIG##*/}"
           research_id="${research_id%.json}"
-          if [[ ! "$research_id" =~ ^([A-F][0-9]{2}|Infra)$ ]]; then
-            research_id=Infra
+          [[ "$research_id" =~ ^(P[1-9]|[A-F][0-9]{2}|Infra)$ ]] || { echo "Invalid experiment research ID"; exit 1; }
+          if [[ "$research_id" =~ ^P[1-9]$ ]]; then
+            if [[ "$GITHUB_REF_NAME" == experiment/* ]]; then
+              id_part="${GITHUB_REF_NAME#experiment/}"
+              version="${id_part#"$research_id"-}"
+              version="${version%%-*}"
+              [[ "$version" =~ ^v(0|[1-9][0-9]*)$ ]] || { echo "Invalid P project variant"; exit 1; }
+              python3 - "$EXPERIMENT_CONFIG" "$research_id" "$version" <<'PY'
+          import json,sys
+          data=json.load(open(sys.argv[1]))
+          if data.get("project_id") != sys.argv[2] or data.get("variant") != sys.argv[3]:
+              raise SystemExit("Project/variant config does not match branch")
+          PY
+            fi
           fi
           echo "RESEARCH_ID=$research_id" >> "$GITHUB_ENV"
           echo "EXPERIMENT_CONFIG=$EXPERIMENT_CONFIG" >> "$GITHUB_ENV"
@@ -163,4 +175,104 @@ jobs:
             data/research/setup/*.log
             data/research/runs/
             data/research/archive/
+          retention-days: 90
+
+  offline:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/experiment/') && contains(github.event.head_commit.message, '[run offline]')
+    needs: checks
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.9'
+          enable-cache: true
+      - name: Produce tracked offline research evidence
+        run: |
+          set -euo pipefail
+          name="${GITHUB_REF_NAME#experiment/}"
+          research_id="${name%%-*}"
+          [[ "$research_id" =~ ^P[1-9]$ ]] || { echo "Offline project must be P1..P9"; exit 1; }
+          cfg="experiments/offline/$research_id.json"
+          git ls-files --error-unmatch "$cfg"
+          echo "RESEARCH_ID=$research_id" >> "$GITHUB_ENV"
+          mkdir -p data/research/offline_runs
+          .venv/bin/python tools/run_offline_experiment.py "$cfg" \
+            --run "data/research/offline_runs/actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Verify and package offline evidence with checksums
+        if: always()
+        run: |
+          set -euo pipefail
+          run="data/research/offline_runs/actions-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          test -d "$run"
+          .venv/bin/python tools/archive_offline_run.py \
+            --run "$run" --output data/research/offline_archive \
+            --research-id "${RESEARCH_ID:?missing research ID}"
+
+      - name: Persist offline evidence in a draft GitHub Release
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd data/research/offline_archive
+          shopt -s nullglob
+          archives=(*.tar.gz)
+          if [[ ${#archives[@]} -ne 1 ]]; then
+            echo "Expected exactly one verified archive; refusing to publish incomplete data."
+            exit 1
+          fi
+          file="${archives[0]}"
+          stem="${file%.tar.gz}"
+          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          gh release create "$tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --draft \
+            --title "[research evidence] $stem" \
+            --notes-file "$stem.md" \
+            "$file" "$stem.sha256" "$stem.json"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
+            --json isDraft,assets,tagName \
+            --jq '{tagName, isDraft, names: [.assets[].name]}'
+      - name: Commit permanent offline results index
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd data/research/offline_archive
+          shopt -s nullglob
+          catalogs=(*.json)
+          if [[ ${#catalogs[@]} -ne 1 ]]; then
+            echo "No complete catalog to index."
+            exit 1
+          fi
+          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          release_url=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json url --jq .url)
+          python3 - "${catalogs[0]}" "$tag" "$GITHUB_REF_NAME" "$GITHUB_REPOSITORY" "$release_url" > request.json <<'PY'
+          import base64, json, sys
+          source, tag, branch, repo, release_url = sys.argv[1:]
+          record = json.load(open(source, encoding='utf-8'))
+          record['release_tag'] = tag
+          record['release_url'] = release_url
+          raw = (json.dumps(record, sort_keys=True, indent=2) + '\n').encode()
+          print(json.dumps({'message': 'Record archived offline experiment ' + tag,
+                            'branch': branch, 'content': base64.b64encode(raw).decode()}))
+          PY
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/research/runs/$tag.json" --input request.json
+
+      - name: Preserve offline job and archive in temporary Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/research/offline_runs/
+            data/research/offline_archive/
           retention-days: 90
