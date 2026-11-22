@@ -19,7 +19,7 @@
 The baseline 'bots/eBotI/eBotI/stockfish_search.py' has explicit MAX_ROOTS≈64, scan states≈256, maximum depth≈12 and per-slice limits. 'bots/eBotI/eBotI/search.py' has a reserve-clock rule. The team tried broader 384-root search and uncertainty/time tweaks with poor or inconclusive results; this suggests that a new budget rule must optimize *decision quality per cost* rather than rely on 'more thinking on scary positions'.
 
 At time t, the bot has a posterior over action utilities U(a) estimated from finite sampled roots/Stockfish calls. A computation c—one additional state evaluation, deeper search at promising action, an extra tactical reply, or one solver pass—changes the posterior over U. Ideal metalevel value of computation is
-  VOC(c | data_t)= E[max_a E(U(a)|data_t, observation_from_c)] - max_a E(U(a)|data_t] - λ·cost(c).
+  VOC(c | D_t) = E_{y~P(y|D_t,c)}[max_a m_a(D_t,y)] - max_a m_a(D_t) - λ·cost(c), where m_a(D)=E[U(a)|D].
 The expectation is over possible results of the computation itself, *not* the hidden referee truth. λ reflects lost future clock opportunity. This is distinct from P4's **value of game observations**. P4 changes what the player will see on the board; P8 decides which computations to execute before choosing the current move.
 
 **v0 instrumentation:** replay a held-out fixed decision dataset, incrementally grow baseline Stockfish calls one slice at a time; log each intermediate candidate ranking, action margin, approximate uncertainty, time and eventual high-budget reference action. This establishes actual marginal returns as a function of budget and whether early stopping is justified. Need one action stability trace per root and seed.
