@@ -85,7 +85,8 @@ def test_generated_pair_rebuilds_every_referee_state_and_view():
     assert len(xs) > 5 and len(ys) > 5
     assert validate_replay(a) == len(xs)
     assert validate_replay(b) == len(ys)
-    assert all(x["selected_action"] in x["legal_attempts"] for x in xs)
+    assert all(y["selected_action"] in x["online_inputs"]["legal_attempts"]
+               for x, y in zip(xs, labels))
     assert all(l["retrospective_only"] for l in labels + labels_b)
     assert "truth_board_fen" not in xs[0] and "truth_board_fen" in labels[0]
 
@@ -106,15 +107,21 @@ def test_reference_corpus_has_disjoint_game_and_color_block_splits(tmp_path):
     assert metrics["games_checked"] == 72
     assert metrics["decisions_checked"] > 200
     assert set(x["split"] for x in features) == set(COUNTS)
-    assert all(x["opponent_policy"] != "king_pressure" for x in features
-               if x["split"] != "opponent_shift")
+    for split in ("train", "development", "holdout"):
+        labels = [json.loads(line) for line in
+                  (root / "retrospective_labels" / (split + ".jsonl")).read_text().splitlines()]
+        assert all(x["policy"] != "king_pressure" and x["opponent_policy"] != "king_pressure"
+                   for x in labels)
     assert len({x["game_id"] for x in game_records}) == 72
     by_block = {}
     for game in game_records:
         by_block.setdefault(game["pair_block"], set()).add(game["split"])
     assert all(len(s) == 1 for s in by_block.values())
     assert not any("truth_board" in x or "future" in x for x in features)
-    assert all("?" in x["view"] for x in features[:15])
+    assert all("?" in x["online_inputs"]["view"] for x in features[:15])
+    assert all("selected_action" not in x["online_inputs"] and
+               "opponent_policy" not in x["online_inputs"] and
+               "truth_board_fen" not in x["online_inputs"] for x in features)
     # Replay files in the official referee format remain retrospective labels.
     assert all((root / item["replay"]).is_file() for item in game_records)
 
@@ -138,3 +145,15 @@ def test_policy_random_streams_remain_paired_under_color_swap():
     assert right_black == right_white
     assert left_white != right_black
     assert left_white != pair_seed(7106, 5, 0, True)
+
+
+def test_future_action_is_not_in_predecision_online_inputs(tmp_path):
+    root = tmp_path / "dataset"
+    build(root, 3191)
+    online = root / "observations/train.jsonl"
+    rows = [json.loads(x) for x in online.read_text().splitlines()]
+    assert rows[0]["online_inputs"]["view"]
+    rows[0]["online_inputs"]["selected_action"] = "e2e4"
+    online.write_text("\n".join(json.dumps(x) for x in rows) + "\n")
+    with pytest.raises(ValueError, match="unapproved online field"):
+        audit(root)
