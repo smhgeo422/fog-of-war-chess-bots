@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "stage3_nine_toy_kernels_verified",
+  "status": "stage4_restricted_screening_completed",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -33,10 +33,18 @@
       "findings": "https://github.com/smhgeo422/fog-of-war-chess-bots/blob/experiment/P1-v1-toy-kernel/research/projects/P1/findings.md",
       "toy_metric": {
         "name": "rare-event root estimator MSE",
-        "value": 0.000011847024478008386
+        "value": 1.1847024478008386e-05
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "blocked",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "Early replay, game-averaged unseen king-attack Brier at 64 roots",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P2",
@@ -59,7 +67,15 @@
         "value": 0.6685362152868636
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "screened",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "Game-averaged action and observed transition NLL on early opponent moves",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P3",
@@ -82,7 +98,15 @@
         "value": 0.5
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "fixture_screen_complete",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "mean fixed-blind vs observation-contingent policy regret on fixed referee roots",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P4",
@@ -105,7 +129,15 @@
         "value": 0.5
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "fixture_screen_complete",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "instrumental VOI after quiet, equal-direct-payoff referee moves",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P5",
@@ -128,7 +160,15 @@
         "value": 0.14792808828764684
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "screened",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "Game-averaged Brier score of next-reply unseen capture of undefended N/B/R/Q after our action",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P6",
@@ -151,7 +191,15 @@
         "value": 0
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "fixture_screen_complete",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "exact exploitability gap and policy security in restricted hidden-world matrices",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P7",
@@ -174,7 +222,15 @@
         "value": 0.00019890761270623518
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "restricted_diagnostic",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "Equal color-pair-block weight MSE of six-ply logged-policy utility",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P8",
@@ -197,7 +253,15 @@
         "value": 0.15
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "restricted_diagnostic",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "Equal color-pair-block weight action regret against the shared larger root sample",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     },
     {
       "id": "P9",
@@ -220,7 +284,15 @@
         "value": 1
       },
       "bot_integration": "not_started",
-      "original_preregistered_endpoint": "not_evaluated"
+      "original_preregistered_endpoint": "not_evaluated",
+      "stage4_screening": {
+        "status": "fixture_screen_complete",
+        "run_id": "stage4-screen-20261122",
+        "run_index": "research/runs/stage4-screen-20261122.json",
+        "metric": "false certificates and certified action coverage for declared one-turn KQvK layouts",
+        "findings": "research/STAGE4_FINDINGS.md",
+        "playing_benchmark_result": null
+      }
     }
   ],
   "legacy_registry": "research/experiment_registry.jsonl",
@@ -236,5 +308,6 @@
   "stage3_evidence_document": "research/STAGE3_FINDINGS.md",
   "stage3_ci_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/actions/runs/45076702957",
   "stage3_all_nine_remotely_verified": true,
-  "stage3_playing_strength_untested": true
+  "stage3_playing_strength_untested": true,
+  "stage4_evidence_index": "research/runs/stage4-screen-20261122.json"
 }

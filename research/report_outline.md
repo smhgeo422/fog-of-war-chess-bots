@@ -200,6 +200,8 @@ Book, reserve clock, adaptive root count, special FoW endgame logic, and *final*
 
 **Update convention:** after each experiment, append date, author, experiment ID, hypothesis, code SHA, configuration, result, uncertainties, what it changed in our understanding, and next decision. Promote a planned contribution to DONE only when its code and evidence are available.
 
+**Stage 4 update (2026-11-22):** The restricted replay/referee screens are archived from `effafc6`. Useful report evidence includes the P3/P4 information counterexamples, P6 restricted security, P7's adverse residual result, and P9's zero hidden-world one-turn coverage. P1 lacked positive threat labels. P8 is exploratory and the playing-strength results section remains open. See [findings](STAGE4_FINDINGS.md) and the [run index](runs/stage4-screen-20261122.json).
+
 ## References / source links (starter list)
 
 - Official FoW rules and submission instructions: https://www.mit.edu/~6.7980/fow/?tab=rules and https://www.mit.edu/~6.7980/fow/?tab=submit

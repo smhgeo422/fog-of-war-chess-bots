@@ -1,0 +1,59 @@
+{
+  "archive": "research-offline-Infra-stage4-screen-20261122.tar.gz",
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "fresh synthetic games, local starter FowBoard/ObservationTracker; no public arena or private replays",
+  "evidence_type": "offline",
+  "file_count": 87,
+  "hypothesis": "The nine v1 mechanisms can be screened independently on restricted referee fixtures and held-out synthetic referee histories.",
+  "primary_metric": {
+    "n": 9,
+    "name": "stage4_project_screen_records",
+    "unit": "projects",
+    "value": 9
+  },
+  "purpose": "research",
+  "research_id": "Infra",
+  "run_id": "stage4-screen-20261122",
+  "schema": 1,
+  "script": "tools/stage4_screen.py",
+  "sha256": "390099d8a928507bb36237b3cb087b0482ee79406c703f60cc893ab5ddc17019",
+  "source_commit": "effafc631d198de8e2e4101ac50ea787bc147f17",
+  "source_ref": "infra/stage4-scientific-screening",
+  "status": "complete",
+  "valid_complete_run": true,
+  "variant": null,
+  "storage": "git_branch",
+  "archive_path": "research/archives/stage4-screen-20261122/research-offline-Infra-stage4-screen-20261122.tar.gz",
+  "sidecar_path": "research/archives/stage4-screen-20261122/research-offline-Infra-stage4-screen-20261122.sha256",
+  "catalog_path": "research/archives/stage4-screen-20261122/research-offline-Infra-stage4-screen-20261122.json",
+  "inventory_and_checksum_verified": true,
+  "project_status": {
+    "P1": "blocked",
+    "P2": "screened",
+    "P3": "fixture_screen_complete",
+    "P4": "fixture_screen_complete",
+    "P5": "screened",
+    "P6": "fixture_screen_complete",
+    "P7": "restricted_diagnostic",
+    "P8": "restricted_diagnostic",
+    "P9": "fixture_screen_complete"
+  },
+  "findings": "research/STAGE4_FINDINGS.md",
+  "playing_matches": 0,
+  "validation": {
+    "pytest_passed": 346,
+    "pytest_skipped": 0,
+    "pytest_warnings": 1,
+    "pytest_stockfish_enabled": true,
+    "baseline_smoke": {
+      "candidate": "eBotI (B2)",
+      "baseline": "obscuro_v4 (B0)",
+      "recorded_games": 2,
+      "valid_complete_run": true,
+      "cap_plies": 20,
+      "purpose": "smoke",
+      "archive": "research/archives/stage4-b0-b2-smoke-20261122/research-Infra-stage4-b0-b2-smoke-20261122.tar.gz",
+      "sha256": "592a526844bcf3d6c5043baf73ec0dc0c04bfc585fbdb9dbd48dbb177c11d23c"
+    }
+  }
+}

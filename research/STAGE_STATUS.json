@@ -2,10 +2,10 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/stage3-independent-kernels",
+  "branch": "infra/stage4-scientific-screening",
   "planning_pr": 4,
-  "current_stage_completed": 3,
-  "next_stage": 4,
+  "current_stage_completed": 4,
+  "next_stage": 5,
   "stages": [
     {
       "id": 0,
@@ -124,7 +124,38 @@
     {
       "id": 4,
       "name": "Offline and short-game screening evidence",
-      "status": "not_started"
+      "status": "completed",
+      "scope": "Restricted offline/referee screening and match gate assessment. Competitive endpoints remain open.",
+      "evidence": [
+        "research/STAGE4_DESIGN.md",
+        "research/STAGE4_FINDINGS.md",
+        "research/runs/stage4-screen-20261122.json"
+      ],
+      "source_commit": "effafc631d198de8e2e4101ac50ea787bc147f17",
+      "run_id": "stage4-screen-20261122",
+      "project_records": 9,
+      "research_variant_matches": 0,
+      "primary_endpoint_blockers": [
+        "P1's bounded early-game support had no positive king-threat events.",
+        "Competitive full-clock replay data was unavailable from the cloud environment.",
+        "No playing candidate isolates a Stage 4 mechanism with verified feature-off parity."
+      ],
+      "validation": {
+        "pytest_passed": 346,
+        "pytest_skipped": 0,
+        "pytest_warnings": 1,
+        "pytest_stockfish_enabled": true,
+        "baseline_smoke": {
+          "candidate": "eBotI (B2)",
+          "baseline": "obscuro_v4 (B0)",
+          "recorded_games": 2,
+          "valid_complete_run": true,
+          "cap_plies": 20,
+          "purpose": "smoke",
+          "archive": "research/archives/stage4-b0-b2-smoke-20261122/research-Infra-stage4-b0-b2-smoke-20261122.tar.gz",
+          "sha256": "592a526844bcf3d6c5043baf73ec0dc0c04bfc585fbdb9dbd48dbb177c11d23c"
+        }
+      }
     },
     {
       "id": 5,
@@ -149,7 +180,9 @@
       "document": "research/projects/P1/proposal.md",
       "versions": "research/projects/P1/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "blocked",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P2",
@@ -157,7 +190,9 @@
       "document": "research/projects/P2/proposal.md",
       "versions": "research/projects/P2/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "screened",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P3",
@@ -165,7 +200,9 @@
       "document": "research/projects/P3/proposal.md",
       "versions": "research/projects/P3/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "fixture_screen_complete",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P4",
@@ -173,7 +210,9 @@
       "document": "research/projects/P4/proposal.md",
       "versions": "research/projects/P4/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "fixture_screen_complete",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P5",
@@ -181,7 +220,9 @@
       "document": "research/projects/P5/proposal.md",
       "versions": "research/projects/P5/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "screened",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P6",
@@ -189,7 +230,9 @@
       "document": "research/projects/P6/proposal.md",
       "versions": "research/projects/P6/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "fixture_screen_complete",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P7",
@@ -197,7 +240,9 @@
       "document": "research/projects/P7/proposal.md",
       "versions": "research/projects/P7/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "restricted_diagnostic",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P8",
@@ -205,7 +250,9 @@
       "document": "research/projects/P8/proposal.md",
       "versions": "research/projects/P8/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "restricted_diagnostic",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     },
     {
       "id": "P9",
@@ -213,7 +260,9 @@
       "document": "research/projects/P9/proposal.md",
       "versions": "research/projects/P9/variants.jsonl",
       "verified_results": 1,
-      "bot_integration": "not_started"
+      "bot_integration": "not_started",
+      "stage4_screen_status": "fixture_screen_complete",
+      "stage4_evidence": "research/runs/stage4-screen-20261122.json"
     }
   ],
   "legacy_backlog_preserved": true,
@@ -228,7 +277,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Stage 4 only on user instruction: evaluate P1–P9 scientifically on allowed FoW replay data / real referee and run feature-gated, equal-CPU, color-swapped short game screens only where meaningful. Preserve negative findings. Do not claim toy success is chess strength.",
+  "next_stage_action": "Stage 5 only on user instruction. Use Stage 4 dispositions to select hypothesis-driven revisions and revisit blocked endpoints with a prespecified data source or fixture. Keep candidate work separate and require feature-off parity and matched budgets before playing-strength screens.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,

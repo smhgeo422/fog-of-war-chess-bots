@@ -1,0 +1,25 @@
+{
+  "archive": "research-offline-Infra-stage4-screen-20261122.tar.gz",
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "fresh synthetic games, local starter FowBoard/ObservationTracker; no public arena or private replays",
+  "evidence_type": "offline",
+  "file_count": 87,
+  "hypothesis": "The nine v1 mechanisms can be screened independently on restricted referee fixtures and held-out synthetic referee histories.",
+  "primary_metric": {
+    "n": 9,
+    "name": "stage4_project_screen_records",
+    "unit": "projects",
+    "value": 9
+  },
+  "purpose": "research",
+  "research_id": "Infra",
+  "run_id": "stage4-screen-20261122",
+  "schema": 1,
+  "script": "tools/stage4_screen.py",
+  "sha256": "390099d8a928507bb36237b3cb087b0482ee79406c703f60cc893ab5ddc17019",
+  "source_commit": "effafc631d198de8e2e4101ac50ea787bc147f17",
+  "source_ref": "infra/stage4-scientific-screening",
+  "status": "complete",
+  "valid_complete_run": true,
+  "variant": null
+}
