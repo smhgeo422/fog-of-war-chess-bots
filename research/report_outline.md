@@ -204,6 +204,8 @@ Book, reserve clock, adaptive root count, special FoW endgame logic, and *final*
 
 **Stage 5 update (2026-11-22):** The P3 and P8 v2 ablations are archived. P3 covered more omitted threats with no observed change in root choice. P8 reliability shrinkage gave no ordinary holdout gain at a matched quota. There is no supported variant for confirmatory playing-strength trials. See [Stage 5 findings](STAGE5_FINDINGS.md).
 
+**Stage 6 update (2026-11-22):** The confirmation audit found zero qualifying candidates. Full-clock research comparisons and an integrated research bot are absent from the evidence. Use the [confirmation decision](STAGE6_FINDINGS.md) when describing the final results and their limits.
+
 ## References / source links (starter list)
 
 - Official FoW rules and submission instructions: https://www.mit.edu/~6.7980/fow/?tab=rules and https://www.mit.edu/~6.7980/fow/?tab=submit

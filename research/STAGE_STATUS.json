@@ -2,10 +2,10 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/stage5-guided-ablations",
+  "branch": "infra/stage6-confirmation-decision",
   "planning_pr": 4,
-  "current_stage_completed": 5,
-  "next_stage": 6,
+  "current_stage_completed": 6,
+  "next_stage": 7,
   "stages": [
     {
       "id": 0,
@@ -205,7 +205,37 @@
     {
       "id": 6,
       "name": "Confirmatory tournaments and separate integration candidate",
-      "status": "not_started"
+      "status": "completed",
+      "scope": "Confirmation eligibility decision. No qualifying candidate and no match execution.",
+      "audited_checkpoint": "ef0854163f840c17640580353e74b0ca7249badd",
+      "evidence": [
+        "research/STAGE6_FINDINGS.md",
+        "research/STAGE4_FINDINGS.md",
+        "research/STAGE5_FINDINGS.md",
+        "research/STAGE2_FINDINGS.md"
+      ],
+      "reviewed_projects": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9"
+      ],
+      "eligible_confirmatory_candidates": [],
+      "full_clock_games_scheduled": 0,
+      "full_clock_games_played": 0,
+      "final_research_candidate": null,
+      "playing_strength_verdict": "unmeasured_for_P1_to_P9",
+      "verified_local_archives": [
+        "stage4-screen-20261122",
+        "stage4-b0-b2-smoke-20261122",
+        "stage5-P3-v2",
+        "stage5-P8-v2"
+      ]
     },
     {
       "id": 7,
@@ -335,7 +365,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Stage 6 only on user instruction. Review the confirmation gate before scheduling full-clock games. No Stage 5 variant qualified. No integration candidate is supported by these results.",
+  "next_stage_action": "Stage 7 only on user instruction. Audit and package the existing evidence, including the empty confirmation slate and per-project limitations, for the final report.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,

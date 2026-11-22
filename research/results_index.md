@@ -36,3 +36,7 @@ Each experiment was independently run on its own Pn-v1 branch. The evidence incl
 - [P3 v2 referee ablation](runs/stage5-P3-v2.json). The hidden-reply slot changed retention on 18 of 32 root/world cases, with zero selected-root changes and zero measured regret gain in the paired fixture domain.
 - [P8 v2 matched-quota replay ablation](runs/stage5-P8-v2.json). The reliability-adjusted allocation failed to improve ordinary holdout regret versus v1 over 24 paired blocks. The shifted contrast was nearly zero.
 - [Stage 5 findings and dispositions](STAGE5_FINDINGS.md). Both revisions are preserved separately. None advanced to full-clock confirmation.
+
+## Stage 6 · Confirmation gate
+
+The [confirmation audit](STAGE6_FINDINGS.md) records the decision for each of the nine projects. There were zero eligible research candidates, zero 180+2 confirmation games, and no integrated research bot. Stage 4 and Stage 5 archives were reverified.

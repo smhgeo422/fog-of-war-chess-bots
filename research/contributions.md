@@ -28,3 +28,7 @@ User-directed continuation. Codex implemented the FoW screening harness, fixture
 ## Stage 5 guided-ablation attribution (2026-11-22)
 
 At the user's direction, Codex developed and tested the P8 uncertainty adjustment and the experimental P3 reply-slot selector, built the controlled ablations, ran regression tests, and archived the results. The prior team authored the underlying eBotI infoset planner, native components, and frozen comparisons. Code, tests, experimental execution, and draft findings involved substantial AI assistance. [Stage 5 findings and source records](STAGE5_FINDINGS.md)
+
+## Stage 6 confirmation audit attribution (2026-11-22)
+
+At the user's direction, Codex reviewed eligibility for each project, checked archived evidence and native component integrity, and recorded the confirmation decision. This work used substantial AI assistance for the audit and documentation. It adds no playing-strength observations. [Stage 6 confirmation decision](STAGE6_FINDINGS.md)

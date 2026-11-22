@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated": "2026-11-22",
-  "status": "stage5_guided_ablations_completed",
+  "status": "stage6_confirmation_gate_closed_no_candidate",
   "source": "research/stage0_experiment_cards.json",
   "project_ids": [
     "P1",
@@ -48,7 +48,8 @@
       "stage5_revision": {
         "disposition": "deferred_threat_bearing_histories",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P2",
@@ -83,7 +84,8 @@
       "stage5_revision": {
         "disposition": "deferred_wider_opponent_validation",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P3",
@@ -124,7 +126,8 @@
         "source_commit": "bdf80f55fa9b2b78d7372779de2957758c64aa23",
         "branch": "experiment/P3-v2-hidden-reply-slot",
         "archive_sha256": "eb81672dee9370db1655fe79ce37172d2d6779df4017de651015bb5900b6e3eb"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P4",
@@ -159,7 +162,8 @@
       "stage5_revision": {
         "disposition": "deferred_action_conditioned_forecast",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P5",
@@ -194,7 +198,8 @@
       "stage5_revision": {
         "disposition": "current_categorical_model_not_promoted",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P6",
@@ -229,7 +234,8 @@
       "stage5_revision": {
         "disposition": "deferred_extensive_form_policy_and_compute",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P7",
@@ -264,7 +270,8 @@
       "stage5_revision": {
         "disposition": "current_residual_not_promoted",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P8",
@@ -305,7 +312,8 @@
         "source_commit": "be3f507ffdb6cd4e64c5b70135ad5079966c3cce",
         "branch": "experiment/P8-v2-voc-reliability",
         "archive_sha256": "6b5c9bf25d249e3a9d7cca0b22d2f18794828222d111db387051c8d61fc409b6"
-      }
+      },
+      "stage6_confirmation_eligible": false
     },
     {
       "id": "P9",
@@ -340,7 +348,8 @@
       "stage5_revision": {
         "disposition": "one_turn_domain_closed_zero_hidden_coverage",
         "findings": "research/STAGE5_FINDINGS.md"
-      }
+      },
+      "stage6_confirmation_eligible": false
     }
   ],
   "legacy_registry": "research/experiment_registry.jsonl",
@@ -358,5 +367,11 @@
   "stage3_all_nine_remotely_verified": true,
   "stage3_playing_strength_untested": true,
   "stage4_evidence_index": "research/runs/stage4-screen-20261122.json",
-  "stage5_findings": "research/STAGE5_FINDINGS.md"
+  "stage5_findings": "research/STAGE5_FINDINGS.md",
+  "stage6_confirmation": {
+    "eligible_candidates": [],
+    "full_clock_games_played": 0,
+    "final_research_candidate": null,
+    "findings": "research/STAGE6_FINDINGS.md"
+  }
 }
