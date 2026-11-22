@@ -22,6 +22,19 @@ source="$state/stockfish-source"
 check_network() {
     printf '%s  %s\n' "$network_hash" "$1" | sha256sum --check --status
 }
+export_release_network() {
+    local destination="$1" scratch="$2"
+    local asset=stockfish-linux-x86-64-universal.tar.gz
+    local digest=9defc0d4e55d49c65a6d042f3e571a39fcea499ade6dbe741b53b8c65e03611f
+    [[ $(uname -sm) == "Linux x86_64" ]] || return 1
+    curl --fail --silent --show-error --location --retry 2 --max-time 120 \
+        "https://github.com/official-stockfish/Stockfish/releases/download/sf_19/$asset" \
+        -o "$scratch/$asset"
+    printf '%s  %s\n' "$digest" "$scratch/$asset" | sha256sum --check
+    tar -xOzf "$scratch/$asset" stockfish/stockfish-linux-x86-64-universal > "$scratch/stockfish-release"
+    chmod +x "$scratch/stockfish-release"
+    "$scratch/stockfish-release" export_net "$destination"
+}
 if ! check_network "$source/src/$network" 2>/dev/null ||
    [[ $(git -C "$source" rev-parse HEAD 2>/dev/null) != "$revision" ]] ||
    ! git -C "$source" diff --quiet HEAD; then
@@ -29,11 +42,17 @@ if ! check_network "$source/src/$network" 2>/dev/null ||
     trap 'rm -rf -- "$staging"' EXIT
     git -c advice.detachedHead=false clone --quiet --depth 1 --branch sf_19 https://github.com/official-stockfish/Stockfish.git "$staging/source"
     [[ $(git -C "$staging/source" rev-parse HEAD) == "$revision" ]]
-    curl --fail --silent --show-error --location --retry 2 --max-time 120 \
-        "https://data.stockfishchess.org/nn/$network" -o "$staging/source/src/$network" ||
-    curl --fail --silent --show-error --location --retry 2 --max-time 120 \
-        "https://raw.githubusercontent.com/official-stockfish/networks/master/$network" -o "$staging/source/src/$network"
-    check_network "$staging/source/src/$network"
+    target="$staging/source/src/$network"
+    if ! { curl --fail --silent --show-error --location --retry 2 --max-time 120 \
+        "https://data.stockfishchess.org/nn/$network" -o "$target" && check_network "$target"; }; then
+        if ! { curl --fail --silent --show-error --location --retry 2 --max-time 120 \
+            "https://raw.githubusercontent.com/official-stockfish/networks/master/$network" -o "$target" &&
+            check_network "$target"; }; then
+            export_release_network "$target" "$staging"
+        fi
+    fi
+    check_network "$target"
+    rm -f -- "$staging/stockfish-release" "$staging/stockfish-linux-x86-64-universal.tar.gz"
     rm -rf -- "$source"
     mv "$staging/source" "$source"
     rmdir "$staging"
