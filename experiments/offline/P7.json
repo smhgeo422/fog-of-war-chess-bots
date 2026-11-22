@@ -1,0 +1,8 @@
+{
+  "project_id": "P7",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "Strict online-only features and a ridge continuation-value residual predict a declared synthetic counterfactual target on untouched samples better than zero residual.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7146
+}
