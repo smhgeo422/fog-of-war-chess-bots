@@ -1,0 +1,581 @@
+{
+  "schema": 1,
+  "as_of": "2026-11-22",
+  "version": "proposal-1",
+  "frozen_taxonomy": false,
+  "decision": "nine independent testable research directions; three legacy items are shared support, not independent research",
+  "source_registry": "research/experiment_registry.jsonl",
+  "source_backlog": "research/idea_backlog.md",
+  "research_spec": "research/consolidated_contributions.md",
+  "research_projects": [
+    {
+      "id": "P1",
+      "name": "History-consistent belief reconstruction and calibration",
+      "legacy_ids": [
+        "B01",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "E04"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Opponent policy identification and adaptation",
+      "legacy_ids": [
+        "B02",
+        "B03",
+        "B08",
+        "E05"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Observation-consistent contingent tactical planning",
+      "legacy_ids": [
+        "A01",
+        "A02",
+        "A07"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Strategic value of information and denial",
+      "legacy_ids": [
+        "A03",
+        "A04",
+        "D01"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Calibrated catastrophic risk and hidden material",
+      "legacy_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "E01"
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "Bounded game-theoretic re-solving",
+      "legacy_ids": [
+        "A06",
+        "A08",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07"
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "Learned continuation-value correction",
+      "legacy_ids": [
+        "E02",
+        "E03",
+        "E07"
+      ]
+    },
+    {
+      "id": "P8",
+      "name": "Rational metareasoning under a hard clock",
+      "legacy_ids": [
+        "A05",
+        "F02",
+        "F03",
+        "F04",
+        "E06"
+      ]
+    },
+    {
+      "id": "P9",
+      "name": "Information-state endgame conversion",
+      "legacy_ids": [
+        "F05",
+        "F06"
+      ]
+    }
+  ],
+  "support_ids": [
+    "F01",
+    "F07",
+    "F08"
+  ],
+  "coverage": {
+    "legacy_count": 46,
+    "unique_assigned": 46,
+    "unmapped": []
+  },
+  "legacy_crosswalk": [
+    {
+      "legacy_id": "A01",
+      "legacy_title": "Finish two-ply observation-consistent search",
+      "research_project": "P3",
+      "project_name": "Observation-consistent contingent tactical planning",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "M; existing",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A02",
+      "legacy_title": "Information-consistent 3–5-ply tactical microsearch",
+      "research_project": "P3",
+      "project_name": "Observation-consistent contingent tactical planning",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A03",
+      "legacy_title": "Decision-focused value of information",
+      "research_project": "P4",
+      "project_name": "Strategic value of information and denial",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A04",
+      "legacy_title": "Information denial / opponent sightline model",
+      "research_project": "P4",
+      "project_name": "Strategic value of information and denial",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A05",
+      "legacy_title": "Conditional search by uncertainty and tactical motif",
+      "research_project": "P8",
+      "project_name": "Rational metareasoning under a hard clock",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A06",
+      "legacy_title": "Small KLUSS-style local game, initialized by deep Stockfish",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "L; revision",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A07",
+      "legacy_title": "Search-tree persistence and next-turn reuse",
+      "research_project": "P3",
+      "project_name": "Observation-consistent contingent tactical planning",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new architecture",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "A08",
+      "legacy_title": "Revisit one-sided GT-CFR as a bounded subroutine",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "L; revision",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B01",
+      "legacy_title": "Belief accuracy / calibration audit",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "S–M; new diagnostic",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B02",
+      "legacy_title": "Opponent-specific likelihood model",
+      "research_project": "P2",
+      "project_name": "Opponent policy identification and adaptation",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B03",
+      "legacy_title": "Forward-simulated opponent information rather than a 'blind' board",
+      "research_project": "P2",
+      "project_name": "Opponent policy identification and adaptation",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; revision",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B04",
+      "legacy_title": "Resampling, cap repair and particle rejuvenation",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B05",
+      "legacy_title": "Danger-focused, importance-corrected root sampling",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B06",
+      "legacy_title": "Learned piece-location marginals",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B07",
+      "legacy_title": "Robust ensemble posterior, not a uniform fear penalty",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "B08",
+      "legacy_title": "Opponent policy via online latent-style adaptation",
+      "research_project": "P2",
+      "project_name": "Opponent policy identification and adaptation",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C01",
+      "legacy_title": "Controlled ablation of existing `FOW_HANG`",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S–M; existing",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C02",
+      "legacy_title": "View-only geometric exposure threshold",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S–M; existing foundation / new switch",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C03",
+      "legacy_title": "Two- and three-move material danger forecast",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C04",
+      "legacy_title": "Attack probability times realistic capture propensity",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C05",
+      "legacy_title": "King-risk as win probability, not centipawn exchange",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; revision",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C06",
+      "legacy_title": "Zero-risk-first, but conditional on action quality",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S–M; existing variant",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C07",
+      "legacy_title": "Unseen-check escape policy / anti-hunt defense",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "C08",
+      "legacy_title": "Active king-hunting as a risk-conditioned strategy",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D01",
+      "legacy_title": "Safe tactical bluff score",
+      "research_project": "P4",
+      "project_name": "Strategic value of information and denial",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D02",
+      "legacy_title": "Restricted root security game",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D03",
+      "legacy_title": "Strategy purification and stable mixing",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "S–M; new to Stockfish path",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D04",
+      "legacy_title": "Resolve/Maxmargin switch and opponent root priors",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; paper-derived revision",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D05",
+      "legacy_title": "PCFR+ update schedule and convergence diagnostics",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; solver optimization",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D06",
+      "legacy_title": "Robust policy versus opponent-specific best response",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "D07",
+      "legacy_title": "Opponent population / PSRO-lite",
+      "research_project": "P6",
+      "project_name": "Bounded game-theoretic re-solving",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L–XL; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E01",
+      "legacy_title": "Supervised next-ply fog hazard model",
+      "research_project": "P5",
+      "project_name": "Calibrated catastrophic risk and hidden material",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E02",
+      "legacy_title": "Lightweight FoW-specific value residual",
+      "research_project": "P7",
+      "project_name": "Learned continuation-value correction",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E03",
+      "legacy_title": "Distill expensive information-set search",
+      "research_project": "P7",
+      "project_name": "Learned continuation-value correction",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E04",
+      "legacy_title": "Learned state proposal distribution",
+      "research_project": "P1",
+      "project_name": "History-consistent belief reconstruction and calibration",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E05",
+      "legacy_title": "Opponent-policy imitation from replay corpus",
+      "research_project": "P2",
+      "project_name": "Opponent policy identification and adaptation",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E06",
+      "legacy_title": "Search-quality teacher and compute scheduler",
+      "research_project": "P8",
+      "project_name": "Rational metareasoning under a hard clock",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "E07",
+      "legacy_title": "End-to-end RL / PSRO deep self-play",
+      "research_project": "P7",
+      "project_name": "Learned continuation-value correction",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "XL; research stretch",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F01",
+      "legacy_title": "Opening protocol / repertoire",
+      "research_project": "SUPPORT",
+      "project_name": "Shared engineering / integration (not a standalone contribution)",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S–M; existing book + extension",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F02",
+      "legacy_title": "Clock allocation with survival reserve",
+      "research_project": "P8",
+      "project_name": "Rational metareasoning under a hard clock",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S; existing",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F03",
+      "legacy_title": "Adaptive state count vs Stockfish depth",
+      "research_project": "P8",
+      "project_name": "Rational metareasoning under a hard clock",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F04",
+      "legacy_title": "Progressive candidate pruning and correlated evaluation",
+      "research_project": "P8",
+      "project_name": "Rational metareasoning under a hard clock",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F05",
+      "legacy_title": "Special-case terminal/endgame solver",
+      "research_project": "P9",
+      "project_name": "Information-state endgame conversion",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F06",
+      "legacy_title": "King chase and winning conversion without overplaying",
+      "research_project": "P9",
+      "project_name": "Information-state endgame conversion",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M; new",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F07",
+      "legacy_title": "CPU, packaging and protocol optimization",
+      "research_project": "SUPPORT",
+      "project_name": "Shared engineering / integration (not a standalone contribution)",
+      "original_status": "existing_code_or_foundation_needs_validation",
+      "prior_code_or_foundation": true,
+      "original_effort_estimate": "S–M; infrastructure",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    },
+    {
+      "legacy_id": "F08",
+      "legacy_title": "Hybrid portfolio arbitration",
+      "research_project": "SUPPORT",
+      "project_name": "Shared engineering / integration (not a standalone contribution)",
+      "original_status": "proposed",
+      "prior_code_or_foundation": false,
+      "original_effort_estimate": "M–L; capstone",
+      "classification": "proposal_or_subexperiment_not_independent_claim"
+    }
+  ]
+}
