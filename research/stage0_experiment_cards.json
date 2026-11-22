@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "prepared_on": "2026-11-22",
+  "status": "preregistered_design_only",
+  "literature": "research/stage0_literature_review.md",
+  "preregistration": "research/stage0_preregistration.md",
+  "data_seeds_splits_pending_stage": 2,
+  "projects": [
+    {
+      "id": "P1",
+      "name": "History-consistent belief reconstruction and posterior calibration",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Calibrated risk-stratified sampler on existing legal states",
+      "primary_endpoint": "Held-out per-game hidden-attack Brier score",
+      "control": "Original posterior sampler at equal Stockfish calls",
+      "toy_validity_gate": "Synthetic exact history posterior; no zero proposal mass",
+      "stop_or_falsification": "Support missing, low ESS or worse calibration without playing advantage",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P1/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P2",
+      "name": "Opponent policy identification and online adaptation",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Shrinkage style-expert mixture with event-level Bayesian update",
+      "primary_endpoint": "Held-out opponent-action NLL and observable-transition NLL",
+      "control": "Existing one-ply Stockfish likelihood with uniform floor",
+      "toy_validity_gate": "Ambiguous hidden actions share one observable event; normalize OTHER probability",
+      "stop_or_falsification": "No opponent-held-out likelihood gain or online hidden-action leakage",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P2/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P3",
+      "name": "Observation-consistent contingent tactical search",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Correct two-ply infoset implementation with policy-consistent action grouping",
+      "primary_endpoint": "Matched-CPU regret to high-budget observation-consistent policy",
+      "control": "Existing FOW_INFOSET and depth-only Stockfish",
+      "toy_validity_gate": "Two hidden boards same view force same next action; special move legality",
+      "stop_or_falsification": "No valid aliasing benefit or depth loss cancels gains",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P3/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P4",
+      "name": "Strategic value of information and denial",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Cheap decision-focused VOI/denial estimator at fixed immediate value",
+      "primary_endpoint": "Incremental instrumental information value on matched actions",
+      "control": "Entropy and square-count information bonuses; baseline decision value",
+      "toy_validity_gate": "Revealing irrelevant squares yields near-zero value",
+      "stop_or_falsification": "Duplicate P3 valuation or only material proxy predicts bonus",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P4/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P5",
+      "name": "Calibrated catastrophic risk and material preservation",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Calibrated selective quiet-piece loss model with capture exception",
+      "primary_endpoint": "Held-out unseen material/king event probability Brier",
+      "control": "Existing HANG/SAFE_FIRST/FOG_TAX and baseline value",
+      "toy_validity_gate": "Quiet exposed piece vs profitable fog capture; no double count",
+      "stop_or_falsification": "Lower losses without wins, worse calibration, excessive passivity",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P5/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P6",
+      "name": "Bounded game-theoretic re-solving",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Tiny deep-leaf restricted zero-sum information-set solver",
+      "primary_endpoint": "Exploitability/security on exactly solved toy games",
+      "control": "Existing GT-CFR and deep Stockfish greedy policy",
+      "toy_validity_gate": "Known equilibrium, counterfactual reach and regret convergence",
+      "stop_or_falsification": "Toy exploitability incorrect or runtime defeats leaf quality",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P6/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P7",
+      "name": "Learned continuation-value correction",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Regularized observation-only residual over Stockfish value",
+      "primary_endpoint": "Held-out per-game value prediction error on declared target",
+      "control": "Stockfish-only plus constant/risk-only residual",
+      "toy_validity_gate": "Future truth feature leakage sentinel; permuted-label negative control",
+      "stop_or_falsification": "Prediction gain not robust or action gains absent",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P7/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P8",
+      "name": "Rational metareasoning under hard clock",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Cheap value-of-computation stopping/slice policy",
+      "primary_endpoint": "Holdout decision regret at equal total CPU and chess clock",
+      "control": "Existing reserve time and fixed root-depth allocations",
+      "toy_validity_gate": "Near-certain action has low VOC; ambiguous can have positive VOC",
+      "stop_or_falsification": "Controller overhead, latency or flags erase matched-budget gain",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P8/proposal.md",
+      "runs": [],
+      "result": null
+    },
+    {
+      "id": "P9",
+      "name": "Information-state endgame conversion",
+      "status": "proposed_not_implemented",
+      "initial_intervention": "Restricted exact belief-state capture reachability policy",
+      "primary_endpoint": "No false winning certificates on enumerated domain; coverage",
+      "control": "Baseline Stockfish endgame and known FUN 2026 theorems",
+      "toy_validity_gate": "Exhaustive witness and adversarial counterstrategy on declared set",
+      "stop_or_falsification": "False certificate, theorem-rule mismatch or intractable domain",
+      "hard_dependencies": [
+        "Stage 1 archival+P-id support",
+        "Stage 2 baseline and data"
+      ],
+      "optional_research_dependencies": [],
+      "spec": "research/projects/P9/proposal.md",
+      "runs": [],
+      "result": null
+    }
+  ]
+}
