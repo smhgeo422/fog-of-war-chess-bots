@@ -1,0 +1,8 @@
+{
+  "project_id": "P5",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "Class-conditional calibrated catastrophic loss probabilities can selectively penalize exposed quiet moves without penalizing every fog capture.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7144
+}
