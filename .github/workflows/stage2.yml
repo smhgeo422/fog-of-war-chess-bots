@@ -26,6 +26,7 @@ jobs:
       - name: Set up frozen and experimental control bots
         run: |
           set -euo pipefail
+          mkdir -p data/research/setup
           tools/setup-experiments.sh 2>&1 | tee data/research/setup/stage2-setup.log
       - name: Build referee-replay corpus and audit baseline action parity
         run: |
