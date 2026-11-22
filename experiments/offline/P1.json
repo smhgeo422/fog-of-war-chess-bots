@@ -1,8 +1,8 @@
 {
   "project_id": "P1",
-  "variant": "v0",
-  "purpose": "smoke",
-  "hypothesis": "The offline evidence pipeline can retain checksummed synthetic labels and model assets without implying a scientific result.",
-  "script": "tools/offline_jobs/smoke.py",
-  "seed": 7106
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "A threat-stratified mixture proposal with p/q importance weights should preserve legal posterior support and produce valid rare hidden-attack estimates.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7140
 }
