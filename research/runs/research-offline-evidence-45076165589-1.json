@@ -1,0 +1,30 @@
+{
+  "archive": "research-offline-P3-actions-45076165589-1.tar.gz",
+  "archive_sha256": "a4d8bc7514cc5f16d2acb5cf80f7cb72c7207ec98ec0f2e0a2b6fe5a9ff80db5",
+  "archive_urls": {},
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "tracked Stage 3 synthetic fixtures generated from toy models; no use of private arena replays, official match data, or Stage 2 holdout labels",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "Grouping future policy choices by observation and public history eliminates impossible clairvoyant strategy-fusion optimism.",
+  "primary_metric": {
+    "n": 2,
+    "name": "bounded_contingent_strategy_fusion_gap",
+    "value": 0.5
+  },
+  "purpose": "research",
+  "release_tag": "research-offline-evidence-45076165589-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-e24ef614cb7c593f8bdf",
+  "research_id": "P3",
+  "run_id": "actions-45076165589-1",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage3.py",
+  "sha256": "a4d8bc7514cc5f16d2acb5cf80f7cb72c7207ec98ec0f2e0a2b6fe5a9ff80db5",
+  "source_commit": "037f595cc6adee37132ed3e9aa03ab96d113707d",
+  "source_ref": "experiment/P3-v1-toy-kernel",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": "v1",
+  "verified_remote": true
+}
