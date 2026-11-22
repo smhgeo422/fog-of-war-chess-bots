@@ -1,0 +1,30 @@
+{
+  "archive": "research-offline-P2-actions-45076160806-1.tar.gz",
+  "archive_sha256": "b5aeede6e852ba62312202dbec32541aeff534365aa7ad8132c9f59301a981f6",
+  "archive_urls": {},
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "tracked Stage 3 synthetic fixtures generated from toy models; no use of private arena replays, official match data, or Stage 2 holdout labels",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "A probability-floor mixture of style experts updated on observable event equivalence classes should learn opponent tendencies without observing hidden moves.",
+  "primary_metric": {
+    "n": 180,
+    "name": "observable_event_style_model_retrospective_action_nll",
+    "value": 0.6685362152868636
+  },
+  "purpose": "research",
+  "release_tag": "research-offline-evidence-45076160806-1",
+  "release_url": "https://github.com/smhgeo422/fog-of-war-chess-bots/releases/tag/untagged-6571faad9e7139a9dfa1",
+  "research_id": "P2",
+  "run_id": "actions-45076160806-1",
+  "schema": 1,
+  "script": "tools/offline_jobs/stage3.py",
+  "sha256": "b5aeede6e852ba62312202dbec32541aeff534365aa7ad8132c9f59301a981f6",
+  "source_commit": "d90ee982e78630bde657a8473d1c15832396a516",
+  "source_ref": "experiment/P2-v1-toy-kernel",
+  "status": "complete",
+  "storage": "draft-release",
+  "valid_complete_run": true,
+  "variant": "v1",
+  "verified_remote": true
+}
