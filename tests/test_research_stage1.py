@@ -1,6 +1,7 @@
 """Stage 1: project IDs, offline scientific assets, checksum and no-strength guards."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -216,3 +217,53 @@ def test_downloaded_release_bundle_detects_tampered_sidecar_and_catalog(tmp_path
     dump(catalog, data)
     with pytest.raises(ValueError, match="identity mismatch"):
         verify_bundle(archive_file, sidecar, catalog)
+
+
+def test_release_permission_denial_falls_back_to_verified_git_branch(monkeypatch, tmp_path):
+    from tools import persist_research_evidence as publisher
+    run = sample_offline(tmp_path, project="P1", variant="v1", purpose="research")
+    new = tmp_path / "actions-123-1"
+    run.rename(new)
+    manifest = json.loads((new / "manifest.json").read_text())
+    manifest["run_id"] = new.name
+    dump(new / "manifest.json", manifest)
+    archive(new, tmp_path / "bundle", "P1")
+    stored = {}
+
+    def no_release(*args):
+        raise RuntimeError("HTTP 403: Resource not accessible by integration")
+
+    def fake_gh(*args, stdin=None):
+        if args[0] == "--method" and args[1] == "PUT":
+            dest = args[2].split("/contents/", 1)[1]
+            assert dest not in stored
+            stored[dest] = json.loads(stdin)["content"]
+            return {"content": {"path": dest}}
+        assert args[0].startswith("repos/") and "/contents/" in args[0]
+        dest = args[0].split("/contents/", 1)[1].split("?ref=", 1)[0]
+        if dest not in stored:
+            raise RuntimeError("Missing fake remote file " + dest)
+        return {"content": stored[dest], "encoding": "base64"}
+
+    monkeypatch.setattr(publisher, "gh_cli", no_release)
+    monkeypatch.setattr(publisher, "gh", fake_gh)
+    storage, location = publisher.publish(
+        tmp_path / "bundle", "offline", "owner/repository",
+        "experiment/P1-v1-test", "c" * 40, "actions-123-1")
+    assert storage["storage"] == "git-branch"
+    assert storage["release_url"] is None
+    assert "research/runs/research-offline-evidence-123-1.json" in location
+    saved = [k for k in stored if k.startswith("research/archives/")]
+    assert len(saved) == 3
+    for k in saved:
+        assert base64.b64decode(stored[k])
+
+
+def test_archive_publisher_rejects_other_revision(monkeypatch, tmp_path):
+    from tools import persist_research_evidence as publisher
+    run = sample_offline(tmp_path)
+    archive(run, tmp_path / "bundle", "P1")
+    with pytest.raises(ValueError, match="workflow source"):
+        publisher.publish(tmp_path / "bundle", "offline",
+                          "owner/repository", "experiment/P1-v1-test",
+                          "a" * 40, run.name)
