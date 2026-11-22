@@ -1,0 +1,8 @@
+{
+  "project_id": "P9",
+  "variant": "v1",
+  "purpose": "research",
+  "hypothesis": "A finite reachability solver certifies wins only with a common action across hidden worlds and universal adversarial successor checks.",
+  "script": "tools/offline_jobs/stage3.py",
+  "seed": 7148
+}
