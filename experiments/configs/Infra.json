@@ -1,0 +1,13 @@
+{
+  "id": "Infra-full-game-smoke",
+  "hypothesis": "Verify uncapped, color-swapped Fog of War games terminate normally and preserve complete replay evidence in a draft release and indexed GitHub record; this is infrastructure validation only.",
+  "candidate": "obscuro",
+  "baseline": "greedy",
+  "purpose": "smoke",
+  "games": 2,
+  "seed": 2026112202,
+  "base": 45,
+  "increment": 0.5,
+  "max_plies": 1000,
+  "parallel": 1
+}
