@@ -40,6 +40,11 @@ jobs:
             tail -80 "$RUNNER_TEMP/pytest.log"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+          if (( test_status != 0 )); then
+            while IFS= read -r failure; do
+              printf '::error::%s\n' "${failure//%/%25}"
+            done < <(grep -E '^(FAILED |ERROR |E +)' "$RUNNER_TEMP/pytest.log" | tail -15)
+          fi
           exit "$test_status"
       - name: Verify validation artifacts
         run: |
