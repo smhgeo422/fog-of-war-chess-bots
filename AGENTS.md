@@ -1,6 +1,6 @@
 # Instructions for research coding agents
 
-This fork is the **experimental** Fog of War Chess repository. Before working on a research task, read `research/idea_backlog.md`, `research/experiment_registry.jsonl`, `research/report_outline.md`, `experiments/AUTOMATION.md`, `APPROACHES.md`, and the relevant `docs/research/` notes. Preserve the distinction between earlier team work and new contributions.
+This fork is the **experimental** Fog of War Chess repository. Before working on a research task, read `research/queue.json`, `research/idea_backlog.md`, `research/experiment_registry.jsonl`, `research/report_outline.md`, `experiments/AUTOMATION.md`, `APPROACHES.md`, and the relevant `docs/research/` notes. Preserve the distinction between earlier team work and new contributions.
 
 ## Scope and safety
 
@@ -13,7 +13,7 @@ This fork is the **experimental** Fog of War Chess repository. Before working on
 
 ## One research item at a time
 
-1. Select the next appropriate uncompleted idea, respecting the priority and dependency groups in `research/idea_backlog.md`. Verify its current status in `research/experiment_registry.jsonl` and existing source files.
+1. Select the first feasible uncompleted idea from `research/queue.json`, cross-checking the existing code, constraints, and evidence in `research/idea_backlog.md`. Record a specific reason for deferring blocked high-cost ideas rather than pretending they were tested. Verify its current status in `research/experiment_registry.jsonl` and existing source files.
 2. Write a falsifiable hypothesis, scope of implementation, baseline, planned ablations, compute budget, and measurable success/failure diagnostics.
 3. Implement and write meaningful correctness and regression tests; do not alter the frozen bots or trust unverified external full-board information during play.
 4. Add a committed `experiments/configs/<ID>.json` file. On `experiment/<ID>-...` branches, a commit message containing `[run experiment]` triggers the hosted CI and experiment runner.
