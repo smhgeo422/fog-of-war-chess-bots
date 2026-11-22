@@ -108,7 +108,9 @@ def validate_replay(replay):
 
 
 def pair_seed(root_seed, block, swap, side):
-    raw = f"stage2-corpus|{root_seed}|{block}|{swap}|{int(side)}".encode()
+    # Keep the same random stream for the same policy when colors swap.
+    role = "left" if bool(side) == (swap == 0) else "right"
+    raw = f"stage2-corpus|{root_seed}|{block}|{role}".encode()
     return int.from_bytes(hashlib.sha256(raw).digest()[:8], "big")
 
 
