@@ -113,75 +113,13 @@ jobs:
             --run "$run_dir" \
             --output data/research/archive \
             --research-id "${RESEARCH_ID:-Infra}"
-      - name: Persist full evidence in a draft GitHub Release
+      - name: Publish durable game evidence and verify remote bytes
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          cd data/research/archive
-          shopt -s nullglob
-          archives=(*.tar.gz)
-          if [[ ${#archives[@]} -ne 1 ]]; then
-            echo "Expected exactly one verified archive; refusing to publish incomplete data."
-            exit 1
-          fi
-          file="${archives[0]}"
-          stem="${file%.tar.gz}"
-          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          gh release create "$tag" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
-            --draft \
-            --title "[research evidence] $stem" \
-            --notes-file "$stem.md" \
-            "$file" "$stem.sha256" "$stem.json"
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
-            --json isDraft,assets,tagName \
-            --jq '{tagName, isDraft, names: [.assets[].name]}'
-      - name: Re-download and independently verify archived game evidence
-        id: verify_game_release
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          mkdir -p data/research/downloaded-game
-          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir data/research/downloaded-game
-          shopt -s nullglob
-          archives=(data/research/downloaded-game/*.tar.gz)
-          hashes=(data/research/downloaded-game/*.sha256)
-          catalogs=(data/research/downloaded-game/*.json)
-          [[ ${#archives[@]} -eq 1 && ${#hashes[@]} -eq 1 && ${#catalogs[@]} -eq 1 ]]
-          .venv/bin/python tools/verify_research_archive.py --archive ${archives[0]} --sha256-file ${hashes[0]} --catalog ${catalogs[0]}
-
-      - name: Commit permanent results index to the experiment branch
-        if: always() && steps.verify_game_release.outcome == 'success'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          cd data/research/archive
-          shopt -s nullglob
-          catalogs=(*.json)
-          if [[ ${#catalogs[@]} -ne 1 ]]; then
-            echo "No complete catalog to index."
-            exit 1
-          fi
-          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          release_url=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json url --jq .url)
-          python3 - "${catalogs[0]}" "$tag" "$GITHUB_REF_NAME" "$GITHUB_REPOSITORY" "$release_url" > request.json <<'PY'
-          import base64, json, sys
-          source, tag, branch, repo, release_url = sys.argv[1:]
-          record = json.load(open(source, encoding='utf-8'))
-          record['release_tag'] = tag
-          record['release_url'] = release_url
-          raw = (json.dumps(record, sort_keys=True, indent=2) + '\n').encode()
-          print(json.dumps({'message': 'Record archived research experiment ' + tag,
-                            'branch': branch, 'content': base64.b64encode(raw).decode()}))
-          PY
-          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/research/runs/$tag.json" --input request.json
+          .venv/bin/python tools/persist_research_evidence.py --archive-dir data/research/archive --type game
       - name: Preserve experiment and logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -233,76 +171,13 @@ jobs:
             --run "$run" --output data/research/offline_archive \
             --research-id "${RESEARCH_ID:?missing research ID}"
 
-      - name: Persist offline evidence in a draft GitHub Release
+      - name: Publish durable offline evidence and verify remote bytes
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          cd data/research/offline_archive
-          shopt -s nullglob
-          archives=(*.tar.gz)
-          if [[ ${#archives[@]} -ne 1 ]]; then
-            echo "Expected exactly one verified archive; refusing to publish incomplete data."
-            exit 1
-          fi
-          file="${archives[0]}"
-          stem="${file%.tar.gz}"
-          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          gh release create "$tag" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
-            --draft \
-            --title "[research evidence] $stem" \
-            --notes-file "$stem.md" \
-            "$file" "$stem.sha256" "$stem.json"
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
-            --json isDraft,assets,tagName \
-            --jq '{tagName, isDraft, names: [.assets[].name]}'
-      - name: Re-download and independently verify archived offline evidence
-        id: verify_offline_release
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          mkdir -p data/research/downloaded-offline
-          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir data/research/downloaded-offline
-          shopt -s nullglob
-          archives=(data/research/downloaded-offline/*.tar.gz)
-          hashes=(data/research/downloaded-offline/*.sha256)
-          catalogs=(data/research/downloaded-offline/*.json)
-          [[ ${#archives[@]} -eq 1 && ${#hashes[@]} -eq 1 && ${#catalogs[@]} -eq 1 ]]
-          .venv/bin/python tools/verify_research_archive.py --archive ${archives[0]} --sha256-file ${hashes[0]} --catalog ${catalogs[0]}
-
-      - name: Commit permanent offline results index
-        if: always() && steps.verify_offline_release.outcome == 'success'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          cd data/research/offline_archive
-          shopt -s nullglob
-          catalogs=(*.json)
-          if [[ ${#catalogs[@]} -ne 1 ]]; then
-            echo "No complete catalog to index."
-            exit 1
-          fi
-          tag="research-offline-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-          release_url=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json url --jq .url)
-          python3 - "${catalogs[0]}" "$tag" "$GITHUB_REF_NAME" "$GITHUB_REPOSITORY" "$release_url" > request.json <<'PY'
-          import base64, json, sys
-          source, tag, branch, repo, release_url = sys.argv[1:]
-          record = json.load(open(source, encoding='utf-8'))
-          record['release_tag'] = tag
-          record['release_url'] = release_url
-          raw = (json.dumps(record, sort_keys=True, indent=2) + '\n').encode()
-          print(json.dumps({'message': 'Record archived offline experiment ' + tag,
-                            'branch': branch, 'content': base64.b64encode(raw).decode()}))
-          PY
-          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/research/runs/$tag.json" --input request.json
-
+          .venv/bin/python tools/persist_research_evidence.py --archive-dir data/research/offline_archive --type offline
       - name: Preserve offline job and archive in temporary Actions artifact
         if: always()
         uses: actions/upload-artifact@v4
