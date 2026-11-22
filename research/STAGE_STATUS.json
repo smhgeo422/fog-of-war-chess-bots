@@ -2,7 +2,7 @@
   "schema": 1,
   "project": "fog-of-war-chess-research",
   "updated": "2026-11-22",
-  "branch": "infra/p1-p9-research-pipeline",
+  "branch": "infra/stage2-baselines-corpus",
   "planning_pr": 4,
   "current_stage_completed": 1,
   "next_stage": 2,
@@ -50,7 +50,18 @@
     {
       "id": 2,
       "name": "Frozen baseline parity and offline replay corpus",
-      "status": "not_started"
+      "status": "in_progress",
+      "planned_artifacts": [
+        "research/STAGE2_DESIGN.md",
+        "tools/stage2_corpus.py",
+        "tools/stage2_parity.py",
+        "tools/stage2_pipeline.py",
+        ".github/workflows/stage2.yml",
+        "tests/test_stage2.py",
+        "tools/experiment.py",
+        "research/stage2_baseline_results.md"
+      ],
+      "status_reason": "Corpus/rule/parity CI and hosted archive are being validated; neither expected control match nor dataset is yet claimed complete."
     },
     {
       "id": 3,
@@ -155,7 +166,7 @@
     "Planning PR #4 remains unmerged and draft"
   ],
   "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
-  "next_stage_action": "Stage 2: establish frozen v4/eBotI control action parity, validate referee replay/observation rules, build leakage-safe training/development/holdout corpus with provenance, and freeze match configurations before any new algorithm experiment.",
+  "next_stage_action": "Complete all Stage 2 hosted checks, verify the corpus archive and baseline control runs, then start Stage 3 only when explicitly requested.",
   "stage1_pr": 5,
   "stage1_smoke_branch": "experiment/P1-v0-pipeline-smoke",
   "stage1_smoke_run": 45071213893,
@@ -211,5 +222,19 @@
     "P1 through P9 and prior A01..F99/Infra identifiers are supported; active P workflows include version traceability.",
     "Hosted release publication and release re-download verification passed on run 45071213893.",
     "The GitHub branch fallback is unit-tested for a simulated release denial, but not yet exercised as the successful storage path in a hosted run."
-  ]
+  ],
+  "stage2_control_branches": [
+    "experiment/Infra-stage2-b1-parity-profile",
+    "experiment/Infra-stage2-b2-current-default"
+  ],
+  "stage2_corpus_plan": {
+    "seed": 7106,
+    "synthetic_games": 72,
+    "color_swapped_blocks": 36,
+    "train_games": 36,
+    "development_games": 12,
+    "holdout_games": 12,
+    "opponent_shift_games": 12
+  },
+  "stage2_does_not_implement_research_algorithms": true
 }
