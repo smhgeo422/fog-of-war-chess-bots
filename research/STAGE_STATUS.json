@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "project": "fog-of-war-chess-research",
+  "updated": "2026-11-22",
+  "branch": "research/nine-independent-directions",
+  "planning_pr": 4,
+  "current_stage_completed": 0,
+  "next_stage": 1,
+  "stages": [
+    {
+      "id": 0,
+      "name": "Deep research specification and preregistration",
+      "status": "completed",
+      "evidence": [
+        "research/consolidated_contributions.md",
+        "research/consolidated_crosswalk.json",
+        "research/stage0_literature_review.md",
+        "research/stage0_preregistration.md",
+        "research/stage0_dependency_map.md",
+        "research/stage0_experiment_cards.json",
+        "research/projects/P1/proposal.md",
+        "research/projects/P2/proposal.md",
+        "research/projects/P3/proposal.md",
+        "research/projects/P4/proposal.md",
+        "research/projects/P5/proposal.md",
+        "research/projects/P6/proposal.md",
+        "research/projects/P7/proposal.md",
+        "research/projects/P8/proposal.md",
+        "research/projects/P9/proposal.md"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Reproducible P1–P9 infrastructure and archival smoke",
+      "status": "not_started"
+    },
+    {
+      "id": 2,
+      "name": "Frozen baseline parity and offline replay corpus",
+      "status": "not_started"
+    },
+    {
+      "id": 3,
+      "name": "Independent algorithm v1 implementations",
+      "status": "not_started"
+    },
+    {
+      "id": 4,
+      "name": "Offline and short-game screening evidence",
+      "status": "not_started"
+    },
+    {
+      "id": 5,
+      "name": "Hypothesis-driven algorithm versions and ablations",
+      "status": "not_started"
+    },
+    {
+      "id": 6,
+      "name": "Confirmatory tournaments and separate integration candidate",
+      "status": "not_started"
+    },
+    {
+      "id": 7,
+      "name": "Archive verification and report-ready evidence package",
+      "status": "not_started"
+    }
+  ],
+  "research_projects": [
+    {
+      "id": "P1",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P1/proposal.md",
+      "versions": "research/projects/P1/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P2",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P2/proposal.md",
+      "versions": "research/projects/P2/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P3",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P3/proposal.md",
+      "versions": "research/projects/P3/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P4",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P4/proposal.md",
+      "versions": "research/projects/P4/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P5",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P5/proposal.md",
+      "versions": "research/projects/P5/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P6",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P6/proposal.md",
+      "versions": "research/projects/P6/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P7",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P7/proposal.md",
+      "versions": "research/projects/P7/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P8",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P8/proposal.md",
+      "versions": "research/projects/P8/variants.jsonl",
+      "verified_results": 0
+    },
+    {
+      "id": "P9",
+      "status": "proposed_not_implemented",
+      "document": "research/projects/P9/proposal.md",
+      "versions": "research/projects/P9/variants.jsonl",
+      "verified_results": 0
+    }
+  ],
+  "legacy_backlog_preserved": true,
+  "machine_checked_legacy_count": 46,
+  "no_scheduled_research": true,
+  "main_untouched_by_stage0": true,
+  "no_algorithm_implementation_in_stage0": true,
+  "no_research_tournaments_in_stage0": true,
+  "limitations": [
+    "Course permission check and dataset provenance follow in Stage 2",
+    "Precise match seeds/opponent holdouts instantiated in Stage 2 before observing new outcomes",
+    "Stage 1 must migrate GitHub Actions A01-style parser to P1–P9 identifiers",
+    "Planning PR #4 remains unmerged and draft"
+  ],
+  "stage_transition_rule": "Proceed only on explicit user instruction. If a stage is incomplete, preserve it as incomplete rather than incrementing.",
+  "next_stage_action": "Implement P1–P9 workflow naming, test/per-run evidence schemas and archive smoke on a non-main branch; do not implement playing strategies."
+}
