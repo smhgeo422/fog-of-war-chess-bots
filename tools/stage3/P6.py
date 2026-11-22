@@ -71,16 +71,23 @@ def solve(matrix, iterations=5000):
 def trial(seed=719):
     matching = [[1.0, -1.0], [-1.0, 1.0]]
     rps = [[0.0, -1.0, 1.0], [1.0, 0.0, -1.0], [-1.0, 1.0, 0.0]]
+    asymmetric = [[3.0, 0.0], [0.0, 1.0]]
     one = solve(matching, 6000)
     two = solve(rps, 6000)
+    three = solve(asymmetric, 6000)
     # Pure deterministic strategy has security value -1; equilibrium mixes.
     assert one["certificate"]["exploitability_gap"] < 0.08, one
     assert two["certificate"]["exploitability_gap"] < 0.10, two
+    assert three["certificate"]["exploitability_gap"] < 0.04
+    assert abs(three["row_policy"][0] - 0.25) < 0.05
+    assert abs(three["col_policy"][0] - 0.25) < 0.05
+    assert abs(three["certificate"]["value"] - 0.75) < 0.05
     assert abs(one["certificate"]["value"]) < 0.08
     assert abs(one["row_policy"][0] - 0.5) < 0.08
     assert one["certificate"]["row_security_value"] > -0.2
     assert certificate(matching, [1, 0], [1, 0])["row_security_value"] == -1
     return {"primary_metric": "exact best-response exploitability gap, zero-sum toy games",
             "matching_pennies": one, "rock_paper_scissors": two,
+            "asymmetric_nonuniform_equilibrium": three,
             "pure_policy_worst_case": -1.0,
             "limitations": "Correct normal-form local solver only; no FoW infosets, blueprint safety guarantees, or Stockfish leaf cost yet."}
