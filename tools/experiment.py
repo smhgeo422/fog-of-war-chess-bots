@@ -90,7 +90,7 @@ def load_settings(path, identifier):
         "baseline_args": [],
     }
     config = json.loads(path.read_text())
-    unknown = config.keys() - (settings.keys() | {"id", "candidate", "games", "seed", "hypothesis"})
+    unknown = config.keys() - (settings.keys() | {"id", "candidate", "games", "seed", "hypothesis", "project_id", "variant"})
     if unknown:
         raise ValueError(f"unknown settings {sorted(unknown)}")
     settings.update(config)
@@ -99,6 +99,15 @@ def load_settings(path, identifier):
     for key in ("id", "candidate", "baseline"):
         if not isinstance(settings[key], str) or not NAME.fullmatch(settings[key]):
             raise ValueError(f"invalid {key}")
+    if "project_id" in settings:
+        from research_ids import research_id, research_variant
+        project = research_id(settings["project_id"])
+        if re.fullmatch(r"P[1-9]", project):
+            research_variant(settings.get("variant"), project=project)
+        elif settings.get("variant") is not None:
+            raise ValueError("legacy runs must not declare a P-project variant")
+    elif "variant" in settings:
+        raise ValueError("variant requires project_id")
     if settings["candidate"] == settings["baseline"]:
         raise ValueError("candidate and baseline must be distinct bot directories")
     for key in ("games", "seed", "parallel", "engines", "max_plies"):
