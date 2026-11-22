@@ -84,7 +84,7 @@ def mse(rows, coefficients=None):
 def mock_view(rng):
     own_count = rng.randrange(6, 17)
     enemy_count = rng.randrange(1, 10)
-    unknown_count = rng.randrange(10, 43)
+    unknown_count = rng.randrange(10, min(43, 64 - own_count - enemy_count) + 1)
     chars = "P" * own_count + "p" * enemy_count + "?" * unknown_count
     chars += "-" * (64 - len(chars))
     chars = list(chars)
