@@ -22,8 +22,12 @@ sys.path.insert(0, str(ROOT))
 import fow  # noqa: F401,E402
 import chess  # noqa: E402
 import referee  # noqa: E402
-from stage2_corpus import build, audit, write_json
-from stage2_parity import B0, B1, B2, B1_ENV, static_audit, black_box_probe, verified_source_hashes
+try:
+    from .stage2_corpus import build, audit, write_json
+    from .stage2_parity import B0, B1, B2, B1_ENV, static_audit, black_box_probe, verified_source_hashes
+except ImportError:  # standalone tools/stage2_pipeline.py CLI
+    from stage2_corpus import build, audit, write_json
+    from stage2_parity import B0, B1, B2, B1_ENV, static_audit, black_box_probe, verified_source_hashes
 
 
 def git(*args):
