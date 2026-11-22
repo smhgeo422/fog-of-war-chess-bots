@@ -127,6 +127,31 @@ jobs:
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
             --json isDraft,assets,tagName \
             --jq '{tagName, isDraft, names: [.assets[].name]}'
+      - name: Commit permanent results index to the experiment branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd data/research/archive
+          shopt -s nullglob
+          catalogs=(*.json)
+          if [[ ${#catalogs[@]} -ne 1 ]]; then
+            echo "No complete catalog to index."
+            exit 1
+          fi
+          tag="research-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          python3 - "${catalogs[0]}" "$tag" "$GITHUB_REF_NAME" "$GITHUB_REPOSITORY" > request.json <<'PY'
+          import base64, json, sys
+          source, tag, branch, repo = sys.argv[1:]
+          record = json.load(open(source, encoding='utf-8'))
+          record['release_tag'] = tag
+          record['release_url'] = 'https://github.com/' + repo + '/releases/tag/' + tag
+          raw = (json.dumps(record, sort_keys=True, indent=2) + '\n').encode()
+          print(json.dumps({'message': 'Record archived research experiment ' + tag,
+                            'branch': branch, 'content': base64.b64encode(raw).decode()}))
+          PY
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/research/runs/$tag.json" --input request.json
       - name: Preserve experiment and logs
         if: always()
         uses: actions/upload-artifact@v4
