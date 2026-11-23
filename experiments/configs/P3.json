@@ -1,0 +1,15 @@
+{
+  "id": "followup-p3-game-positions",
+  "project_id": "P3",
+  "variant": "v3",
+  "hypothesis": "Collect paired short-clock reference histories for an offline reply-coverage and event-availability audit.",
+  "purpose": "smoke",
+  "candidate": "eBotI",
+  "baseline": "obscuro_v4",
+  "games": 6,
+  "seed": 87341,
+  "base": 24,
+  "increment": 0.1,
+  "max_plies": 100,
+  "parallel": 1
+}
