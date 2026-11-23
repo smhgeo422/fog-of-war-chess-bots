@@ -1,0 +1,25 @@
+{
+  "archive": "research-offline-P3-followup-game-audit.tar.gz",
+  "conclusion": "Offline metric recorded; playing-strength claims require independent matches.",
+  "data_provenance": "Six fresh local paired B2 versus B0 games at 24+0.1, capped at 100 plies. No training on these replays.",
+  "evidence_type": "offline",
+  "file_count": 6,
+  "hypothesis": "An overlooked hidden reply can change the selected root and reduce regret in game-derived positions.",
+  "primary_metric": {
+    "n": 11,
+    "name": "matched_replay_p3_hidden_slot_minus_legacy_regret",
+    "unit": "selected replay positions",
+    "value": 0.0
+  },
+  "purpose": "research",
+  "research_id": "P3",
+  "run_id": "followup-game-audit",
+  "schema": 1,
+  "script": "tools/followup_game_audit.py",
+  "sha256": "18374a5a03dd31ddaa2ee90bedd7d7a7bbe9ed62d1155b224002dd6041b4b6e8",
+  "source_commit": "8500763c42c76a37b902fa7b7cf9871964878b8f",
+  "source_ref": "experiment/P3-v3-game-reply-audit",
+  "status": "complete",
+  "valid_complete_run": true,
+  "variant": "v3"
+}

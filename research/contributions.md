@@ -36,3 +36,7 @@ At the user's direction, Codex reviewed eligibility for each project, checked ar
 ## Stage 7 evidence package attribution (2026-11-22)
 
 The user directed completion of the eight-stage research plan. Codex assembled the report inputs, checked the accessible archives and Git provenance, generated the ledger and figure, and wrote scoped project dispositions. This documentation, tooling, and evidence audit involved substantial AI assistance. Original teammate code and historical match work remain attributed separately. Human review and formal course disclosure remain report-writing tasks. [Evidence package](report_package/README.md)
+
+## Post-Stage-7 follow-up attribution (2026-11-22)
+
+The user authorized the follow-up and directed preparation for the course report. Codex designed and ran the fresh replay collection, implemented the real-engine and event audits, checked available course instructions and assembled the team contribution map. This used AI assistance for the code, experiment execution, analysis and document preparation. The collection ran the earlier team bots and reused the earlier Stage 5 experimental selector. [Findings](report_package/FOLLOWUP_FINDINGS.md) · [Contributor evidence](report_package/REPORT_ORGANIZATION.md)

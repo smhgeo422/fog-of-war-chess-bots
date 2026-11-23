@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "research_ids": [
+    "P3",
+    "P1",
+    "P5",
+    "P9"
+  ],
+  "variant": "P3-v3",
+  "replay_source_commit": "38a9a59e4a841f398d3324c1366a1c1c3302045e",
+  "engine_audit_source_commit": "1d83161308a423bce3bd08e2215cd871618ca0b9",
+  "event_audit_source_commit": "8500763c42c76a37b902fa7b7cf9871964878b8f",
+  "collection_archive_sha256": "612daad496d3c5c5757ecd314df10f94c48b1816f6888ecc25694a8ea5e1b487",
+  "analysis_archive_sha256": "18374a5a03dd31ddaa2ee90bedd7d7a7bbe9ed62d1155b224002dd6041b4b6e8",
+  "local_replay_games": 6,
+  "color_pairs": 3,
+  "confirmatory_games": 0,
+  "promoted_candidate": null,
+  "findings": "research/report_package/FOLLOWUP_FINDINGS.md"
+}

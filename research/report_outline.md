@@ -208,6 +208,8 @@ Book, reserve clock, adaptive root count, special FoW endgame logic, and *final*
 
 **Stage 7 update (2026-11-22):** The [report evidence package](report_package/README.md) contains the verified run ledger, all nine conclusions, and reproducible figure data. Use the [closure sheet](report_package/CLOSURE.md) for final scope and the [contribution record](contributions.md) for AI disclosure and teammate attribution.
 
+**Post-Stage-7 follow-up:** Use the [report organization](report_package/REPORT_ORGANIZATION.md) and [course requirements](report_package/COURSE_REQUIREMENTS.md) for manuscript planning. The [fresh replay results](report_package/FOLLOWUP_FINDINGS.md) add the game-derived P3, P1, P5 and P9 checks.
+
 ## References / source links (starter list)
 
 - Official FoW rules and submission instructions: https://www.mit.edu/~6.7980/fow/?tab=rules and https://www.mit.edu/~6.7980/fow/?tab=submit

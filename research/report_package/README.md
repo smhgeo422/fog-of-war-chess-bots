@@ -12,6 +12,12 @@ The eight-stage research workflow is closed at the evidence handoff. This packag
 | Primary references, earlier team code and contributor attribution | [Bibliography](BIBLIOGRAPHY.md) · [Contribution record](../contributions.md) |
 | Manuscript planning and disclosure checklist | [Report outline](../report_outline.md) |
 
+## Post-Stage-7 handoff
+
+- [Game-derived follow-up](FOLLOWUP_FINDINGS.md), including both verified archives and the continued decision to retain the baseline.
+- [Course report requirements](COURSE_REQUIREMENTS.md), with source access and template limits.
+- [Report organization and team contribution map](REPORT_ORGANIZATION.md), including Git-backed provenance and human attribution still to confirm.
+
 ## Evidence audit
 
 The combined table inventories 18 canonical run catalogs, including the Stage 1 pipeline pair, Stage 2 baseline and corpus records, all nine v1 studies, the Stage 4 offline and capped smoke bundles, and both Stage 5 v2 ablations. Early attempts and historical team experiments remain indexed in the prior stage findings; they are outside this canonical table. The P1 v0 smoke published two catalogs under the same hosted run ID, one for the game and one for offline evidence.

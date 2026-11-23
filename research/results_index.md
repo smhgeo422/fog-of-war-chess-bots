@@ -44,3 +44,7 @@ The [confirmation audit](STAGE6_FINDINGS.md) records the decision for each of th
 ## Stage 7 · Report package
 
 The [report package](report_package/README.md) includes nine [project closure notes](report_package/CLOSURE.md), combined [JSON](combined_results.json) and [CSV](combined_results.csv) tables, and the P8 figure with its exact paired estimates. Four Git-tracked bundles were reverified. Fourteen earlier hosted catalogs and their source commits were verified; direct draft Release access remains unresolved in this environment.
+
+## Post-Stage-7 replay follow-up
+
+The [follow-up findings](report_package/FOLLOWUP_FINDINGS.md) and [run record](runs/followup-game-audit.json) link the verified local collection and analysis archives. This supplement is separate from the Stage 7 canonical 18-catalog snapshot.
