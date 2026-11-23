@@ -48,8 +48,9 @@ def main(pdf=None):
     fig.suptitle("P8 v2 · Equal root quota, disjoint reference worlds", fontweight="bold")
     fig.supxlabel("V2 minus control regret · lower favors v2 · exploratory 95% paired intervals")
     if pdf is not None:
-        fig.savefig(pdf, format="pdf", metadata={"CreationDate": None,
-                    "Subject": f"Stage 5 P8, source {catalog['source_commit']}, 24 paired blocks per split."})
+        with matplotlib.rc_context({"pdf.fonttype": 42}):
+            fig.savefig(pdf, format="pdf", metadata={"CreationDate": None,
+                        "Subject": f"Stage 5 P8, source {catalog['source_commit']}, 24 paired blocks per split."})
         return
     OUT.mkdir(exist_ok=True)
     svg = OUT / "p8_paired_contrasts.svg"

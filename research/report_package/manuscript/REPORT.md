@@ -27,25 +27,24 @@ Let $s_t$ denote the hidden state at ply $t$. It includes the board position and
 
 An idealized update after a hidden opponent action sums over each candidate previous state $s$ and opponent move $r$. With deterministic transition $T$ and observation $O$,
 $$
-b_{t+1}(s') propto
-sum_{s,r} b_t(s),pi_{mathrm{opp}}(rmid s,h_t)
-,mathbf{1}{T(s,r)=s'},mathbf{1}{O(s')=o_{t+1}}.
+b_{t+1}(s') \propto
+\sum_{s,r} b_t(s)\,\pi_{\mathrm{opp}}(r\mid s,h_t)
+\,\mathbf{1}\{T(s,r)=s'\}\,\mathbf{1}\{O(s')=o_{t+1}\}.
 $$
 This describes the role of an opponent likelihood and an observation filter. A practical implementation must bound the number of worlds, branch over plausible moves, and cope with model mismatch. If a compatible state was discarded, resampling the retained set cannot restore it. Work on particle planning and history filtering motivates these approximations and their limits [2, 3].
 
 The second course connection is **strategy fusion** [4]. For a fixed root action $a$, let $L$ be a random continuation leaf after the opponent replies, let $O(L)$ be our next observation, and let $u(L,m)$ be the value of choosing move $m$ there. With a compatible feasible-action set for each observation, the value of a realizable one-step continuation is
 $$
-Q_{mathrm{obs}}(a)
-= sum_o P(O=omid a)max_{min A(o)}
-mathbb{E}[u(L,m)mid O=o,a].
+Q_{\mathrm{obs}}(a)
+= \sum_o P(O=o\mid a)\max_{m\in A(o)}
+\mathbb{E}[u(L,m)\mid O=o,a].
 $$
-An evaluator allowed to choose a different move for every hidden leaf instead obtains an upper bound, $mathbb{E}[max_m u(L,m)mid a]$, when each feasible observation policy is also available to that evaluator. The difference measures the optimism introduced by having more information in the evaluator than the player will have. The team’s existing eBotI infoset search already uses a restricted two-ply correction based on this idea. Small games with exact security values also let us test when a mixed strategy can outperform a deterministic action. This connects to regret minimization and subgame solving, with stronger guarantees requiring additional assumptions about the larger game [5–8].
+An evaluator allowed to choose a different move for every hidden leaf instead obtains an upper bound, $\mathbb{E}[\max_m u(L,m)\mid a]$, when each feasible observation policy is also available to that evaluator. The difference measures the optimism introduced by having more information in the evaluator than the player will have. The team’s existing eBotI infoset search already uses a restricted two-ply correction based on this idea. Small games with exact security values also let us test when a mixed strategy can outperform a deterministic action. This connects to regret minimization and subgame solving, with stronger guarantees requiring additional assumptions about the larger game [5–8].
 
-Finally, *value of computation* is different from value of an in-game observation [9]. It asks whether a search operation is worth its cost before the move is played. If an operation $c$ yields random search result $Y_c$ and updates estimated action values $widehat Q(amid Y_c)$, a simple criterion is
+Finally, *value of computation* is different from value of an in-game observation [9]. It asks whether a search operation is worth its cost before the move is played. If an operation $c$ yields random search result $Y_c$ and updates estimated action values $\widehat Q(a\mid Y_c)$, a simple criterion is
 $$
-mathbb{E}_{Y_c}left[max_a widehat Q(amid Y_c)
-ight]
-- max_a widehat Q(a) - lambda,mathrm{cost}(c).
+\mathbb{E}_{Y_c}\!\left[\max_a \widehat Q(a\mid Y_c)\right]
+- \max_a \widehat Q(a) - \lambda\,\mathrm{cost}(c).
 $$
 An apparent gain obtained by spending more time can disappear once the clock is matched. The final decision also needs a reserve against time forfeits.
 
@@ -69,7 +68,7 @@ The post-campaign follow-up collected six fresh B2-versus-B0 games at 24+0.1 wit
 
 ## 4.2 Measurements
 
-For an event with label $yin{0,1}$ and forecast $p$, we use Brier loss $(p-y)^2$. For a recorded opponent action, negative log likelihood is $-log pi(a)$ [15]. P1 also measures error against an exact weighted average over the *retained support*. P1 draws from a mixture of the baseline weight distribution and a threat-biased proposal, then reweights each sampled world by the ratio of baseline to proposal probability. This evaluates the estimator conditional on that support. It differs from Brier error against the actual game event, which depends on the quality of the support and weights as well.
+For an event with label $y\in\{0,1\}$ and forecast $p$, we use Brier loss $(p-y)^2$. For a recorded opponent action, negative log likelihood is $-\log \pi(a)$ [15]. P1 also measures error against an exact weighted average over the *retained support*. P1 draws from a mixture of the baseline weight distribution and a threat-biased proposal, then reweights each sampled world by the ratio of baseline to proposal probability. This evaluates the estimator conditional on that support. It differs from Brier error against the actual game event, which depends on the quality of the support and weights as well.
 
 Action regret is the reference value of the best candidate minus the reference value of the selected candidate, on the same candidate set. A reference can be exact within a restricted domain or a deeper, truncated engine calculation. We identify which in each result. Prediction losses, action regret, restricted security utility and certificate soundness have different units. They are not pooled. For game comparisons the independent units are games or paired color/seed blocks. We do not treat plies, state samples, or mirrored boards as independent games. P8 intervals are exploratory paired bootstrap ranges. For the six-game follow-up we report descriptive differences and event counts.
 
@@ -77,7 +76,7 @@ Action regret is the reference value of the best candidate minus the reference v
 
 ## 5.1 Belief, opponent prediction, and tactical risk
 
-**Belief sampling (P1).** The first replay screen retained the true board at all 108 scored decisions, but contained zero positive hidden king-attack events and zero nonzero risk estimates. Forty player histories hit the support limit. This made that screen uninformative for calibration. In the six-game follow-up, the scheduled sample again missed all four positive labels, which motivated an exploratory all-plies audit. Across 428 compatible decisions, 39 had nonzero retained-support risk. We compared 64 ordinary draws and 64 threat-biased importance-weighted draws, using eight fixed seeds for each estimate. Mean squared error against the retained-support expectation decreased from $8.91	imes10^{-5}$ to $4.81	imes10^{-5}$. Brier loss against actual labels rose slightly from 0.006791 to 0.006906. This separates estimator variance from posterior quality. The proposal used an attack indicator computed across the retained support, so this trial also offers no estimate of net compute savings [12, 14].
+**Belief sampling (P1).** The first replay screen retained the true board at all 108 scored decisions, but contained zero positive hidden king-attack events and zero nonzero risk estimates. Forty player histories hit the support limit. This made that screen uninformative for calibration. In the six-game follow-up, the scheduled sample again missed all four positive labels, which motivated an exploratory all-plies audit. Across 428 compatible decisions, 39 had nonzero retained-support risk. We compared 64 ordinary draws and 64 threat-biased importance-weighted draws, using eight fixed seeds for each estimate. Mean squared error against the retained-support expectation decreased from $8.91\times 10^{-5}$ to $4.81\times 10^{-5}$. Brier loss against actual labels rose slightly from 0.006791 to 0.006906. This separates estimator variance from posterior quality. The proposal used an attack indicator computed across the retained support, so this trial also offers no estimate of net compute savings [12, 14].
 
 **Opponent prediction (P2).** We updated a latent style mixture using observable event classes. Across 129 early replay decisions, the adaptive model's average action log loss was 3.480 versus 3.937 for the one-ply Stockfish control on ordinary holdout, and 3.440 versus 3.967 on policy shift. The adaptive model was slightly worse than the static mixture in-family. Its shifted action-loss difference from static was about −0.0023, with a paired interval crossing zero. The engine contrast shows that a different predictive model can fit the synthetic opponents better. The static control limits the claim about learning style online. We did not observe the kinds of opponents needed to establish general transfer [12].
 
