@@ -7,6 +7,9 @@ geometry: margin=0.9in
 colorlinks: true
 linkcolor: blue
 urlcolor: blue
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
 ---
 
 # Abstract
@@ -52,7 +55,15 @@ An apparent gain obtained by spending more time can disappear once the clock is 
 
 The original system included random and greedy bots, a local referee tournament runner, packaging, and tests. The first Obscuro-style agent used a belief set with a small subgame and predictive regret updates, using shallow material and visibility leaves. A later version used a deadline-aware Stockfish engine pool to score moves over candidate boards. The weighted version added a one-ply opponent likelihood and a native C++ position-set helper. The helper tracks the candidate set up to its configured cap and provides states and weights to the search. The Python path provides a fallback. The archived version records describe this evolution and report historical arena scores of about 39%, 45%, and 63% for frozen versions 2, 3, and 4, respectively. These runs occurred at different times against different arena mixes and provide descriptive context [10].
 
-The team's later eBotI work investigated wider sampling, risk-sensitive aggregation, exact king risk, deeper tree search, hidden material hazards, an opening book, and clock allocation. It also studied replay patterns of the opponent Greek Gift. Historical tests documented an offline-to-online gap before our follow-up. A worst-board mixture reduced next-ply measures in saved data, while its reported score against frozen v3 was the same as v4's, 0.825, in the team's separate 80-game tests at 180+2. Adding a king-move penalty produced a reported score of 0.812. Those historical tests motivate separate decision and game metrics. They remain distinct from the later study [10].
+## 3.1 Earlier eBotI experiments
+
+The team implemented and tested multiple eBotI alternatives after freezing v4. Three representative tests show why later experiments separated belief quality, decisions, and compute.
+
+- **Deeper strategic search versus deeper leaf evaluation.** The team built one-sided growing-tree search in Python and C++, then compared it with v4's Stockfish-over-beliefs search. Three short configurations finished 0–10, 1–9 and 3–7. The tree allocated work to expanding and solving the subgame while using much shallower Stockfish leaves. The result made a budget-matched leaf comparison a priority for any later solver.
+- **More belief boards versus engine depth.** Increasing the evaluation budget from 64 to 384 boards reduced per-board depth at 36+0.4 and scored 4.5 points out of 18 against v4. The longer-clock tests reported 4.5/12 with CVaR and 4/10 without it. The extra breadth did not reliably compensate for the search trade-off.
+- **Offline safety gains versus game score.** A worst-board mixture reduced moves into fog attacks from 310 to 273 on the team's saved evidence. At 180+2, the mixture and v4 each scored 0.825 against frozen v3 in separate 80-game comparisons. Adding a king-move penalty reduced the score to 0.812. These observations motivated measuring choices and full games separately.
+
+The historical notes also cover opponent modeling, king and material risk, reserve clocks, opening books, and the Greek Gift replay studies. Appendix A records outcomes and evidence gaps for those attempts. Historical setups varied, and the team's notes identify oversubscribed workers and mismatched engine counts in some local comparisons. We use the records to explain design decisions, with the later controlled experiments reported separately [10].
 
 We used three reference labels throughout. **B0** is the frozen `obscuro_v4` bot with Stockfish 19 and its native helper. **B2** is default eBotI. **B1** is an explicitly configured v4-like eBotI profile. On common prefixes, B1 matched B0 on 6 of 9 actions, while the B0 self-comparison agreed on 10 of 11. Shared components passed deterministic checks, but measured action agreement was insufficient to treat B1 as an interchangeable control. We kept B0 as the fixed reference for claims about improvement. In the short-clock pipeline checks at 36+0.4, B1 and B2 each scored 1–0–3 against B0 in separate four-game samples. A later two-game B2 smoke at 24+0.1 reached its 20-ply cap in both games. These runs established compatibility and did not supply strength estimates suitable for promotion [11].
 
@@ -65,6 +76,8 @@ The campaign used nine distinct questions. Each had a specified intervention, a 
 The canonical synthetic corpus contains 72 observation-only starter-policy games in 36 color-swapped blocks, with 2,190 predecision records. Whole games and their color-swapped partners were assigned together. Training, development, ordinary holdout, and opponent-shift splits contained 36, 12, 12, and 12 games respectively. We reconstructed all replays with the local referee and verified the observation and rules checks. The online feature record contains side, view, own-history hash, legal attempts, visible enemy count, and visible square count. Hidden boards, chosen actions, and policy identities are separated for retrospective analysis. These games have no measured chess clock. The P8 revision regenerated four new seeded corpora and used only the two holdout splits for its comparisons [11, 13].
 
 The post-campaign follow-up collected six fresh B2-versus-B0 games at 24+0.1 with a 100-ply cap and three paired seeds. Both bots used their pinned native components. Five games ended with a capturable king and one reached the cap. Default eBotI scored 3–1–2. The opt-in hidden-reply rule was off for collection. We replayed each side's observations and own actions using the native helper with a 4,096-state cap and no opponent-policy weighting. We reconstructed real hidden boards only for retrospective labels and replay validation. This yields a local, game-derived test distribution with a specific pair of bots [14].
+
+**What the later campaign added.** We built and tested nine small, isolated mechanisms rather than treating existing team toggles as new algorithms. We added controlled referee fixtures and replay evaluations, then implemented two narrower revisions where the initial evidence supported a retest. The final game-derived audit exercised the hidden-reply selector with real Stockfish tables and checked whether two risk estimators carried over to fresh engine games. Appendix B records the first-version tests and their controls; Section 5 reports the follow-through and includes the failed and inconclusive comparisons.
 
 ## 4.2 Measurements
 
@@ -128,6 +141,43 @@ The repository records the reference source and frozen-bot inventory, engine and
 # AI-use disclosure
 
 The human project team selected the Fog of War problem, developed the earlier bot family, and established the initial project context. For the later campaign, a human project member directed the objectives, authorized each research stage and the follow-up, and set the report scope. Generative AI assistance was substantial in organizing the hypotheses, writing the new prototype and analysis code, proposing and implementing the controls, running the test harnesses and experiments, interpreting outcomes, verifying archived evidence, producing the figure and results tables, and drafting this manuscript. The later archive records distinguish experimental additions from the existing team bot and third-party code. The experimental results are sourced to run manifests and saved outputs. [Workflow and AI-use record](https://github.com/smhgeo422/fog-of-war-chess-bots/blob/fa57975/research/contributions.md)
+
+# Appendix A. Earlier attempts and what the team learned
+
+This inventory uses the team's historical implementation and experiment notes [10]. The clocks, opponent, and evidence scope are retained where they change the interpretation. Scores such as 4.5/18 are game points with draws worth half a point.
+
+| Attempt or diagnostic | Recorded result and takeaway |
+| ---------------------- | ------------------------------------------------ |
+| Python and C++ growing-tree search, wider Stockfish sampling, and CVaR | Growing-tree and breadth outcomes are in Section 3.1. CVaR mixed average value with the mean of the worst 30% of boards. The historical records show no clear benefit over ordinary aggregation. Broad pessimism can move scores without separating the safe and dangerous actions. |
+| Uniform/weighted king-risk mix | Replay metrics looked slightly better. Configurations using the uniform component performed worse in games, with other settings also varying. Uniform weighting may overrepresent unlikely but observation-compatible histories. |
+| Exact whole-set king risk and a one-ply trap check | The otherwise v4-like configuration scored 7–6 against v4. Native counting ran in about 12–30 ms per move. The small game sample supplied no clear gain. Exact counting makes sense only in the context of the quality of the retained belief. |
+| Boosted checks and captures in the opponent model | Replay checks found no improvement in true-board weight over the existing one-ply likelihood. The boosts were left off. |
+| More time when uncertain and four engines | The historical notes report no measurable improvement. Some comparisons used unequal engine and core counts, while later overlapping workers also distorted the available compute. Engine work is a control variable in its own right. |
+| Empirical geometric king hazard | The hazard was fitted on 5,858 logged decisions. The team recorded a 42–42 self-play score. A risk fit to moves already selected by v4 underpredicted the hazards of rejected moves, making its use to rank all alternatives questionable. |
+| Reweighting attacked kings or threatened pieces | On the same saved evidence of 1,393 decisions, changes affected 18 and 73 decisions respectively. The team reported no substantive gain. Improving aggregate calibration left the rare tactical tail unresolved. |
+| Worst-board mixture and king-move penalty | Offline safety measures improved, while the reported game scores in Section 3.1 did not. Apparent next-ply safety can miss losses that develop several plies later. |
+| Cheap sparring and replay audits of fatal moves | V4 won 90–0 against the recorded cheap sparring bot, giving little resolution. The true board was present in 87% of the 40 fatal king walks in the historical audit, so missing support alone could not explain all failures. |
+| Increasing the king-loss penalty | A coefficient of five failed to improve the recorded short-clock comparison against v4. The team's notes found that many fatal decisions were made after the bot was already materially behind. |
+| Blind-board opponent model | Across 4,783 opponent moves, relative likelihood versus equal odds was 2.05 for the full-board engine model and 1.17 for the blind model. Deleting unseen pieces was a poor proxy for an opponent's belief. |
+| Original two-ply infoset search | The team implemented observation grouping and recorded a 120+2 comparison as started. The cited historical notes supply no completed result for that comparison. Section 5.2 reports our later, separately controlled reply-slot variant. |
+| Greek Gift analysis and safe-first | The team observed fewer unsafe king moves in Greek Gift replays and implemented a zero-risk-first rule. A v4 comparison at 60+1 was stopped at 13 wins, 1 draw and 19 losses. In 18 of the 19 losses no zero-risk choice remained at the fatal decision. Replay observations motivate the rule but do not isolate its strength effect. |
+| Material loss, book, clock, and randomization | The Greek Gift studies motivated exact hidden-material pricing on quiet moves, a view-keyed book, a reserve clock and randomization among near-equal moves. The cited notes give planned clock and material-penalty matches, alongside descriptive replay differences. These records do not establish a separate matched effect for each switch. |
+
+# Appendix B. First-version tests and their controls
+
+The following tests preceded the later screens in Section 5. A fixture's result is scoped to its declared model. Proposals and unrun configurations are indexed separately in the [research ledger](https://github.com/smhgeo422/fog-of-war-chess-bots/blob/260a684/research/idea_backlog.md) [12].
+
+| Project | Implemented test and v1 outcome |
+| -------- | -------------------------------------------------------------- |
+| **P1** | Importance-corrected threat sampling reduced rare-event MSE from 0.00021243 to 0.00001185 in a four-world model. Effective draws fell from 64 to 46.39, documenting a sampling trade-off. |
+| **P2** | An event-equivalence update and uniform floor gave synthetic action log loss 0.669 versus 1.099 for uniform. The later static-mixture control was necessary to isolate adaptation. |
+| **P3** | A two-world counterexample yielded value 1.0 for the clairvoyant choice and 0.5 for a feasible observation-conditioned policy. A fallback check exercised the zero-budget case. |
+| **P4** | Instrumental value was 0.5 when information changed the useful response and 0 for an irrelevant revelation with matched immediate payoff. |
+| **P5** | Shrunk class risks on artificial event labels gave Brier loss 0.148 versus 0.242 for the constant. Later replay and transfer results did not reproduce this gap. |
+| **P6** | A restricted solver recovered a near-25%/75% mix on the asymmetric fixture. The gap fell from about 0.386 after 10 iterations to 0.006 after 6,000, at real iteration cost. |
+| **P7** | An observation-only ridge residual beat the uncorrected and shuffled-label controls on synthetic continuation outcomes. The later Stockfish-backed synthetic replay comparison reversed the result. |
+| **P8** | A controlled near tie gave estimated computation gain 0.15, versus zero on the decisive case. Reserve and consistency checks constrained the toy policy. Search budgets on held-out histories were evaluated separately. |
+| **P9** | The small graph fixture failed at horizon one and succeeded at horizon two. The first local one-turn FoW check enumerated 23 common actions and 35 replies and certified zero universal wins. The larger zero-coverage result is in Section 5.3. |
 
 # References
 
