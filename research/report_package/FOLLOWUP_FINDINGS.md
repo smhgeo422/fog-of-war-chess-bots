@@ -16,3 +16,5 @@ The report can now distinguish three independent failure points. Better sampling
 - [Collection archive](../archives/followup-collection/) contains six full replay files, the report, the config and the manifest from source `38a9a59`.
 - [Analysis archive](../archives/followup-analysis/) contains the per-game decisions, paired node counts, sampled event estimates and the two source pins. The real-engine audit ran from `1d83161`, and the all-plies event audit ran from `8500763`.
 - Extract the verified collection bundle and pass its `run/` directory to `.venv/bin/python -m tools.followup_game_audit --replays <run-directory> --output <new-json>` from the source revision and with the pinned native components installed. Add `--event-audit` for the all-plies audit on the second source pin. The original plan and its sampling amendment are in [the protocol](FOLLOWUP_PROTOCOL.md).
+
+The targeted frozen-bot, protocol, and replay suite passed all 31 tests with Stockfish enabled. The real-engine smoke exercised all three scoring arms before the formal replay analysis.
