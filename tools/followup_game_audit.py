@@ -10,6 +10,7 @@ from pathlib import Path
 import random
 from statistics import mean
 import subprocess
+import tarfile
 import time
 
 import chess
@@ -21,7 +22,7 @@ from bots.eBotI.eBotI.engine import cp_value, mate_value
 from bots.eBotI.eBotI.position_set import PositionSet
 from bots.eBotI.eBotI.stockfish_search import engine_accepts, engine_fen, LOSS
 from tools.stage3 import P1
-from tools.stage4.replay import retrospective_material_loss, unseen_king_attack
+from tools.stage4.replay import move_category, retrospective_material_loss, unseen_king_attack
 
 REPO = Path(__file__).resolve().parents[1]
 ENGINE = REPO / "bots/obscuro_v4/stockfish/src/stockfish"
@@ -168,11 +169,12 @@ def sampling_audit(active, move, side, label, seed):
             "supported_worlds": len(events), "arms": arms}
 
 
-def reconstruct(replay, game, score):
+def reconstruct(replay, game, score, material_model=None):
     flags = Counter()
     selected = {}
     records = []
     sampling = []
+    material = []
     true_board = referee.FowBoard()
     histories = replay["frames"]
     with ExitStack() as cleanup:
@@ -202,7 +204,16 @@ def reconstruct(replay, game, score):
                 reply = chess.Move.from_uci(histories[ply + 2]["move"])
                 view = histories[ply + 1][chess.COLOR_NAMES[side]]
                 flags["material_reply_opportunities"] += 1
-                flags["unseen_material_losses"] += retrospective_material_loss(after, reply, view)
+                event = retrospective_material_loss(after, reply, view)
+                flags["unseen_material_losses"] += event
+                if material_model is not None:
+                    category = move_category(frame[chess.COLOR_NAMES[side]], side, next_move)
+                    probability = material_model["trained_event_probabilities"][category]
+                    constant = material_model["train_baseline_probability"]
+                    material.append({"ply": ply, "category": category, "event": int(event),
+                                     "model_probability": probability, "constant_probability": constant,
+                                     "model_brier": (probability - event) ** 2,
+                                     "constant_brier": (constant - event) ** 2})
             for color, instance in belief.items():
                 view = frame[chess.COLOR_NAMES[color]]
                 try:
@@ -210,13 +221,15 @@ def reconstruct(replay, game, score):
                 except (RuntimeError, ValueError):
                     flags["belief_repairs"] += 1
                     instance.repair(view, side)
-            if ply < 12 or (ply - 12) % 7:
+            if score is not None and (ply < 12 or (ply - 12) % 7):
                 continue
             flags["offered"] += 1
             active = belief[side]
             estimate = sampling_audit(active, next_move, side, king_event, f"{game}:{ply}")
             if estimate is not None:
                 sampling.append({"ply": ply, **estimate})
+            if score is None:
+                continue
             ranked = sorted(zip(active.weights, active.states, strict=True), key=lambda row: (-row[0], row[1].fen()))
             unique = {}
             for weight, board in ranked:
@@ -259,13 +272,16 @@ def reconstruct(replay, game, score):
                     "work": [work for _, work in evaluations],
                     "replies": picks,
                 }
-    return {"game": game, "counts": dict(flags), "decisions": records, "sampling": sampling}
+    return {"game": game, "counts": dict(flags), "decisions": records,
+            "sampling": sampling, "material": material}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--replays", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--event-audit", action="store_true",
+                        help="Check all plies for P1 and score the frozen Stage 4 P5 model")
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
@@ -279,18 +295,29 @@ def main():
     if len(paths) != 6:
         raise ValueError("Expected the six declared replay histories")
     start = time.monotonic()
-    with chess.engine.SimpleEngine.popen_uci(str(ENGINE), cwd=ENGINE.parent, timeout=15) as engine:
-        engine.configure({"Threads": 1, "Hash": 16})
-        score = board_table(engine)
+    with ExitStack() as cleanup:
+        score = None
+        model = None
+        if args.event_audit:
+            [archive] = (REPO / "research/archives/stage4-screen-20261122").glob("*.tar.gz")
+            with tarfile.open(archive) as bundle:
+                with bundle.extractfile("run/projects.json") as stream:
+                    model = json.load(stream)["P5"]
+        else:
+            engine = cleanup.enter_context(
+                chess.engine.SimpleEngine.popen_uci(str(ENGINE), cwd=ENGINE.parent, timeout=15))
+            engine.configure({"Threads": 1, "Hash": 16})
+            score = board_table(engine)
         games = []
         for path in paths:
-            row = reconstruct(json.loads(path.read_text()), path.name, score)
+            row = reconstruct(json.loads(path.read_text()), path.name, score, model)
             games.append(row)
             print(path.name, row["counts"], flush=True)
     with ENGINE.open("rb") as binary:
         engine_sha256 = file_digest(binary, "sha256").hexdigest()
     data = {"source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
             "replay_source_commit": manifest["commit"], "engine_sha256": engine_sha256,
+            "mode": "all_plies_events" if args.event_audit else "scheduled_engine",
             "games": games, "wall_seconds": time.monotonic() - start}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(data, indent=2, allow_nan=False) + "\n")
