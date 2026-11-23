@@ -143,7 +143,7 @@ The repository records the reference source and frozen-bot inventory, engine and
 - **Section 3 · Ernesto Gomez.** Repository setup, starter bots, local tournament runner, packaging, tests, and the first Obscuro-style agent.
 - **Section 3 · Sammy Krem.** Clock and fallback handling, repetition checks, Stockfish search over weighted beliefs, the C++ position-set helper, and frozen bot versions.
 - **Section 3.1 and Appendix A · Ernesto Gomez.** eBotI development and earlier experiments on growing-tree search, tactical risk, and the Greek Gift.
-- **Sections 4–5 and Appendix B · Research campaign lead.** Set the research questions, directed the nine-idea evaluation, and commissioned the game-derived follow-up. See the AI-use disclosure for Codex's role.
+- **Sections 4–5 and Appendix B · Daeho Lee.** Set the research questions and directed the nine-idea evaluation and game-derived follow-up. See the AI-use disclosure.
 
 **TODO before submission.** Add Kevin Cheng as a contributor and confirm the description of his work with him.
 
