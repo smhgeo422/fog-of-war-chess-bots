@@ -12,6 +12,10 @@ The eight-stage research workflow is closed at the evidence handoff. This packag
 | Primary references, earlier team code and contributor attribution | [Bibliography](BIBLIOGRAPHY.md) · [Contribution record](../contributions.md) |
 | Manuscript planning and disclosure checklist | [Report outline](../report_outline.md) |
 
+## Manuscript draft
+
+[Read the PDF](manuscript/REPORT.pdf) or [edit the Markdown source](manuscript/REPORT.md). The working draft integrates the original team system, the nine investigations, the game-derived follow-up, and the AI-use disclosure. Build it with `bash research/report_package/manuscript/build.sh` from the repository root. The build requires Pandoc, XeLaTeX, and Python with Matplotlib.
+
 ## Post-Stage-7 handoff
 
 - [Game-derived follow-up](FOLLOWUP_FINDINGS.md), including both verified archives and the continued decision to retain the baseline.

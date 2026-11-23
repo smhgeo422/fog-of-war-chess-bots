@@ -1,5 +1,6 @@
 """Render P8's archived paired contrasts without rerunning the experiment."""
 
+import argparse
 import csv
 from pathlib import Path
 
@@ -20,7 +21,7 @@ CONTRASTS = {
 }
 
 
-def main():
+def main(pdf=None):
     [bundle] = (RESEARCH / "archives" / "stage5-P8-v2").glob("*.tar.gz")
     _, catalog = checked_bundle(bundle)
     report = read_member(bundle, "run/ablation.json")
@@ -46,6 +47,10 @@ def main():
         ax.tick_params(axis="y", length=0)
     fig.suptitle("P8 v2 · Equal root quota, disjoint reference worlds", fontweight="bold")
     fig.supxlabel("V2 minus control regret · lower favors v2 · exploratory 95% paired intervals")
+    if pdf is not None:
+        fig.savefig(pdf, format="pdf", metadata={"CreationDate": None,
+                    "Subject": f"Stage 5 P8, source {catalog['source_commit']}, 24 paired blocks per split."})
+        return
     OUT.mkdir(exist_ok=True)
     svg = OUT / "p8_paired_contrasts.svg"
     fig.savefig(svg, metadata={"Date": None,
@@ -58,4 +63,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pdf", type=Path, help="Write a vector PDF for the manuscript")
+    main(parser.parse_args().pdf)
